@@ -18,6 +18,7 @@ declare module 'vue' {
     MainContent: typeof import('./src/components/element/pages/ide/MainContent.vue')['default']
     MainFrame: typeof import('./src/components/element/pages/ide/MainFrame.vue')['default']
     NSplit: typeof import('naive-ui')['NSplit']
+    NTree: typeof import('naive-ui')['NTree']
     ProjTree: typeof import('./src/components/element/pages/ide/ProjTree.vue')['default']
     Providers: typeof import('./src/components/providers/Providers.vue')['default']
     ResizableHandle: typeof import('./src/components/ui/resizable/ResizableHandle.vue')['default']
