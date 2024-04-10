@@ -31,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import ProjTree from '@/components/element/pages/ide/ProjTree.vue'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import ProjTree from '@/components/element/pages/ide/ProjTree.vue';
 </script>
 
 <style scoped></style>
