@@ -19,6 +19,7 @@ declare module 'vue' {
     MainFrame: typeof import('./src/components/element/pages/ide/MainFrame.vue')['default']
     NSplit: typeof import('naive-ui')['NSplit']
     ProjTree: typeof import('./src/components/element/pages/ide/ProjTree.vue')['default']
+    Providers: typeof import('./src/components/providers/Providers.vue')['default']
     ResizableHandle: typeof import('./src/components/ui/resizable/ResizableHandle.vue')['default']
     ResizablePanelGroup: typeof import('./src/components/ui/resizable/ResizablePanelGroup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -28,5 +29,6 @@ declare module 'vue' {
     SiderBar: typeof import('./src/components/element/pages/ide/SiderBar.vue')['default']
     TopMenu: typeof import('./src/components/element/pages/ide/TopMenu.vue')['default']
     VmIde: typeof import('./src/components/element/VmIde.vue')['default']
+    WebIdeProviders: typeof import('./src/components/providers/WebIdeProviders.vue')['default']
   }
 }

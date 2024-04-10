@@ -2,7 +2,7 @@
   <div>
     <NSplit direction="vertical" :default-size="0.75">
       <template #1>
-        <NSplit direction="horizontal">
+        <NSplit direction="horizontal" :default-size="0.2">
           <template #1> <ProjTree /> </template>
           <template #2> <IdeEditor /> </template>
         </NSplit>
