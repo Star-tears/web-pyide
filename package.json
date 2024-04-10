@@ -13,14 +13,19 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/lang-python": "^6.1.5",
+    "@codemirror/theme-one-dark": "^6.1.2",
     "@radix-icons/vue": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "codemirror": "^6.0.1",
     "pinia": "^2.1.7",
     "radix-vue": "^1.6.2",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.4.21",
+    "vue-codemirror": "^6.1.1",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {

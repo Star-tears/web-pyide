@@ -4,7 +4,7 @@
       <template #1>
         <NSplit direction="horizontal">
           <template #1> <ProjTree /> </template>
-          <template #2> Pane 4 </template>
+          <template #2> <IdeEditor /> </template>
         </NSplit>
       </template>
       <template #2> Pane 2 </template>
@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import ProjTree from '@/components/element/pages/ide/ProjTree.vue';
 import { NSplit } from 'naive-ui';
+import IdeEditor from '@/components/element/pages/ide/IdeEditor.vue';
 </script>
 
 <style scoped></style>
