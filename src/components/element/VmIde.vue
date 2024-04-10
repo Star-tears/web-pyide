@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen w-screen flex flex-col">
     <TopMenu />
-    <MainFrame class="flex-grow" />
+    <MainFrame class="flex-grow overflow-hidden" />
     <FooterStatusBar />
   </div>
 </template>
