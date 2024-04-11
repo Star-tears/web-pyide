@@ -10,6 +10,17 @@
 import TopMenu from '@/components/element/pages/ide/TopMenu.vue';
 import FooterStatusBar from '@/components/element/pages/ide/FooterStatusBar.vue';
 import MainFrame from '@/components/element/pages/ide/MainFrame.vue';
+import { storeToRefs } from 'pinia';
+import { useWsStore } from '@/stores/websocket';
+import { onMounted } from 'vue';
+const wsStore = useWsStore();
+const { wsInfo } = storeToRefs(wsStore);
+onMounted(() => {
+  if (!wsInfo.value.rws) {
+    const { init } = wsStore;
+    init({});
+  }
+});
 </script>
 
 <style scoped></style>
