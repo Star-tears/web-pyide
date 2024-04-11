@@ -404,7 +404,7 @@ export const useWsStore = defineStore('ws', () => {
     callback
   }: {
     wsKey: string;
-    msgId: number;
+    msgId?: number;
     cmd: string;
     data: any;
     callback: any;
@@ -456,5 +456,5 @@ export const useWsStore = defineStore('ws', () => {
     wsInfo.rws.send(msgStr);
     return msg.id;
   };
-  return { wsInfoMap, wsInfo, init };
+  return { wsInfoMap, wsInfo, init, sendCmdWs };
 });

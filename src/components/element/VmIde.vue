@@ -13,13 +13,26 @@ import MainFrame from '@/components/element/pages/ide/MainFrame.vue';
 import { storeToRefs } from 'pinia';
 import { useWsStore } from '@/stores/websocket';
 import { onMounted } from 'vue';
+import { useIdeStore } from '@/stores/ide';
 const wsStore = useWsStore();
+const ideStore = useIdeStore();
 const { wsInfo } = storeToRefs(wsStore);
 onMounted(() => {
   if (!wsInfo.value.rws) {
-    const { init } = wsStore;
-    init({});
+    wsStore.init({});
   }
+  const t = setInterval(() => {
+    if (wsInfo.value.connected) {
+      ideStore.ide_list_projects({
+        callback: (dict: any) => {
+          clearInterval(t);
+          if (dict.code == 0) {
+            // console.log(dict.data);
+          }
+        }
+      });
+    }
+  }, 1000);
 });
 </script>
 
