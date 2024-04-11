@@ -8,9 +8,6 @@
     :tab-size="2"
     :extensions="extensions"
     @ready="handleReady"
-    @change="log('change', $event)"
-    @focus="log('focus', $event)"
-    @blur="log('blur', $event)"
   />
 </template>
 
@@ -18,6 +15,7 @@
 import { defineComponent, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
+import { python } from '@codemirror/lang-python';
 import { oneDark } from '@codemirror/theme-one-dark';
 
 export default defineComponent({
@@ -25,8 +23,8 @@ export default defineComponent({
     Codemirror
   },
   setup() {
-    const code = ref(`console.log('Hello, world!')`);
-    const extensions = [javascript(), oneDark];
+    const code = ref(`print('Hello, world!')`);
+    const extensions = [python(), oneDark];
 
     // Codemirror EditorView instance ref
     const view = shallowRef();

@@ -27,7 +27,7 @@ onMounted(() => {
         callback: (dict: any) => {
           clearInterval(t);
           if (dict.code == 0) {
-            console.log(dict.data);
+            // ideStore.handleProjects(dict.data);
           }
         }
       });

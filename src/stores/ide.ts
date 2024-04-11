@@ -34,6 +34,7 @@ export const useIdeStore = defineStore('ide', () => {
         ideInfo.value.currProj.config.name = ideInfo.value.projList[i].name;
       }
     }
+    console.log(ideInfo.value);
   };
 
   const handleProject = (data: any) => {
@@ -796,5 +797,5 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  return { ideInfo, handleProjects, ide_list_projects };
+  return { ideInfo, handleProjects, ide_list_projects, setTreeRef, setNodeSelected };
 });
