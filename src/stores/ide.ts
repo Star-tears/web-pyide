@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { useWsStore } from '@/stores/websocket';
 import { IDE_CMD_TYPES } from '@/types/ide';
-import * as path from 'path';
+import path from 'path';
 
 export const useIdeStore = defineStore('ide', () => {
   const wsStore = useWsStore();
@@ -113,7 +113,7 @@ export const useIdeStore = defineStore('ide', () => {
       ideInfo.value.nodeSelected = ideInfo.value.treeRef.getCurrentNode();
     }
   };
-  const handleDelFile = ({ parentData, filePath }) => {
+  const handleDelFile = ({ parentData, filePath }: { parentData: any; filePath: string }) => {
     for (let i = 0; i < ideInfo.value.codeItems.length; i++) {
       if (ideInfo.value.codeItems[i].path === filePath) {
         if (i > 0) {
@@ -169,7 +169,7 @@ export const useIdeStore = defineStore('ide', () => {
       ideInfo.value.currProj.data.label = name;
     } else {
       // rename file/folder
-      const renameNodeData = (nodeData, parentPath) => {
+      const renameNodeData = (nodeData: any, parentPath: string) => {
         nodeData.path = path.join(parentPath, nodeData.name);
         nodeData.uuid = nodeData.path;
         if (nodeData.type === 'dir' && nodeData.children) {
@@ -290,7 +290,7 @@ export const useIdeStore = defineStore('ide', () => {
       }
     }
   };
-  const handleStopResult = ({ consoleId, dict }) => {
+  const handleStopResult = ({ consoleId, dict }: { consoleId: any; dict: any }) => {
     if (dict.code === 0) {
       for (let i = 0; i < ideInfo.value.consoleItems.length; i++) {
         if (consoleId && ideInfo.value.consoleItems[i].id !== consoleId) continue;
@@ -307,7 +307,7 @@ export const useIdeStore = defineStore('ide', () => {
   };
   const delExpandNodeKey = (key: any) => {
     ideInfo.value.currProj.expandedKeys.splice(
-      ideInfo.value.currProj.expandedKeys.findIndex((item) => item === key),
+      ideInfo.value.currProj.expandedKeys.findIndex((item: any) => item === key),
       1
     );
   };
@@ -329,7 +329,7 @@ export const useIdeStore = defineStore('ide', () => {
   const assignConsoleSelected = (item: any) => {
     if (item && typeof item === 'object') Object.assign = (ideInfo.value.consoleSelected, item);
   };
-  const spliceConsoleItems = ({ start, count }) => {
+  const spliceConsoleItems = ({ start, count }: { start: any; count: any }) => {
     ideInfo.value.consoleItems.splice(start, count);
   };
   const setConsoleId = (consoleId: any) => {
@@ -348,10 +348,10 @@ export const useIdeStore = defineStore('ide', () => {
   const setCodeItems = (items: any) => {
     ideInfo.value.codeItems = items;
   };
-  const setCodeItemMirror = ({ index, codemirror }) => {
+  const setCodeItemMirror = ({ index, codemirror }: { index: any; codemirror: any }) => {
     ideInfo.value.codeItems[index].codemirror = codemirror;
   };
-  const setCodeItemContent = ({ index, content }) => {
+  const setCodeItemContent = ({ index, content }: { index: any; content: any }) => {
     ideInfo.value.codeItems[index].content = content;
   };
   const setCodeHeight = (height: number) => {
@@ -378,7 +378,15 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_get_project = ({ wsKey, projectName, callback }) => {
+  const ide_get_project = ({
+    wsKey,
+    projectName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_GET_PROJECT,
@@ -388,7 +396,15 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_create_project = ({ wsKey, projectName, callback }) => {
+  const ide_create_project = ({
+    wsKey,
+    projectName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_CREATE_PROJECT,
@@ -398,7 +414,15 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_delete_project = ({ wsKey, projectName, callback }) => {
+  const ide_delete_project = ({
+    wsKey,
+    projectName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_DEL_PROJECT,
@@ -408,7 +432,17 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_rename_project = ({ wsKey, oldName, newName, callback }) => {
+  const ide_rename_project = ({
+    wsKey,
+    oldName,
+    newName,
+    callback
+  }: {
+    wsKey: string;
+    oldName: string;
+    newName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_RENAME_PROJECT,
@@ -419,7 +453,7 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_save_project = ({ wsKey, callback }) => {
+  const ide_save_project = ({ wsKey, callback }: { wsKey: string; callback: any }) => {
     const openList = [];
     for (let i = 0; i < ideInfo.value.codeItems.length; i++) {
       openList.push(ideInfo.value.codeItems[i].path);
@@ -436,7 +470,19 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_create_file = ({ wsKey, projectName, parentPath, fileName, callback }) => {
+  const ide_create_file = ({
+    wsKey,
+    projectName,
+    parentPath,
+    fileName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    parentPath: string;
+    fileName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_CREATE_FILE,
@@ -457,6 +503,15 @@ export const useIdeStore = defineStore('ide', () => {
     line,
     column,
     callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    filePath: string;
+    fileData: any;
+    complete: any;
+    line: any;
+    column: any;
+    callback: any;
   }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
@@ -472,7 +527,17 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_get_file = ({ wsKey, projectName, filePath, callback }) => {
+  const ide_get_file = ({
+    wsKey,
+    projectName,
+    filePath,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    filePath: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_GET_FILE,
@@ -483,7 +548,17 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_delete_file = ({ wsKey, projectName, filePath, callback }) => {
+  const ide_delete_file = ({
+    wsKey,
+    projectName,
+    filePath,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    filePath: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_DEL_FILE,
@@ -494,7 +569,19 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_rename_file = ({ wsKey, projectName, oldPath, fileName, callback }) => {
+  const ide_rename_file = ({
+    wsKey,
+    projectName,
+    oldPath,
+    fileName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    oldPath: string;
+    fileName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_RENAME_FILE,
@@ -506,7 +593,19 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_create_folder = ({ wsKey, projectName, parentPath, folderName, callback }) => {
+  const ide_create_folder = ({
+    wsKey,
+    projectName,
+    parentPath,
+    folderName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    parentPath: string;
+    folderName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_CREATE_FOLDER,
@@ -518,7 +617,17 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_delete_folder = ({ wsKey, projectName, folderPath, callback }) => {
+  const ide_delete_folder = ({
+    wsKey,
+    projectName,
+    folderPath,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    folderPath: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_DEL_FOLDER,
@@ -529,7 +638,19 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_rename_folder = ({ wsKey, projectName, oldPath, folderName, callback }) => {
+  const ide_rename_folder = ({
+    wsKey,
+    projectName,
+    oldPath,
+    folderName,
+    callback
+  }: {
+    wsKey: string;
+    projectName: string;
+    oldPath: string;
+    folderName: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_RENAME_FOLDER,
@@ -541,7 +662,19 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const autocomplete_python = ({ wsKey, source, line, column, callback }) => {
+  const autocomplete_python = ({
+    wsKey,
+    source,
+    line,
+    column,
+    callback
+  }: {
+    wsKey: string;
+    source: any;
+    line: any;
+    column: any;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_AUTOCOMPLETE_PYTHON,
@@ -553,7 +686,17 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const run_pip_command = ({ wsKey, msgId, command, callback }) => {
+  const run_pip_command = ({
+    wsKey,
+    msgId,
+    command,
+    callback
+  }: {
+    wsKey: string;
+    msgId: number;
+    command: any;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       msgId: msgId,
@@ -564,7 +707,19 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const run_python_program = ({ wsKey, msgId, projectName, filePath, callback }) => {
+  const run_python_program = ({
+    wsKey,
+    msgId,
+    projectName,
+    filePath,
+    callback
+  }: {
+    wsKey: string;
+    msgId: number;
+    projectName: string;
+    filePath: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       msgId: msgId,
@@ -576,7 +731,15 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const stop_python_program = ({ wsKey, consoleId, callback }) => {
+  const stop_python_program = ({
+    wsKey,
+    consoleId,
+    callback
+  }: {
+    wsKey: string;
+    consoleId: any;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_STOP_PYTHON_PROGRAM,
@@ -586,7 +749,7 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const get_python_pkg_installed_list = ({ wsKey, callback }) => {
+  const get_python_pkg_installed_list = ({ wsKey, callback }: { wsKey: string; callback: any }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_GET_PYTHON_PKG_INSTALLED_LIST,
@@ -594,7 +757,15 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const install_python_package = ({ wsKey, pkgListStr, callback }) => {
+  const install_python_package = ({
+    wsKey,
+    pkgListStr,
+    callback
+  }: {
+    wsKey: string;
+    pkgListStr: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_INSTALL_PYTHON_PACKAGE,
@@ -604,7 +775,17 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const install_py_pkg_by_local_file = ({ wsKey, fileName, fileBase64, callback }) => {
+  const install_py_pkg_by_local_file = ({
+    wsKey,
+    fileName,
+    fileBase64,
+    callback
+  }: {
+    wsKey: string;
+    fileName: string;
+    fileBase64: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_INSTALL_PY_PKG_BY_LOCAL_FILE,
