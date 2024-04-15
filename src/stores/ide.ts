@@ -830,6 +830,11 @@ export const useIdeStore = defineStore('ide', () => {
     getCurrentNode,
     ide_get_file,
     handleGetFile,
-    ide_save_project
+    ide_save_project,
+    setPathSelected,
+    setCodeSelected,
+    setConsoleSelected,
+    setConsoleItems,
+    setCodeItems
   };
 });
