@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { useWsStore } from '@/stores/websocket';
 import { IDE_CMD_TYPES } from '@/types/ide';
-import path from 'path';
+import path from 'path-browserify';
 
 export const useIdeStore = defineStore('ide', () => {
   const wsStore = useWsStore();
@@ -29,6 +29,7 @@ export const useIdeStore = defineStore('ide', () => {
   const setCurrentKey = (key: string) => {
     ideInfo.value.selectKeys = [key];
     ideInfo.value.nodeSelected = getCurrentNode();
+    console.log(ideInfo.value);
   };
   const getCurrentNode = () => {
     if (!(ideInfo.value.selectKeys || ideInfo.value.selectKeys.length > 0)) return null;
@@ -67,9 +68,9 @@ export const useIdeStore = defineStore('ide', () => {
       ideInfo.value.currProj.expandedKeys = data.config.expendKeys;
       ideInfo.value.currProj.expandedKeys.sort();
     }
-    // if (ideInfo.value.currProj.pathSelected && ideInfo.value.treeRef) {
-    //   ideInfo.value.nodeSelected = ideInfo.value.treeRef.getCurrentNode();
-    // }
+    if (ideInfo.value.currProj.pathSelected) {
+      ideInfo.value.nodeSelected = getCurrentNode();
+    }
   };
   const handleDelProject = (projectName: string) => {
     for (let i = 0; i < ideInfo.value.projList.length; i++) {
@@ -130,8 +131,8 @@ export const useIdeStore = defineStore('ide', () => {
       ideInfo.value.currProj.pathSelected = filePath;
       ideInfo.value.codeSelected = ideInfo.value.codeItems[ideInfo.value.codeItems.length - 1];
       // self.saveProject();
-      ideInfo.value.treeRef.setCurrentKey(ideInfo.value.currProj.pathSelected);
-      ideInfo.value.nodeSelected = ideInfo.value.treeRef.getCurrentNode();
+      setCurrentKey(ideInfo.value.currProj.pathSelected);
+      ideInfo.value.nodeSelected = getCurrentNode();
     }
   };
   const handleDelFile = ({ parentData, filePath }: { parentData: any; filePath: string }) => {
@@ -474,7 +475,7 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const ide_save_project = ({ wsKey, callback }: { wsKey: string; callback: any }) => {
+  const ide_save_project = ({ wsKey, callback }: { wsKey?: string; callback?: any }) => {
     const openList = [];
     for (let i = 0; i < ideInfo.value.codeItems.length; i++) {
       openList.push(ideInfo.value.codeItems[i].path);
@@ -554,8 +555,8 @@ export const useIdeStore = defineStore('ide', () => {
     filePath,
     callback
   }: {
-    wsKey: string;
-    projectName: string;
+    wsKey?: string;
+    projectName?: string;
     filePath: string;
     callback: any;
   }) => {
@@ -826,6 +827,9 @@ export const useIdeStore = defineStore('ide', () => {
     ide_get_project,
     handleProject,
     setCurrentKey,
-    getCurrentNode
+    getCurrentNode,
+    ide_get_file,
+    handleGetFile,
+    ide_save_project
   };
 });

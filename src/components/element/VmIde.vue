@@ -45,9 +45,24 @@ const getProject = (name?: any) => {
     callback: (dict: any) => {
       if (dict.code == 0) {
         ideStore.handleProject(dict.data);
-        // for (var i = 0; i < self.ideInfo.currProj.config.openList.length; i++) {
-        //   self.getFile(self.ideInfo.currProj.config.openList[i], false);
-        // }
+        for (var i = 0; i < ideInfo.value.currProj.config.openList.length; i++) {
+          getFile(ideInfo.value.currProj.config.openList[i], false);
+        }
+      }
+    }
+  });
+};
+const getFile = (path: string, save: boolean) => {
+  ideStore.ide_get_file({
+    filePath: path,
+    callback: (dict: any) => {
+      if (dict.code == 0) {
+        ideStore.handleGetFile({
+          filePath: path,
+          data: dict.data,
+          save: save
+        });
+        if (save !== false) ideStore.ide_save_project({});
       }
     }
   });
