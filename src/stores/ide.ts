@@ -15,16 +15,38 @@ export const useIdeStore = defineStore('ide', () => {
     consoleId: 10001,
     currProj: {
       config: {},
-      data: [],
+      data: {},
       expandedKeys: [],
       pathSelected: null
     },
     treeRef: null,
+    selectKeys: [],
     nodeSelected: null,
     projList: [],
     pythonPkgInstalledList: []
   });
 
+  const setCurrentKey = (key: string) => {
+    ideInfo.value.selectKeys = [key];
+    ideInfo.value.nodeSelected = getCurrentNode();
+  };
+  const getCurrentNode = () => {
+    if (!(ideInfo.value.selectKeys || ideInfo.value.selectKeys.length > 0)) return null;
+    return findNodeByKey(ideInfo.value.currProj.data, ideInfo.value.selectKeys[0]);
+  };
+  const findNodeByKey = (node: any, key: string): any => {
+    if (node.key === key) {
+      return node;
+    }
+    if (node.children)
+      for (const child of node.children) {
+        const foundNode = findNodeByKey(child, key);
+        if (foundNode) {
+          return foundNode;
+        }
+      }
+    return null;
+  };
   const handleProjects = (data: any) => {
     ideInfo.value.projList = data;
     let lastAccessTime = 0;
@@ -34,11 +56,8 @@ export const useIdeStore = defineStore('ide', () => {
         ideInfo.value.currProj.config.name = ideInfo.value.projList[i].name;
       }
     }
-    console.log(ideInfo.value);
   };
-
   const handleProject = (data: any) => {
-    console.log(data);
     ideInfo.value.codeItems = [];
     ideInfo.value.currProj.expandedKeys = [];
     ideInfo.value.currProj.config = data.config || {};
@@ -805,6 +824,8 @@ export const useIdeStore = defineStore('ide', () => {
     setTreeRef,
     setNodeSelected,
     ide_get_project,
-    handleProject
+    handleProject,
+    setCurrentKey,
+    getCurrentNode
   };
 });

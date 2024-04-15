@@ -5,11 +5,10 @@
       show-line
       block-line
       expand-on-click
-      v-model:checked-keys="checkedKeys"
-      v-model:selected-keys="selectKeys"
+      :selected-keys="selectKeys"
       :data="[tree_data]"
       :render-prefix="renderPrefix"
-      :on-update:expanded-keys="updatePrefixWithExpaned"
+      :on-update:selected-keys="updateSelectKeys"
     />
   </NScrollbar>
 </template>
@@ -26,48 +25,16 @@ import type { Key } from 'naive-ui/es/tree/src/interface';
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const tree_data = computed(() => ideInfo.value.currProj.data);
-// const ideInfo = computed(() => ideStore.ideInfo);
 // const expandKeys = ref<Key[]>(['文件夹']);
-const checkedKeys = ref<Key[]>(['main.py']);
-const selectKeys = ref<Key[]>(['main.py']);
+const selectKeys = computed(() => ideInfo.value.selectKeys);
 const tree = ref<typeof NTree | null>(null);
 
-const checkOnClick = (node: TreeOption) => {
-  checkedKeys.value.push(node.key);
-  console.log(node);
-  return true;
-};
-const updatePrefixWithExpaned = (
-  _keys: Array<string | number>,
-  _option: Array<TreeOption | null>,
-  meta: {
-    node: TreeOption | null;
-    action: 'expand' | 'collapse' | 'filter';
-  }
-) => {
-  if (!meta.node) return;
-  switch (meta.action) {
-    case 'expand':
-      meta.node.prefix = () =>
-        h(NIcon, null, {
-          default: () => h(FolderOpenOutline)
-        });
-      break;
-    case 'collapse':
-      meta.node.prefix = () =>
-        h(NIcon, null, {
-          default: () => h(Folder)
-        });
-      break;
-  }
-};
-const updateCheckedKeys = (
+const updateSelectKeys = (
   keys: Array<string | number>,
   option: Array<TreeOption | null>,
-  meta: { node: TreeOption | null; action: 'check' | 'uncheck' }
+  meta: { node: TreeOption | null; action: 'select' | 'unselect' }
 ) => {
-  // console.log(keys);
-  // checkedKeys.value.concat(keys);
+  ideStore.setCurrentKey(keys[0] as string);
 };
 const renderPrefix = ({
   option,

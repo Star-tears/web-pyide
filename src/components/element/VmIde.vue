@@ -14,10 +14,12 @@ import { storeToRefs } from 'pinia';
 import { useWsStore } from '@/stores/websocket';
 import { onMounted } from 'vue';
 import { useIdeStore } from '@/stores/ide';
+
 const wsStore = useWsStore();
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const { wsInfo } = storeToRefs(wsStore);
+
 onMounted(() => {
   if (!wsInfo.value.rws) {
     wsStore.init({});
