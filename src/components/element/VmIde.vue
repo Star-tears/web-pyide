@@ -16,6 +16,7 @@ import { onMounted } from 'vue';
 import { useIdeStore } from '@/stores/ide';
 const wsStore = useWsStore();
 const ideStore = useIdeStore();
+const { ideInfo } = storeToRefs(ideStore);
 const { wsInfo } = storeToRefs(wsStore);
 onMounted(() => {
   if (!wsInfo.value.rws) {
@@ -27,13 +28,28 @@ onMounted(() => {
         callback: (dict: any) => {
           clearInterval(t);
           if (dict.code == 0) {
-            // ideStore.handleProjects(dict.data);
+            ideStore.handleProjects(dict.data);
+            getProject();
           }
         }
       });
     }
   }, 1000);
 });
+
+const getProject = (name?: any) => {
+  ideStore.ide_get_project({
+    projectName: name === undefined ? ideInfo.value.currProj.config.name : name,
+    callback: (dict: any) => {
+      if (dict.code == 0) {
+        ideStore.handleProject(dict.data);
+        // for (var i = 0; i < self.ideInfo.currProj.config.openList.length; i++) {
+        //   self.getFile(self.ideInfo.currProj.config.openList[i], false);
+        // }
+      }
+    }
+  });
+};
 </script>
 
 <style scoped></style>

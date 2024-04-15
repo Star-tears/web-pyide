@@ -15,7 +15,7 @@ export const useIdeStore = defineStore('ide', () => {
     consoleId: 10001,
     currProj: {
       config: {},
-      data: {},
+      data: [],
       expandedKeys: [],
       pathSelected: null
     },
@@ -38,6 +38,7 @@ export const useIdeStore = defineStore('ide', () => {
   };
 
   const handleProject = (data: any) => {
+    console.log(data);
     ideInfo.value.codeItems = [];
     ideInfo.value.currProj.expandedKeys = [];
     ideInfo.value.currProj.config = data.config || {};
@@ -47,9 +48,9 @@ export const useIdeStore = defineStore('ide', () => {
       ideInfo.value.currProj.expandedKeys = data.config.expendKeys;
       ideInfo.value.currProj.expandedKeys.sort();
     }
-    if (ideInfo.value.currProj.pathSelected && ideInfo.value.treeRef) {
-      ideInfo.value.nodeSelected = ideInfo.value.treeRef.getCurrentNode();
-    }
+    // if (ideInfo.value.currProj.pathSelected && ideInfo.value.treeRef) {
+    //   ideInfo.value.nodeSelected = ideInfo.value.treeRef.getCurrentNode();
+    // }
   };
   const handleDelProject = (projectName: string) => {
     for (let i = 0; i < ideInfo.value.projList.length; i++) {
@@ -141,7 +142,7 @@ export const useIdeStore = defineStore('ide', () => {
     ideInfo.value.nodeSelected.children.push({
       name: name,
       label: name,
-      uuid: path,
+      key: path,
       path: path,
       type: type,
       children: []
@@ -172,7 +173,7 @@ export const useIdeStore = defineStore('ide', () => {
       // rename file/folder
       const renameNodeData = (nodeData: any, parentPath: string) => {
         nodeData.path = path.join(parentPath, nodeData.name);
-        nodeData.uuid = nodeData.path;
+        nodeData.key = nodeData.path;
         if (nodeData.type === 'dir' && nodeData.children) {
           for (let i = 0; i < nodeData.children.length; i++) {
             renameNodeData(nodeData.children[i], nodeData.path);
@@ -384,7 +385,7 @@ export const useIdeStore = defineStore('ide', () => {
     projectName,
     callback
   }: {
-    wsKey: string;
+    wsKey?: string;
     projectName: string;
     callback: any;
   }) => {
@@ -797,5 +798,13 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  return { ideInfo, handleProjects, ide_list_projects, setTreeRef, setNodeSelected };
+  return {
+    ideInfo,
+    handleProjects,
+    ide_list_projects,
+    setTreeRef,
+    setNodeSelected,
+    ide_get_project,
+    handleProject
+  };
 });

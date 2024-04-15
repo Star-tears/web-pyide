@@ -5,7 +5,10 @@
       show-line
       block-line
       expand-on-click
-      :data="data"
+      v-model:checked-keys="checkedKeys"
+      v-model:selected-keys="selectKeys"
+      :data="[tree_data]"
+      :render-prefix="renderPrefix"
       :on-update:expanded-keys="updatePrefixWithExpaned"
     />
   </NScrollbar>
@@ -18,51 +21,22 @@ import type { TreeOption } from 'naive-ui';
 import { Folder, FolderOpenOutline, FileTrayFullOutline } from '@vicons/ionicons5';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
+import type { Key } from 'naive-ui/es/tree/src/interface';
 
 const ideStore = useIdeStore();
-// const { ideInfo } = storeToRefs(ideStore);
+const { ideInfo } = storeToRefs(ideStore);
+const tree_data = computed(() => ideInfo.value.currProj.data);
 // const ideInfo = computed(() => ideStore.ideInfo);
-
+// const expandKeys = ref<Key[]>(['文件夹']);
+const checkedKeys = ref<Key[]>(['main.py']);
+const selectKeys = ref<Key[]>(['main.py']);
 const tree = ref<typeof NTree | null>(null);
-const data = ref<Array<TreeOption | null>>([
-  {
-    key: '文件夹',
-    label: '文件夹',
-    prefix: () =>
-      h(NIcon, null, {
-        default: () => h(Folder)
-      }),
-    children: [
-      {
-        key: '空的',
-        label: '空的',
-        disabled: true,
-        prefix: () =>
-          h(NIcon, null, {
-            default: () => h(Folder)
-          })
-      },
-      {
-        key: '我的文件',
-        label: '我的文件',
-        prefix: () =>
-          h(NIcon, null, {
-            default: () => h(Folder)
-          }),
-        children: [
-          {
-            label: 'main.py',
-            key: 'main.py',
-            prefix: () =>
-              h(NIcon, null, {
-                default: () => h(FileTrayFullOutline)
-              })
-          }
-        ]
-      }
-    ]
-  }
-]);
+
+const checkOnClick = (node: TreeOption) => {
+  checkedKeys.value.push(node.key);
+  console.log(node);
+  return true;
+};
 const updatePrefixWithExpaned = (
   _keys: Array<string | number>,
   _option: Array<TreeOption | null>,
@@ -86,6 +60,31 @@ const updatePrefixWithExpaned = (
         });
       break;
   }
+};
+const updateCheckedKeys = (
+  keys: Array<string | number>,
+  option: Array<TreeOption | null>,
+  meta: { node: TreeOption | null; action: 'check' | 'uncheck' }
+) => {
+  // console.log(keys);
+  // checkedKeys.value.concat(keys);
+};
+const renderPrefix = ({
+  option,
+  checked,
+  selected
+}: {
+  option: TreeOption;
+  checked: boolean;
+  selected: boolean;
+}) => {
+  if (option.children)
+    return h(NIcon, null, {
+      default: () => h(Folder)
+    });
+  return h(NIcon, null, {
+    default: () => h(FileTrayFullOutline)
+  });
 };
 onMounted(() => {
   // ideStore.setTreeRef(tree.value);
