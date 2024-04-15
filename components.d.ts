@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CodeEditor: typeof import('./src/components/element/pages/ide/editor/CodeEditor.vue')['default']
+    CodeTabs: typeof import('./src/components/element/pages/ide/CodeTabs.vue')['default']
     FooterStatusBar: typeof import('./src/components/element/pages/ide/FooterStatusBar.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
@@ -18,6 +19,8 @@ declare module 'vue' {
     MainContent: typeof import('./src/components/element/pages/ide/MainContent.vue')['default']
     MainFrame: typeof import('./src/components/element/pages/ide/MainFrame.vue')['default']
     NSplit: typeof import('naive-ui')['NSplit']
+    NTabPane: typeof import('naive-ui')['NTabPane']
+    NTabs: typeof import('naive-ui')['NTabs']
     NTree: typeof import('naive-ui')['NTree']
     ProjTree: typeof import('./src/components/element/pages/ide/ProjTree.vue')['default']
     Providers: typeof import('./src/components/providers/Providers.vue')['default']

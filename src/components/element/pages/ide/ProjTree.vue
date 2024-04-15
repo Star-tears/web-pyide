@@ -20,7 +20,6 @@ import type { TreeOption } from 'naive-ui';
 import { Folder, FolderOpenOutline, FileTrayFullOutline } from '@vicons/ionicons5';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
-import type { Key } from 'naive-ui/es/tree/src/interface';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
