@@ -8,6 +8,7 @@
     :tab-size="2"
     :extensions="extensions"
     @ready="handleReady"
+    @change="codeChanged"
   />
 </template>
 
@@ -58,6 +59,15 @@ const getCodemirrorStates = () => {
   const lines = state.doc.lines;
   // more state info ...
   // return ...
+};
+
+const codeChanged = (value: any) => {
+  ideStore.setCodeItemContent({ index: props.codeItemIndex, content: value });
+  ideStore.ide_write_file({
+    filePath: props.codeItem.path,
+    fileData: value,
+    callback: (dict: any) => {}
+  });
 };
 </script>
 

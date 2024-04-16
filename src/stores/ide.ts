@@ -526,13 +526,13 @@ export const useIdeStore = defineStore('ide', () => {
     column,
     callback
   }: {
-    wsKey: string;
-    projectName: string;
+    wsKey?: string;
+    projectName?: string;
     filePath: string;
     fileData: any;
-    complete: any;
-    line: any;
-    column: any;
+    complete?: any;
+    line?: any;
+    column?: any;
     callback: any;
   }) => {
     wsStore.sendCmdWs({
@@ -836,6 +836,7 @@ export const useIdeStore = defineStore('ide', () => {
     setConsoleSelected,
     setConsoleItems,
     setCodeItems,
-    setCodeItemContent
+    setCodeItemContent,
+    ide_write_file
   };
 });
