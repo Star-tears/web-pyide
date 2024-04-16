@@ -835,6 +835,7 @@ export const useIdeStore = defineStore('ide', () => {
     setCodeSelected,
     setConsoleSelected,
     setConsoleItems,
-    setCodeItems
+    setCodeItems,
+    setCodeItemContent
   };
 });

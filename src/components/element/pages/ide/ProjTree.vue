@@ -28,12 +28,18 @@ const tree_data = computed(() => ideInfo.value.currProj.data);
 const selectKeys = computed(() => ideInfo.value.selectKeys);
 const tree = ref<typeof NTree | null>(null);
 
+const emit = defineEmits<{
+  (e: 'get-item', path: string): void;
+}>();
+
 const updateSelectKeys = (
   keys: Array<string | number>,
   option: Array<TreeOption | null>,
   meta: { node: TreeOption | null; action: 'select' | 'unselect' }
 ) => {
   ideStore.setCurrentKey(keys[0] as string);
+  if (option && option.length > 0 && option[0].type === 'file')
+    emit('get-item', option[0].path as string);
 };
 const renderPrefix = ({
   option,

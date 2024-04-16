@@ -3,9 +3,16 @@
     <NSplit direction="vertical" :default-size="0.75">
       <template #1>
         <NSplit direction="horizontal" :default-size="0.2">
-          <template #1> <ProjTree /> </template>
+          <template #1> <ProjTree @get-item="getFile" /> </template>
           <template #2>
-            <CodeTabs @select-item="selectFile" @close-item="closeFile" /> <IdeEditor />
+            <CodeTabs @select-item="selectFile" @close-item="closeFile" />
+            <template v-for="(item, index) in ideInfo.codeItems" :key="item.path + index">
+              <IdeEditor
+                :code-item="item"
+                :code-item-index="index"
+                v-if="ideInfo.codeSelected.path === item.path"
+              />
+            </template>
           </template>
         </NSplit>
       </template>
@@ -25,6 +32,10 @@ import { storeToRefs } from 'pinia';
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 
+/**
+ * 选择文件
+ * @param item 点击的选项卡item，有path属性
+ */
 const selectFile = (item: any) => {
   ideStore.setPathSelected(item.path);
   ideStore.setCodeSelected(item);
@@ -34,6 +45,10 @@ const selectFile = (item: any) => {
   ideStore.setNodeSelected(ideStore.getCurrentNode());
   ideStore.ide_save_project({});
 };
+/**
+ * 关闭文件
+ * @param item 点击的选项卡item，有path属性
+ */
 const closeFile = (item: any) => {
   const codeItems = [];
   for (let i = 0; i < ideInfo.value.codeItems.length; i++) {
@@ -99,6 +114,22 @@ const closeConsole = (item: any) => {
   if (ideInfo.value.consoleItems.length === 0) {
     ideStore.setConsoleSelected({});
   }
+};
+
+const getFile = (path: string, save?: boolean) => {
+  ideStore.ide_get_file({
+    filePath: path,
+    callback: (dict: any) => {
+      if (dict.code == 0) {
+        ideStore.handleGetFile({
+          filePath: path,
+          data: dict.data,
+          save: save
+        });
+        if (save !== false) ideStore.ide_save_project({});
+      }
+    }
+  });
 };
 </script>
 
