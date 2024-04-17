@@ -8,7 +8,12 @@
       :on-update:value="updateValue"
       :on-close="removeTab"
     >
-      <NTabPane v-for="item in codeItems" :tab="item.path" :name="item.path" :key="item.path">
+      <NTabPane
+        v-for="item in codeItems"
+        :tab="getTabContent(item.path)"
+        :name="item.path"
+        :key="item.path"
+      >
       </NTabPane>
     </NTabs>
   </div>
@@ -19,6 +24,7 @@ import { NTabs, NTabPane } from 'naive-ui';
 import { ref } from 'vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
+import { getFileIcon } from '@/utils';
 
 const emit = defineEmits<{
   (e: 'select-item', item: any): void;
@@ -30,6 +36,13 @@ const { ideInfo } = storeToRefs(ideStore);
 
 const codeItems = computed(() => ideInfo.value.codeItems);
 const size = ref<'small' | 'medium' | 'large'>('small');
+
+const getTabContent = (key: string) => {
+  return h('div', { class: 'flex flex-row h-full items-center gap-2' }, [
+    getFileIcon(key),
+    h('div', null, key)
+  ]);
+};
 
 const updateValue = (value: string) => {
   const item = getItem(value);

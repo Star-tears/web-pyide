@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./src/components/ui/button/Button.vue')['default']
     CodeEditor: typeof import('./src/components/element/pages/ide/editor/CodeEditor.vue')['default']
+    CodeTabContent: typeof import('./src/components/element/pages/ide/codetabs/CodeTabContent.vue')['default']
     CodeTabs: typeof import('./src/components/element/pages/ide/CodeTabs.vue')['default']
     DropdownMenu: typeof import('./src/components/ui/dropdown-menu/DropdownMenu.vue')['default']
     DropdownMenuCheckboxItem: typeof import('./src/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue')['default']

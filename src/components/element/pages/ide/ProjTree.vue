@@ -4,7 +4,6 @@
       show-line
       block-line
       expand-on-click
-      default-expand-all
       :data="[tree_data]"
       :render-prefix="renderPrefix"
       :selected-keys="selectKeys"
@@ -21,6 +20,7 @@ import { Folder, FolderOpenOutline, FileTrayFullOutline } from '@vicons/ionicons
 import { Icon } from '@iconify/vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
+import { getFileIcon } from '@/utils';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -51,47 +51,7 @@ const renderPrefix = ({
   selected: boolean;
 }) => {
   if (option.type === 'file') {
-    const ext_name = option.label.substring(option.label.lastIndexOf('.') + 1);
-    return h(NIcon, null, {
-      default: () => {
-        switch (ext_name) {
-          case 'py':
-            return h(Icon, { icon: 'vscode-icons:file-type-python' });
-          case 'md':
-            return h(Icon, { icon: 'vscode-icons:file-type-markdown' });
-          case 'c':
-            return h(Icon, { icon: 'vscode-icons:file-type-c2' });
-          case 'cpp':
-            return h(Icon, { icon: 'vscode-icons:file-type-cpp3' });
-          case 'h':
-            return h(Icon, { icon: 'vscode-icons:file-type-cheader' });
-          case 'css':
-            return h(Icon, { icon: 'vscode-icons:file-type-css' });
-          case 'less':
-            return h(Icon, { icon: 'vscode-icons:file-type-less' });
-          case 'sass':
-            return h(Icon, { icon: 'vscode-icons:file-type-sass' });
-          case 'hpp':
-            return h(Icon, { icon: 'vscode-icons:file-type-cppheader' });
-          case 'sh':
-            return h(Icon, { icon: 'vscode-icons:file-type-powershell' });
-          case 'vue':
-            return h(Icon, { icon: 'vscode-icons:file-type-vue' });
-          case 'html':
-            return h(Icon, { icon: 'vscode-icons:file-type-html' });
-          case 'ts':
-            return h(Icon, { icon: 'vscode-icons:file-type-typescript-official' });
-          case 'js':
-            return h(Icon, { icon: 'vscode-icons:file-type-js-official' });
-          case 'cs':
-            return h(Icon, { icon: 'vscode-icons:file-type-csharp2' });
-          case 'java':
-            return h(Icon, { icon: 'vscode-icons:file-type-java' });
-          default:
-            return h(FileTrayFullOutline);
-        }
-      }
-    });
+    return getFileIcon(option.label);
   }
   if (option.children)
     return h(NIcon, null, {
