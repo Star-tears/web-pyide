@@ -50,6 +50,7 @@ declare module 'vue' {
     TopMenu: typeof import('./src/components/element/pages/ide/TopMenu.vue')['default']
     TopMenuItemBase: typeof import('./src/components/element/pages/ide/topmenu-items/TopMenuItemBase.vue')['default']
     VmIde: typeof import('./src/components/element/VmIde.vue')['default']
+    VscodeIconsFileTypePython: typeof import('./src/components/icons/VscodeIconsFileTypePython.vue')['default']
     WebIdeProviders: typeof import('./src/components/providers/WebIdeProviders.vue')['default']
   }
 }
