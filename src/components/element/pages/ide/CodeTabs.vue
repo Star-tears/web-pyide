@@ -38,8 +38,8 @@ const codeItems = computed(() => ideInfo.value.codeItems);
 const size = ref<'small' | 'medium' | 'large'>('small');
 
 const getTabContent = (key: string) => {
-  return h('div', { class: 'flex flex-row h-full items-center gap-2' }, [
-    getFileIcon(key),
+  return h('div', { class: 'flex flex-row h-full items-center' }, [
+    h(getFileIcon(key), { class: ' -left-2' }),
     h('div', null, key)
   ]);
 };
