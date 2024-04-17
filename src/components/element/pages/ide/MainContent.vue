@@ -19,7 +19,7 @@
           </template>
         </NSplit>
       </template>
-      <template #2> Pane 2 </template>
+      <template #2> <EdgeContainer /> </template>
     </NSplit>
   </div>
 </template>

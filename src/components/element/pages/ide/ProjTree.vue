@@ -13,11 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, onMounted, ref } from 'vue';
+import { computed, h, onMounted } from 'vue';
 import { NScrollbar, NIcon, NTree } from 'naive-ui';
 import type { TreeOption } from 'naive-ui';
-import { Folder, FolderOpenOutline, FileTrayFullOutline } from '@vicons/ionicons5';
-import { Icon } from '@iconify/vue';
+import { FileTrayFullOutline } from '@vicons/ionicons5';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { getFileIcon, getFolderIcon } from '@/utils';
