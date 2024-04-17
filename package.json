@@ -17,6 +17,8 @@
     "@codemirror/lang-python": "^6.1.5",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@radix-icons/vue": "^1.0.0",
+    "@vueuse/components": "^10.9.0",
+    "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "codemirror": "^6.0.1",

@@ -5,14 +5,17 @@
         <NSplit direction="horizontal" :default-size="0.2">
           <template #1> <ProjTree @get-item="getFile" /> </template>
           <template #2>
-            <CodeTabs @select-item="selectFile" @close-item="closeFile" />
-            <template v-for="(item, index) in ideInfo.codeItems" :key="item.path + index">
-              <IdeEditor
-                :code-item="item"
-                :code-item-index="index"
-                v-if="ideInfo.codeSelected.path === item.path"
-              />
-            </template>
+            <div class="size-full flex flex-col">
+              <CodeTabs @select-item="selectFile" @close-item="closeFile" />
+              <template v-for="(item, index) in ideInfo.codeItems" :key="item.path + index">
+                <IdeEditor
+                  class="flex-1 h-0"
+                  :code-item="item"
+                  :code-item-index="index"
+                  v-if="ideInfo.codeSelected.path === item.path"
+                />
+              </template>
+            </div>
           </template>
         </NSplit>
       </template>
