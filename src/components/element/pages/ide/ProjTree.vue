@@ -20,7 +20,7 @@ import { Folder, FolderOpenOutline, FileTrayFullOutline } from '@vicons/ionicons
 import { Icon } from '@iconify/vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
-import { getFileIcon } from '@/utils';
+import { getFileIcon, getFolderIcon } from '@/utils';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -50,13 +50,8 @@ const renderPrefix = ({
   checked: boolean;
   selected: boolean;
 }) => {
-  if (option.type === 'file') {
-    return getFileIcon(option.label);
-  }
-  if (option.children)
-    return h(NIcon, null, {
-      default: () => h(Folder)
-    });
+  if (option.type === 'file') return getFileIcon(option.label);
+  if (option.type === 'dir') return getFolderIcon(option.label);
   return h(NIcon, null, {
     default: () => h(FileTrayFullOutline)
   });

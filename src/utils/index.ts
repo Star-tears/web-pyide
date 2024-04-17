@@ -1,5 +1,5 @@
 import { NIcon } from 'naive-ui';
-import { FileTrayFullOutline } from '@vicons/ionicons5';
+import { Folder, FileTrayFullOutline } from '@vicons/ionicons5';
 import { Icon } from '@iconify/vue';
 
 export const getFileIcon = (key: string) => {
@@ -41,6 +41,24 @@ export const getFileIcon = (key: string) => {
           return h(Icon, { icon: 'vscode-icons:file-type-java' });
         default:
           return h(FileTrayFullOutline);
+      }
+    }
+  });
+};
+
+export const getFolderIcon = (key: string) => {
+  const ext_name = key.substring(key.lastIndexOf('/') + 1);
+  return h(NIcon, null, {
+    default: () => {
+      switch (ext_name) {
+        case 'src':
+          return h(Icon, { icon: 'vscode-icons:folder-type-src' });
+        case 'script':
+          return h(Icon, { icon: 'vscode-icons:folder-type-script' });
+        case 'scripts':
+          return h(Icon, { icon: 'vscode-icons:folder-type-script' });
+        default:
+          return h(Folder);
       }
     }
   });
