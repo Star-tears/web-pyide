@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row">
-    <SiderBar class="w-12" />
+    <SiderBar class="w-12 h-full" />
     <MainContent class="flex-1 w-0" />
   </div>
 </template>
