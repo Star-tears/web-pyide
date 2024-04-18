@@ -7,6 +7,7 @@
       :value="ideInfo.currProj.pathSelected"
       :on-update:value="updateValue"
       :on-close="removeTab"
+      :tab-style="dynamicStyles"
     >
       <NTabPane
         v-for="item in codeItems"
@@ -25,7 +26,6 @@ import { ref } from 'vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { getFileIcon } from '@/utils';
-
 const emit = defineEmits<{
   (e: 'select-item', item: any): void;
   (e: 'close-item', item: any): void;
@@ -36,10 +36,14 @@ const { ideInfo } = storeToRefs(ideStore);
 
 const codeItems = computed(() => ideInfo.value.codeItems);
 const size = ref<'small' | 'medium' | 'large'>('small');
+const dynamicStyles = ref({
+  padding: '8px 2px 4px 6px',
+  'border-top': '1px solid #63e2b7'
+});
 
 const getTabContent = (key: string) => {
-  return h('div', { class: 'flex flex-row h-full items-center' }, [
-    h(getFileIcon(key), { class: ' -left-2' }),
+  return h('div', { class: 'flex flex-row h-full items-center gap-2' }, [
+    getFileIcon(key),
     h('div', null, key)
   ]);
 };

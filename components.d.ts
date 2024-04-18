@@ -49,6 +49,7 @@ declare module 'vue' {
     ScrollArea: typeof import('./src/components/ui/scroll-area/ScrollArea.vue')['default']
     ScrollBar: typeof import('./src/components/ui/scroll-area/ScrollBar.vue')['default']
     SiderBar: typeof import('./src/components/element/pages/ide/SiderBar.vue')['default']
+    TerminalContainer: typeof import('./src/components/element/pages/ide/edge-container/TerminalContainer.vue')['default']
     TopMenu: typeof import('./src/components/element/pages/ide/TopMenu.vue')['default']
     TopMenuItemBase: typeof import('./src/components/element/pages/ide/topmenu-items/TopMenuItemBase.vue')['default']
     VmIde: typeof import('./src/components/element/VmIde.vue')['default']
