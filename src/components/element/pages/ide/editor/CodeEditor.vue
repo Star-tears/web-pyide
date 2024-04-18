@@ -89,22 +89,4 @@ const codeChanged = (value: any) => {
   /*滚动条里面轨道*/
   background: #2f2f2f;
 }
-
-.cm-scroller::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 10px;
-  /* 高宽分别对应横竖滚动条的尺寸 */
-  height: 10px;
-}
-
-.cm-scroller::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  /* background: #87939A; */
-  background: #545a5e;
-}
-
-.cm-scroller::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  background: #2f2f2f;
-}
 </style>
