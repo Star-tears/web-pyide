@@ -45,6 +45,8 @@
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/tsconfig": "^0.5.1",
+    "@xterm/addon-attach": "^0.11.0",
+    "@xterm/addon-canvas": "^0.7.0",
     "@xterm/addon-fit": "^0.10.0",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.49.0",

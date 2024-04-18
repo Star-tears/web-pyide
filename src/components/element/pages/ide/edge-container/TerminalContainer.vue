@@ -5,32 +5,31 @@
 </template>
 
 <script setup lang="ts">
-import { FitAddon } from '@xterm/addon-fit';
 import { Terminal } from '@xterm/xterm';
 import { useElementSize } from '@vueuse/core';
 import { Atom, Dracula, Github, MaterialDark, Chalkboard } from 'xterm-theme';
 import xtermTheme from 'xterm-theme';
+import { FitAddon } from '@xterm/addon-fit';
 const terminalContainer = ref(null);
 const { width, height } = useElementSize(terminalContainer);
 
-const terminal = new Terminal({
+const term = new Terminal({
   theme: Atom,
   cursorBlink: true,
   disableStdin: false,
-  scrollback: 100
+  scrollback: 100,
+  convertEol: true
 });
 const fitAddon = new FitAddon();
-terminal.loadAddon(fitAddon);
+term.loadAddon(fitAddon);
 
+term.onKey((e) => {
+  term.write(e.key);
+  if (e.key == '\r') term.write('\n');
+});
 onMounted(() => {
-  terminal.open(document.getElementById('xterm'));
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
-  terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试\r\n');
+  term.open(document.getElementById('xterm'));
+  term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试');
 });
 watch(width, async () => {
   fitAddon.fit();
