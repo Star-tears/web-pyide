@@ -43,7 +43,7 @@ const edgeWinValue = computed({
 const getActiveStyle = (value: string) => {
   const styleValue: Record<string, any> = {};
   if (ideInfo.value.edgeContainerValue === value)
-    styleValue.borderLeft = '1px solid ' + themeVars.value.primaryColor;
+    styleValue.borderLeft = '1.5px solid ' + themeVars.value.primaryColor;
 
   return styleValue;
 };

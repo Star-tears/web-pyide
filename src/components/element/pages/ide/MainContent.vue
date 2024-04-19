@@ -2,7 +2,7 @@
   <div>
     <NSplit direction="vertical" v-model:size="verticalSize">
       <template #1>
-        <NSplit direction="horizontal" :default-size="0.2">
+        <NSplit direction="horizontal" :default-size="0.3">
           <template #1> <ProjTree @get-item="getFile" /> </template>
           <template #2>
             <div class="size-full flex flex-col">

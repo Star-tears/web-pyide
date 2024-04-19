@@ -5,7 +5,7 @@
       class="absolute z-50 right-2 top-2 px-2"
       :render-icon="renderMinIcon"
       @click="onMinBtnClick"
-    ></NButton>
+    />
     <TerminalContainer v-if="ideInfo.edgeContainerValue === 'console'" />
     <MonitorContainer v-if="ideInfo.edgeContainerValue === 'monitor'" />
     <PkgManagerContainer v-if="ideInfo.edgeContainerValue === 'pkg-manager'" />

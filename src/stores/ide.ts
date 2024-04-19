@@ -772,7 +772,13 @@ export const useIdeStore = defineStore('ide', () => {
       callback: callback
     });
   };
-  const get_python_pkg_installed_list = ({ wsKey, callback }: { wsKey: string; callback: any }) => {
+  const get_python_pkg_installed_list = ({
+    wsKey,
+    callback
+  }: {
+    wsKey?: string;
+    callback: any;
+  }) => {
     wsStore.sendCmdWs({
       wsKey: wsKey,
       cmd: IDE_CMD_TYPES.IDE_GET_PYTHON_PKG_INSTALLED_LIST,
@@ -838,6 +844,8 @@ export const useIdeStore = defineStore('ide', () => {
     setConsoleItems,
     setCodeItems,
     setCodeItemContent,
-    ide_write_file
+    ide_write_file,
+    get_python_pkg_installed_list,
+    setPythonPkgInstalledList
   };
 });
