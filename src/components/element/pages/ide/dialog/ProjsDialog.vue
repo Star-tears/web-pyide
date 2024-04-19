@@ -12,15 +12,18 @@
         </thead>
         <tbody>
           <template v-for="data in ideInfo.projList" :key="data.name">
-            <tr>
-              <td>{{ data.name }}</td>
+            <tr
+              class="hover:scale-105 transition-all duration-300 ease-in-out"
+              @dblclick="selectProj(data.name)"
+            >
+              <td class="select-none">{{ data.name }}</td>
               <td>
-                <NTag :bordered="false" type="info" size="small">
+                <NTag :bordered="false" type="info" size="small" class="select-none">
                   {{ data.ctime }}
                 </NTag>
               </td>
               <td>
-                <div v-if="ideInfo.currProj.data.name !== data.name">打开</div>
+                <div v-if="ideInfo.currProj.data.name !== data.name" class="select-none">打开</div>
                 <check-one v-else theme="filled" size="24" fill="#7ed321" />
               </td>
             </tr>
@@ -39,6 +42,10 @@ import { CheckOne } from '@icon-park/vue-next';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
+
+const selectProj = (projName: string) => {
+  console.log(projName);
+};
 </script>
 
 <style scoped></style>
