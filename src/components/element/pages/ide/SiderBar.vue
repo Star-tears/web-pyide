@@ -3,14 +3,19 @@
     <div class="flex flex-col items-center justify-between h-full">
       <div></div>
       <div class="mb-6 flex flex-col justify-center">
-        <ToggleGroup type="single" orientation="vertical" class="flex-col gap-4">
-          <ToggleGroupItem value="a" class="px-1">
+        <ToggleGroup
+          v-model="edgeWinValue"
+          type="single"
+          orientation="vertical"
+          class="flex-col gap-4"
+        >
+          <ToggleGroupItem value="console" class="px-1">
             <Icon icon="material-symbols-light:terminal-rounded" class="size-7" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="b" class="px-1">
+          <ToggleGroupItem value="monitor" class="px-1">
             <Icon icon="material-symbols-light:stacks-rounded" class="size-7" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="c" class="px-1">
+          <ToggleGroupItem value="pkg-manager" class="px-1">
             <Icon icon="material-symbols-light:package-2" class="size-7" />
           </ToggleGroupItem>
         </ToggleGroup>
@@ -21,7 +26,16 @@
 
 <script setup lang="ts">
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { useIdeStore } from '@/stores/ide';
 import { Icon } from '@iconify/vue/dist/iconify.js';
+import { storeToRefs } from 'pinia';
+
+const ideStore = useIdeStore();
+const { ideInfo } = storeToRefs(ideStore);
+const edgeWinValue = computed({
+  get: () => ideInfo.value.edgeContainerValue,
+  set: (value: string) => (ideInfo.value.edgeContainerValue = value)
+});
 </script>
 
 <style scoped></style>

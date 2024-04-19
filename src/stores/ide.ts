@@ -23,7 +23,8 @@ export const useIdeStore = defineStore('ide', () => {
     selectKeys: [],
     nodeSelected: null,
     projList: [],
-    pythonPkgInstalledList: []
+    pythonPkgInstalledList: [],
+    edgeContainerValue: null
   });
 
   const setCurrentKey = (key: string) => {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NSplit direction="vertical" :default-size="0.75">
+    <NSplit direction="vertical" v-model:size="verticalSize">
       <template #1>
         <NSplit direction="horizontal" :default-size="0.2">
           <template #1> <ProjTree @get-item="getFile" /> </template>
@@ -34,7 +34,19 @@ import { storeToRefs } from 'pinia';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
+const vsize = ref(0.75);
 
+const verticalSize = computed({
+  get: () => {
+    return !ideInfo.value.edgeContainerValue || ideInfo.value.edgeContainerValue.length === 0
+      ? 1
+      : vsize.value;
+  },
+  set: (value: number) => {
+    if (ideInfo.value.edgeContainerValue && ideInfo.value.edgeContainerValue.length > 0)
+      vsize.value = value;
+  }
+});
 /**
  * 选择文件
  * @param item 点击的选项卡item，有path属性
