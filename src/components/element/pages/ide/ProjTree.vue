@@ -4,6 +4,7 @@
       show-line
       block-line
       expand-on-click
+      v-model:expanded-keys="expendKeys"
       :data="[tree_data]"
       :render-prefix="renderPrefix"
       :selected-keys="selectKeys"
@@ -20,6 +21,7 @@ import { FileTrayFullOutline } from '@vicons/ionicons5';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { getFileIcon, getFolderIcon } from '@/utils';
+import type { Key } from 'naive-ui/es/tree/src/interface';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -30,6 +32,14 @@ const selectKeys = computed(() => ideInfo.value.selectKeys);
 const emit = defineEmits<{
   (e: 'get-item', path: string): void;
 }>();
+
+const expendKeys = computed({
+  get: () => ideInfo.value.currProj.expandedKeys,
+  set: (value: Key[]) => {
+    ideInfo.value.currProj.expandedKeys = value;
+    ideStore.ide_save_project({});
+  }
+});
 
 const updateSelectKeys = (
   keys: Array<string | number>,
