@@ -791,7 +791,7 @@ export const useIdeStore = defineStore('ide', () => {
     pkgListStr,
     callback
   }: {
-    wsKey: string;
+    wsKey?: string;
     pkgListStr: string;
     callback: any;
   }) => {
@@ -846,6 +846,7 @@ export const useIdeStore = defineStore('ide', () => {
     setCodeItemContent,
     ide_write_file,
     get_python_pkg_installed_list,
-    setPythonPkgInstalledList
+    setPythonPkgInstalledList,
+    install_python_package
   };
 });
