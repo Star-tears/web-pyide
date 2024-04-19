@@ -16,6 +16,7 @@
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-python": "^6.1.5",
     "@codemirror/theme-one-dark": "^6.1.2",
+    "@icon-park/vue-next": "^1.4.2",
     "@radix-icons/vue": "^1.0.0",
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",

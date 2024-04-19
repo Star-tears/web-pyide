@@ -2,7 +2,7 @@
   <div>
     <NSplit direction="vertical" v-model:size="verticalSize">
       <template #1>
-        <NSplit direction="horizontal" :default-size="0.3">
+        <NSplit direction="horizontal" :default-size="0.3" :min="0.1">
           <template #1> <ProjTree @get-item="getFile" /> </template>
           <template #2>
             <div class="size-full flex flex-col">
@@ -34,7 +34,7 @@ import { storeToRefs } from 'pinia';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
-const vsize = ref(0.75);
+const vsize = ref(0.7);
 
 const verticalSize = computed({
   get: () => {

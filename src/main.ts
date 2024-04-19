@@ -1,3 +1,4 @@
+import '@icon-park/vue-next/styles/index.css';
 import './assets/main.css';
 
 import { createApp } from 'vue';

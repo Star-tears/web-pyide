@@ -1,14 +1,16 @@
 <template>
   <div>
     <NConfigProvider :theme="darkTheme">
-      <slot />
+      <NDialogProvider>
+        <slot />
+      </NDialogProvider>
       <NGlobalStyle />
     </NConfigProvider>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NConfigProvider, NGlobalStyle } from 'naive-ui';
+import { NConfigProvider, NGlobalStyle, NDialogProvider } from 'naive-ui';
 import { darkTheme } from 'naive-ui';
 import { useColorMode } from '@vueuse/core';
 

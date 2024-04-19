@@ -8,9 +8,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./src/components/ui/button/Button.vue')['default']
+    CheckOne: typeof import('./src/components/icons/CheckOne.vue')['default']
     CodeEditor: typeof import('./src/components/element/pages/ide/editor/CodeEditor.vue')['default']
     CodeTabContent: typeof import('./src/components/element/pages/ide/codetabs/CodeTabContent.vue')['default']
     CodeTabs: typeof import('./src/components/element/pages/ide/CodeTabs.vue')['default']
+    DialogProjs: typeof import('./src/components/element/pages/ide/dialog/DialogProjs.vue')['default']
     DropdownMenu: typeof import('./src/components/ui/dropdown-menu/DropdownMenu.vue')['default']
     DropdownMenuCheckboxItem: typeof import('./src/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue')['default']
     DropdownMenuContent: typeof import('./src/components/ui/dropdown-menu/DropdownMenuContent.vue')['default']
@@ -47,6 +49,7 @@ declare module 'vue' {
     NP: typeof import('naive-ui')['NP']
     NSpace: typeof import('naive-ui')['NSpace']
     NSplit: typeof import('naive-ui')['NSplit']
+    NTable: typeof import('naive-ui')['NTable']
     NTabPane: typeof import('naive-ui')['NTabPane']
     NTabs: typeof import('naive-ui')['NTabs']
     NTag: typeof import('naive-ui')['NTag']
@@ -55,6 +58,7 @@ declare module 'vue' {
     NUpload: typeof import('naive-ui')['NUpload']
     NUploadDragger: typeof import('naive-ui')['NUploadDragger']
     PkgManagerContainer: typeof import('./src/components/element/pages/ide/edge-container/PkgManagerContainer.vue')['default']
+    ProjsDialog: typeof import('./src/components/element/pages/ide/dialog/ProjsDialog.vue')['default']
     ProjTree: typeof import('./src/components/element/pages/ide/ProjTree.vue')['default']
     Providers: typeof import('./src/components/providers/Providers.vue')['default']
     ResizableHandle: typeof import('./src/components/ui/resizable/ResizableHandle.vue')['default']

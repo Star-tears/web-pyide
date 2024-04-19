@@ -30,7 +30,6 @@ export const useIdeStore = defineStore('ide', () => {
   const setCurrentKey = (key: string) => {
     ideInfo.value.selectKeys = [key];
     ideInfo.value.nodeSelected = getCurrentNode();
-    console.log(ideInfo.value);
   };
   const getCurrentNode = () => {
     if (!(ideInfo.value.selectKeys || ideInfo.value.selectKeys.length > 0)) return null;
