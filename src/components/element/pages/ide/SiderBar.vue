@@ -9,13 +9,13 @@
           orientation="vertical"
           class="flex-col gap-4"
         >
-          <ToggleGroupItem value="console" class="px-1">
+          <ToggleGroupItem value="console" class="px-1" :style="getActiveStyle('console')">
             <Icon icon="material-symbols-light:terminal-rounded" class="size-7" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="monitor" class="px-1">
+          <ToggleGroupItem value="monitor" class="px-1" :style="getActiveStyle('monitor')">
             <Icon icon="material-symbols-light:stacks-rounded" class="size-7" />
           </ToggleGroupItem>
-          <ToggleGroupItem value="pkg-manager" class="px-1">
+          <ToggleGroupItem value="pkg-manager" class="px-1" :style="getActiveStyle('pkg-manager')">
             <Icon icon="material-symbols-light:package-2" class="size-7" />
           </ToggleGroupItem>
         </ToggleGroup>
@@ -29,6 +29,9 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { useIdeStore } from '@/stores/ide';
 import { Icon } from '@iconify/vue/dist/iconify.js';
 import { storeToRefs } from 'pinia';
+import { useThemeVars } from 'naive-ui';
+
+const themeVars = useThemeVars();
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -36,6 +39,14 @@ const edgeWinValue = computed({
   get: () => ideInfo.value.edgeContainerValue,
   set: (value: string) => (ideInfo.value.edgeContainerValue = value)
 });
+
+const getActiveStyle = (value: string) => {
+  const styleValue: Record<string, any> = {};
+  if (ideInfo.value.edgeContainerValue === value)
+    styleValue.borderLeft = '1px solid ' + themeVars.value.primaryColor;
+
+  return styleValue;
+};
 </script>
 
 <style scoped></style>
