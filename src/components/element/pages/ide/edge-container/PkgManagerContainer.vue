@@ -124,6 +124,7 @@ import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { Separator } from '@/components/ui/separator';
 import { ArchiveOutline as ArchiveIcon } from '@vicons/ionicons5';
+import { IdeService } from '@/client';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -140,27 +141,25 @@ onMounted(() => {
 });
 
 const refreshPkgInstalledList = () => {
-  ideStore.get_python_pkg_installed_list({
-    callback: (dict: any) => {
-      if (dict.code == 0) {
-        ideStore.setPythonPkgInstalledList(dict.data);
-      }
+  IdeService.ideGetPythonPkgInstalledList().then((res) => {
+    if (res.code == 0) {
+      ideStore.setPythonPkgInstalledList(res.data);
     }
   });
 };
 const installPythonPackage = () => {
-  pipInstallLoading.value = true;
-  ideStore.install_python_package({
-    pkgListStr: model.value.inputValue,
-    callback: {
-      callback: () => {
-        setTimeout(() => {
-          pipInstallLoading.value = false;
-          refreshPkgInstalledList();
-        }, 1000);
-      }
-    }
-  });
+  // pipInstallLoading.value = true;
+  // ideStore.install_python_package({
+  //   pkgListStr: model.value.inputValue,
+  //   callback: {
+  //     callback: () => {
+  //       setTimeout(() => {
+  //         pipInstallLoading.value = false;
+  //         refreshPkgInstalledList();
+  //       }, 1000);
+  //     }
+  //   }
+  // });
 };
 </script>
 

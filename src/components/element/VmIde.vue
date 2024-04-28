@@ -37,30 +37,31 @@ onMounted(() => {
 });
 
 const getProject = (name?: any) => {
-  ideStore.ide_get_project({
-    projectName: name === undefined ? ideInfo.value.currProj.config.name : name,
-    callback: (dict: any) => {
-      if (dict.code == 0) {
-        ideStore.handleProject(dict.data);
-        for (var i = 0; i < ideInfo.value.currProj.config.openList.length; i++) {
-          getFile(ideInfo.value.currProj.config.openList[i], false);
-        }
+  IdeService.ideIdeGetProject({
+    requestBody: { projectName: name === undefined ? ideInfo.value.currProj.config.name : name }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleProject(res.data);
+      for (var i = 0; i < ideInfo.value.currProj.config.openList.length; i++) {
+        getFile(ideInfo.value.currProj.config.openList[i], false);
       }
     }
   });
 };
 const getFile = (path: string, save: boolean) => {
-  ideStore.ide_get_file({
-    filePath: path,
-    callback: (dict: any) => {
-      if (dict.code == 0) {
-        ideStore.handleGetFile({
-          filePath: path,
-          data: dict.data,
-          save: save
-        });
-        if (save !== false) ideStore.ide_save_project({});
-      }
+  IdeService.ideIdeGetFile({
+    requestBody: {
+      filePath: path,
+      projectName: ideInfo.value.currProj.data.name
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleGetFile({
+        filePath: path,
+        data: res.data,
+        save: save
+      });
+      if (save !== false) ideStore.ide_save_project();
     }
   });
 };

@@ -31,6 +31,7 @@ import IdeEditor from '@/components/element/pages/ide/IdeEditor.vue';
 import CodeTabs from '@/components/element/pages/ide/CodeTabs.vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
+import { IdeService } from '@/client';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -58,7 +59,7 @@ const selectFile = (item: any) => {
     ideStore.setCurrentKey(ideInfo.value.currProj.pathSelected);
   }
   ideStore.setNodeSelected(ideStore.getCurrentNode());
-  ideStore.ide_save_project({});
+  ideStore.ide_save_project();
 };
 /**
  * 关闭文件
@@ -91,7 +92,7 @@ const closeFile = (item: any) => {
     ideStore.setCodeSelected({});
     // this.$store.commit('ide/setNodeSelected', null);
   }
-  ideStore.ide_save_project({});
+  ideStore.ide_save_project();
 };
 const closeConsoleSafe = (item: any) => {
   //! todo
@@ -132,17 +133,19 @@ const closeConsole = (item: any) => {
 };
 
 const getFile = (path: string, save?: boolean) => {
-  ideStore.ide_get_file({
-    filePath: path,
-    callback: (dict: any) => {
-      if (dict.code == 0) {
-        ideStore.handleGetFile({
-          filePath: path,
-          data: dict.data,
-          save: save
-        });
-        if (save !== false) ideStore.ide_save_project({});
-      }
+  IdeService.ideIdeGetFile({
+    requestBody: {
+      filePath: path,
+      projectName: ideInfo.value.currProj.data.name
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleGetFile({
+        filePath: path,
+        data: res.data,
+        save: save
+      });
+      if (save !== false) ideStore.ide_save_project();
     }
   });
 };

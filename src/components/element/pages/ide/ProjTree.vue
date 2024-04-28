@@ -22,6 +22,7 @@ import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { getFileIcon, getFolderIcon } from '@/utils';
 import type { Key } from 'naive-ui/es/tree/src/interface';
+import { IdeService } from '@/client';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -37,7 +38,7 @@ const expendKeys = computed({
   get: () => ideInfo.value.currProj.expandedKeys,
   set: (value: Key[]) => {
     ideInfo.value.currProj.expandedKeys = value;
-    ideStore.ide_save_project({});
+    ideStore.ide_save_project();
   }
 });
 

@@ -20,6 +20,7 @@ import { python } from '@codemirror/lang-python';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
+import { IdeService } from '@/client';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -63,10 +64,12 @@ const getCodemirrorStates = () => {
 
 const codeChanged = (value: any) => {
   ideStore.setCodeItemContent({ index: props.codeItemIndex, content: value });
-  ideStore.ide_write_file({
-    filePath: props.codeItem.path,
-    fileData: value,
-    callback: (dict: any) => {}
+  IdeService.ideIdeWriteFile({
+    requestBody: {
+      projectName: ideInfo.value.currProj.data.name,
+      filePath: props.codeItem.path,
+      fileData: value
+    }
   });
 };
 </script>

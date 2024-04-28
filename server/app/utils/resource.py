@@ -231,9 +231,9 @@ def save_project(project_path, data):
     if code != 0:
         config_data = {}
     config_data['lastAccessTime'] = time.time()
-    expend_keys = data.get('expendKeys')
-    open_list = data.get('openList')
-    selectFilePath = data.get('selectFilePath')
+    expend_keys = data.expendKeys
+    open_list = data.openList
+    selectFilePath = data.selectFilePath
     config_data['expendKeys'] = list(set(expend_keys))
     config_data['openList'] = list(set(open_list))
     config_data['selectFilePath'] = selectFilePath
