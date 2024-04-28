@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useWsStore } from '@/stores/websocket';
 import { IDE_CMD_TYPES } from '@/types/ide';
 import path from 'path-browserify';
+import { IdeService } from '@/client';
 
 export const useIdeStore = defineStore('ide', () => {
   const wsStore = useWsStore();

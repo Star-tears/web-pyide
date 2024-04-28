@@ -14,6 +14,7 @@ import { storeToRefs } from 'pinia';
 import { useWsStore } from '@/stores/websocket';
 import { onMounted } from 'vue';
 import { useIdeStore } from '@/stores/ide';
+import { IdeService } from '@/client';
 
 const wsStore = useWsStore();
 const ideStore = useIdeStore();
@@ -25,17 +26,13 @@ onMounted(() => {
     wsStore.init({});
   }
   const t = setInterval(() => {
-    if (wsInfo.value.connected) {
-      ideStore.ide_list_projects({
-        callback: (dict: any) => {
-          clearInterval(t);
-          if (dict.code == 0) {
-            ideStore.handleProjects(dict.data);
-            getProject();
-          }
-        }
-      });
-    }
+    IdeService.ideIdeListProjects().then((res) => {
+      if (res.code == 0) {
+        clearInterval(t);
+        ideStore.handleProjects(res.data);
+        getProject();
+      }
+    });
   }, 1000);
 });
 

@@ -26,5 +26,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+*.pyc
+__pycache__
 
 *.tsbuildinfo

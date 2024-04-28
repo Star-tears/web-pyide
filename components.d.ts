@@ -12,6 +12,7 @@ declare module 'vue' {
     CodeEditor: typeof import('./src/components/element/pages/ide/editor/CodeEditor.vue')['default']
     CodeTabContent: typeof import('./src/components/element/pages/ide/codetabs/CodeTabContent.vue')['default']
     CodeTabs: typeof import('./src/components/element/pages/ide/CodeTabs.vue')['default']
+    ConsoleItem: typeof import('./src/components/element/pages/ide/edge-container/terminal/ConsoleItem.vue')['default']
     DialogProjs: typeof import('./src/components/element/pages/ide/dialog/DialogProjs.vue')['default']
     DropdownMenu: typeof import('./src/components/ui/dropdown-menu/DropdownMenu.vue')['default']
     DropdownMenuCheckboxItem: typeof import('./src/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue')['default']
