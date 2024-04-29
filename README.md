@@ -28,7 +28,7 @@
 - Node: 20.12.1
 - Yarn: 1.22.22
 - Python: 3.10
-- FastAPI(后端还未重构，目前仍为Tornado: 6.1)
+- FastAPI
 
 ### 前端
 
@@ -51,16 +51,12 @@ yarn build
 cd server
 
 # 安装依赖
-pip install -r requirements.txt
+poetry install
 
-# 运行（运行端口为10086）指定端口可以使用参数 --port=10010
-# 如果前端页面是独立运行的，不可指定后端端口（除非修改前端代码）
-python server.py
+# 运行（运行端口为8000）
+python app/main.py
 
-# 访问 (工程保存在projects/ide里面)
-# 开发运行前端的情况: localhost:8080
-# 打包好前端的情况: localhost:10086
-pyinstaller server.py
+# http://localhost:8000/doc 可查看API文档
 ```
 
 ## 重构进度
@@ -74,9 +70,13 @@ pyinstaller server.py
 - [x] 代码编辑器读取文件内容
 - [x] 代码编辑器写入文件
 - [x] 文件树图标、tab栏图标
-- [ ] 在终端运行代码
-- [ ] 文件、文件夹创建删除等操作
+- [x] 在终端运行代码(命令行式)
+- [ ] 一键运行
+- [ ] 多程序运行监控管理
+- [ ] 文件、文件夹创建删除重命名等操作
 
 ### 后端
 
-在前端重构完毕或即将完成时开启
+- [x] 构建FastAPI总体框架
+- [x] 迁移部分接口
+- [ ] 重构终端websocket连接
