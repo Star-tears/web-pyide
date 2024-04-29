@@ -21,6 +21,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { IdeService } from '@/client';
+import { useDebounceFn } from '@vueuse/core';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -64,14 +65,21 @@ const getCodemirrorStates = () => {
 
 const codeChanged = (value: any) => {
   ideStore.setCodeItemContent({ index: props.codeItemIndex, content: value });
-  IdeService.ideIdeWriteFile({
-    requestBody: {
-      projectName: ideInfo.value.currProj.data.name,
-      filePath: props.codeItem.path,
-      fileData: value
-    }
-  });
+  ideIdeWriteFile_debouncedFn(value);
 };
+const ideIdeWriteFile_debouncedFn = useDebounceFn(
+  (value: any) => {
+    IdeService.ideIdeWriteFile({
+      requestBody: {
+        projectName: ideInfo.value.currProj.data.name,
+        filePath: props.codeItem.path,
+        fileData: value
+      }
+    });
+  },
+  1000,
+  { maxWait: 5000 }
+);
 </script>
 
 <style>

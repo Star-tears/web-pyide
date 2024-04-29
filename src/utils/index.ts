@@ -63,3 +63,27 @@ export const getFolderIcon = (key: string) => {
     }
   });
 };
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  delay: number,
+  maxTime?: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: NodeJS.Timeout;
+
+  return function (this: any, ...args: Parameters<T>) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+
+    if (maxTime) {
+      setTimeout(() => {
+        if (timeoutId) {
+          func.apply(this, args);
+          timeoutId = undefined;
+        }
+      }, maxTime);
+    }
+  };
+}

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import path from 'path-browserify';
 import { IdeService } from '@/client';
+import { useDebounceFn } from '@vueuse/core';
 
 export const useIdeStore = defineStore('ide', () => {
   const ideInfo = ref<Record<string, any>>({
@@ -382,19 +383,27 @@ export const useIdeStore = defineStore('ide', () => {
   };
 
   const ide_save_project = () => {
-    const openList = [];
-    for (let i = 0; i < ideInfo.value.codeItems.length; i++) {
-      openList.push(ideInfo.value.codeItems[i].path);
-    }
-    IdeService.ideIdeSaveProject({
-      requestBody: {
-        projectName: ideInfo.value.currProj.data.name,
-        expendKeys: ideInfo.value.currProj.expandedKeys,
-        openList: openList,
-        selectFilePath: ideInfo.value.currProj.pathSelected
-      }
-    });
+    ide_save_project_debouncedFn();
   };
+  const ide_save_project_debouncedFn = useDebounceFn(
+    () => {
+      const openList = [];
+      for (let i = 0; i < ideInfo.value.codeItems.length; i++) {
+        openList.push(ideInfo.value.codeItems[i].path);
+      }
+      IdeService.ideIdeSaveProject({
+        requestBody: {
+          projectName: ideInfo.value.currProj.data.name,
+          expendKeys: ideInfo.value.currProj.expandedKeys,
+          openList: openList,
+          selectFilePath: ideInfo.value.currProj.pathSelected
+        }
+      });
+    },
+    1000,
+    { maxWait: 5000 }
+  );
+
   return {
     ideInfo,
     handleProjects,
