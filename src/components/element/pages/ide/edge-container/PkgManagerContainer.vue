@@ -135,9 +135,12 @@ const pipInstallLoading = ref(false);
 
 onMounted(() => {
   refreshPkgInstalledList();
-  setInterval(() => {
+  const intervalId = setInterval(() => {
     refreshPkgInstalledList();
   }, 5000);
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
 });
 
 const refreshPkgInstalledList = () => {
