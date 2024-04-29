@@ -56,7 +56,7 @@ poetry install
 # 运行（运行端口为8000）
 python app/main.py
 
-# http://localhost:8000/doc 可查看API文档
+# http://localhost:8000/docs 可查看API文档
 ```
 
 ## 重构进度
