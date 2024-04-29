@@ -1,74 +1,0 @@
-Script started on Mon Apr 29 09:50:08 2024
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [K[?1h=[?2004h[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K//usr/bin/python /root/workspace/vite-pyide/server/app [K//api/routes/test.py[?1l>[?2004l
-]2;/usr/bin/python /root/workspace/vite-pyide/server/app/api/routes/test.py]1;/usr/bin/pythonTraceback (most recent call last):
-  File "/root/workspace/vite-pyide/server/app/api/routes/test.py", line 10, in <module>
-    print(f"child process: {data.decode('utf-8').rstrip()}")
-AttributeError: 'int' object has no attribute 'decode'
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;31m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004h//usr/bin/python /root/workspace/vite-pyide/server/app [K//api/routes/test.py[?1l>[?2004l
-]2;/usr/bin/python /root/workspace/vite-pyide/server/app/api/routes/test.py]1;/usr/bin/python3
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004h//usr/bin/python /root/workspace/vite-pyide/server/app [K//api/routes/test.py[?1l>[?2004l
-]2;/usr/bin/python /root/workspace/vite-pyide/server/app/api/routes/test.py]1;/usr/bin/pythonb'ls\r\n'
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004h//usr/bin/python /root/workspace/vite-pyide/server/app [K//api/routes/test.py[?1l>[?2004l
-]2;/usr/bin/python /root/workspace/vite-pyide/server/app/api/routes/test.py]1;/usr/bin/pythonls
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004h//usr/bin/python /root/workspace/vite-pyide/server/app [K//api/routes/test.py[?1l>[?2004l
-]2;/usr/bin/python /root/workspace/vite-pyide/server/app/api/routes/test.py]1;/usr/bin/pythonls
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004h//usr/bin/python /root/workspace/vite-pyide/server/app [K//api/routes/test.py[?1l>[?2004l
-]2;/usr/bin/python /root/workspace/vite-pyide/server/app/api/routes/test.py]1;/usr/bin/python[?2004h]0;root@star: ~/workspace/vite-pyideroot@star:~/workspace/vite-pyide# ls
-[?2004lauto-imports.d.ts  [0m[01;34mnode_modules[0m       [01;34mserver[0m              tsconfig.node.json
-components.d.ts    package.json       [01;34msrc[0m                 typescript
-components.json    postcss.config.js  tailwind.config.js  vite.config.ts
-env.d.ts           [01;34mpublic[0m             tsconfig.app.json   yarn.lock
-index.html         README.md          tsconfig.json
-[?2004h]0;root@star: ~/workspace/vite-pyideroot@star:~/workspace/vite-pyide# exit
-[?2004lexit
-ls
-^CTraceback (most recent call last):
-  File "/root/workspace/vite-pyide/server/app/api/routes/test.py", line 9, in <module>
-    data = os.read(master, 1024)
-KeyboardInterrupt
-
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;31m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004hyyarn add [7m@xterm/addon-attach[27m[19D[27m@[27mx[27mt[27me[27mr[27mm[27m/[27ma[27md[27md[27mo[27mn[27m-[27ma[27mt[27mt[27ma[27mc[27mh[?1l>[?2004l
-]2;yarn add @xterm/addon-attach]1;yarn[2K[1G[1myarn add v1.22.22[22m
-[2K[1G[2m[1/4][22m Resolving packages...
-[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[1G[0K[2K[1G[2K[1G[2m[2/4][22m Fetching packages...
-[2K[1G[1G[] 0/548[1G[] 48/548[1G[] 88/548[1G[] 131/548[1G[] 164/548[1G[] 208/548[1G[] 248/548[1G[] 280/548[1G[] 313/548[1G[] 350/548[1G[] 391/548[1G[] 429/548[1G[] 468/548[1G[] 500/548[1G[] 532/548[2K[1G[2m[3/4][22m Linking dependencies...
-[1G[] 548/548[2K[1G[2K[1G[1G[] 0/527[2K[1G[2K[1G[1G[] 0/1005[1G[] 306/1005[1G[] 702/1005[1G[] 910/1005[1G[] 1005/1005[2K[1G[2m[4/4][22m Building fresh packages...
-[1B[2K[1G[33mwarning[39m "@xterm/addon-attach" is already in "devDependencies". Please remove existing entry first before adding it to "dependencies".
-[2K[1G[32msuccess[39m Saved 1 new dependency.
-[2K[1G[34minfo[39m Direct dependencies
-[2K[1G└─ @xterm/addon-attach@0.11.0
-[2K[1G[34minfo[39m All dependencies
-└─ @xterm/addon-attach@0.11.0
-[2K[1GDone in 6.67s.
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;32m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004hyyarn dev[?1l>[?2004l
-]2;yarn dev]1;yarn[2K[1G[1myarn run v1.22.22[22m
-[2K[1G[2m$ vite[22m
-
-[1;1H[0J
-  [32m[1mVITE[22m v5.2.8[39m  [2mready in [0m[1m1172[22m[2m[0m ms[22m
-
-  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
-[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
-  [32m➜[39m  [1mVue DevTools[22m: [32mOpen [36mhttp://localhost:[1m5173[22m/__devtools__/[32m as a separate window[39m
-  [32m➜[39m  [1mVue DevTools[22m: [32mPress [33mAlt(⌥)[2m+[22mShift(⇧)[2m+[22mD[32m in App to toggle the Vue DevTools[39m
-
-[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
-[2m10:33:51 AM[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33m@xterm/addon-attach[32m[39m
-[2m10:33:51 AM[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
-
-[1;1H[0J[2m10:35:15 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/element/pages/ide/edge-container/TerminalContainer.vue, /src/assets/main.css[22m
-
-[1;1H[0J[2m10:43:57 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/element/pages/ide/edge-container/TerminalContainer.vue, /src/assets/main.css[22m [33m(x2)[39m
-^C
-[1m[7m#[27m[1m[0m                                                                                ]2;root@star:~/workspace/vite-pyide]1;..ce/vite-pyide[0m[27m[24m[J[01;31m➜  [36mvite-pyide[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004hyarn dev[?1l>[?2004l
-]2;yarn dev]1;yarn[2K[1G[1myarn run v1.22.22[22m
-[2K[1G[2m$ vite[22m
-
-[1;1H[0J
-  [32m[1mVITE[22m v5.2.8[39m  [2mready in [0m[1m1125[22m[2m[0m ms[22m
-
-  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
-[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
-  [32m➜[39m  [1mVue DevTools[22m: [32mOpen [36mhttp://localhost:[1m5173[22m/__devtools__/[32m as a separate window[39m
-  [32m➜[39m  [1mVue DevTools[22m: [32mPress [33mAlt(⌥)[2m+[22mShift(⇧)[2m+[22mD[32m in App to toggle the Vue DevTools[39m
-

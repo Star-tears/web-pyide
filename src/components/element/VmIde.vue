@@ -11,20 +11,20 @@ import TopMenu from '@/components/element/pages/ide/TopMenu.vue';
 import FooterStatusBar from '@/components/element/pages/ide/FooterStatusBar.vue';
 import MainFrame from '@/components/element/pages/ide/MainFrame.vue';
 import { storeToRefs } from 'pinia';
-import { useWsStore } from '@/stores/websocket';
+// import { useWsStore } from '@/stores/websocket';
 import { onMounted } from 'vue';
 import { useIdeStore } from '@/stores/ide';
 import { IdeService } from '@/client';
 
-const wsStore = useWsStore();
+// const wsStore = useWsStore();
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
-const { wsInfo } = storeToRefs(wsStore);
+// const { wsInfo } = storeToRefs(wsStore);
 
 onMounted(() => {
-  if (!wsInfo.value.rws) {
-    wsStore.init({});
-  }
+  // if (!wsInfo.value.rws) {
+  //   wsStore.init({});
+  // }
   const t = setInterval(() => {
     IdeService.ideIdeListProjects().then((res) => {
       if (res.code == 0) {

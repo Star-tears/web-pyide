@@ -1,12 +1,9 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-import { useWsStore } from '@/stores/websocket';
-import { IDE_CMD_TYPES } from '@/types/ide';
+import { ref } from 'vue';
 import path from 'path-browserify';
 import { IdeService } from '@/client';
 
 export const useIdeStore = defineStore('ide', () => {
-  const wsStore = useWsStore();
   const ideInfo = ref<Record<string, any>>({
     codeHeight: 0,
     codeItems: [],
