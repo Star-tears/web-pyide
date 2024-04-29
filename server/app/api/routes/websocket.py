@@ -28,7 +28,7 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 @router.websocket("/terminal")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket,projectSelected:str):
     await websocket.accept()
-    async with PTY(websocket) as pty:
+    async with PTY(websocket,projectSelected) as pty:
         await pty.run()

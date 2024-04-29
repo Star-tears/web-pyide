@@ -1,15 +1,19 @@
 import os
 import asyncio
 import logging
+import pty
 import subprocess
 
 from fastapi import WebSocket, WebSocketDisconnect
 
+from app.common.config import Config
+
 
 class PTY:
 
-    def __init__(self, websocket: WebSocket):
+    def __init__(self, websocket: WebSocket,projectSelected:str):
         self.ws = websocket
+        self.projectSelected=projectSelected
 
     async def read_ws(self):
         while True:
@@ -19,32 +23,34 @@ class PTY:
             except WebSocketDisconnect:
                 break
             except Exception as e:
-                logging.error('websocket.receive_text error', exc_info=e)
+                logging.error("websocket.receive_text error", exc_info=e)
                 await self.ws.close(reason=str(e))
                 break
             if data:
-                os.write(self.pty, data.encode('utf8'))
+                os.write(self.pty, data.encode("utf8"))
 
     async def read_pty(self):
         while True:
             try:
-                if hasattr(asyncio, 'to_thread'):
+                if hasattr(asyncio, "to_thread"):
                     data = await asyncio.to_thread(os.read, self.pty, 1024)
                 else:
-                    data = await asyncio.get_running_loop().run_in_executor(None, os.read, self.pty, 1024)
-                print('pty.recv: ', data)
+                    data = await asyncio.get_running_loop().run_in_executor(
+                        None, os.read, self.pty, 1024
+                    )
+                print("pty.recv: ", data)
             except Exception as e:
-                logging.error('chan.recv error', exc_info=e)
+                logging.error("chan.recv error", exc_info=e)
                 await self.ws.close(reason=str(e))
                 break
             if data:
-                await self.ws.send_text(data.decode('utf8'))
+                await self.ws.send_text(data.decode("utf8"))
 
     async def __aenter__(self):
-        self.pty, tty = os.openpty()
+        self.pty, tty = pty.openpty()
         self.process = subprocess.Popen(
-            'bash',
-            cwd=os.path.expanduser("~"),
+            "/bin/bash",
+            cwd= os.path.join(Config.PROJECTS,"ide",self.projectSelected),
             stdin=tty,
             stdout=tty,
             stderr=tty,
@@ -57,10 +63,7 @@ class PTY:
         read_ws = asyncio.create_task(self.read_ws())
 
         done, pending = await asyncio.wait(
-            [
-                read_pty,
-                read_ws
-            ],
+            [read_pty, read_ws],
             return_when=asyncio.FIRST_COMPLETED,
         )
         for task in pending:
@@ -69,3 +72,4 @@ class PTY:
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         os.close(self.pty)
         self.process.terminate()
+        print(f"close {self.ws.client}")

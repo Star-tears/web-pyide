@@ -6,11 +6,16 @@
 
 <script setup lang="ts">
 import { Terminal } from '@xterm/xterm';
-import { useElementSize } from '@vueuse/core';
+import { onKeyStroke, useElementSize } from '@vueuse/core';
 import { Atom, Dracula, Github, MaterialDark, Chalkboard } from 'xterm-theme';
 import xtermTheme from 'xterm-theme';
 import { FitAddon } from '@xterm/addon-fit';
 import { AttachAddon } from '@xterm/addon-attach';
+import { useIdeStore } from '@/stores/ide';
+import { storeToRefs } from 'pinia';
+
+const ideStore = useIdeStore();
+const { ideInfo } = storeToRefs(ideStore);
 
 const terminalContainer = ref(null);
 const { width, height } = useElementSize(terminalContainer);
@@ -24,13 +29,19 @@ const term = new Terminal({
 });
 const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
-const socket = new WebSocket('ws://localhost:8000/api/v1/ws/terminal');
+const socket = new WebSocket(
+  'ws://localhost:8000/api/v1/ws/terminal' +
+    '?projectSelected=' +
+    ideInfo.value.currProj.config.name
+);
+
 const attachAddon = new AttachAddon(socket);
 term.loadAddon(attachAddon);
 
 onMounted(() => {
   term.open(document.getElementById('xterm'));
 });
+
 watch(width, async () => {
   fitAddon.fit();
 });
