@@ -39,12 +39,44 @@ import { NCard, NTag } from 'naive-ui';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { CheckOne } from '@icon-park/vue-next';
+import { IdeService } from '@/client';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 
 const selectProj = (projName: string) => {
-  console.log(projName);
+  getProject(projName);
+  ideStore.setCodeItems([]);
+};
+
+const getProject = (name?: any) => {
+  IdeService.ideIdeGetProject({
+    requestBody: { projectName: name === undefined ? ideInfo.value.currProj.config.name : name }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleProject(res.data);
+      for (var i = 0; i < ideInfo.value.currProj.config.openList.length; i++) {
+        getFile(ideInfo.value.currProj.config.openList[i], false);
+      }
+    }
+  });
+};
+const getFile = (path: string, save: boolean) => {
+  IdeService.ideIdeGetFile({
+    requestBody: {
+      filePath: path,
+      projectName: ideInfo.value.currProj.data.name
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleGetFile({
+        filePath: path,
+        data: res.data,
+        save: save
+      });
+      if (save !== false) ideStore.ide_save_project();
+    }
+  });
 };
 </script>
 

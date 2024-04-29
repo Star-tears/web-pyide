@@ -43,4 +43,4 @@ class SaveProjItem(BaseModel):
     projectName: str
     expendKeys: list
     openList: list
-    selectFilePath: str
+    selectFilePath: str | None

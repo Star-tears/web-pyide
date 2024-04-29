@@ -190,7 +190,14 @@ export const $SaveProjItem = {
             title: 'Openlist'
         },
         selectFilePath: {
-            type: 'string',
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
             title: 'Selectfilepath'
         }
     },

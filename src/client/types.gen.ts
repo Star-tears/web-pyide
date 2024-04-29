@@ -52,7 +52,7 @@ export type SaveProjItem = {
     projectName: string;
     expendKeys: Array<unknown>;
     openList: Array<unknown>;
-    selectFilePath: string;
+    selectFilePath: string | null;
 };
 
 export type ValidationError = {
