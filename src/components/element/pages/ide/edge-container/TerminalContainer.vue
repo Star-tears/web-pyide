@@ -10,6 +10,8 @@ import { useElementSize } from '@vueuse/core';
 import { Atom, Dracula, Github, MaterialDark, Chalkboard } from 'xterm-theme';
 import xtermTheme from 'xterm-theme';
 import { FitAddon } from '@xterm/addon-fit';
+import { AttachAddon } from '@xterm/addon-attach';
+
 const terminalContainer = ref(null);
 const { width, height } = useElementSize(terminalContainer);
 
@@ -22,14 +24,12 @@ const term = new Terminal({
 });
 const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
+const socket = new WebSocket('ws://localhost:8000/api/v1/ws/terminal');
+const attachAddon = new AttachAddon(socket);
+term.loadAddon(attachAddon);
 
-term.onKey((e) => {
-  term.write(e.key);
-  if (e.key == '\r') term.write('\n');
-});
 onMounted(() => {
   term.open(document.getElementById('xterm'));
-  term.writeln('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ 测试');
 });
 watch(width, async () => {
   fitAddon.fit();
