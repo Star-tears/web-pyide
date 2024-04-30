@@ -47,7 +47,7 @@ class PTY:
                 await self.ws.send_text(data.decode("utf8"))
 
     async def __aenter__(self):
-        self.pty, tty = pty.openpty()
+        self.pty, tty = os.openpty()
         self.process = subprocess.Popen(
             "/bin/bash",
             cwd= os.path.join(Config.PROJECTS,"ide",self.projectSelected),
@@ -72,4 +72,3 @@ class PTY:
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         os.close(self.pty)
         self.process.terminate()
-        print(f"close {self.ws.client}")

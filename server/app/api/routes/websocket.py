@@ -10,9 +10,11 @@ class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
 
-    async def connect(self, websocket: WebSocket):
+    async def connect(self, websocket: WebSocket,projectSelected:str):
         await websocket.accept()
         self.active_connections.append(websocket)
+        async with PTY(websocket,projectSelected) as pty:
+            await pty.run()
 
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
@@ -29,6 +31,8 @@ manager = ConnectionManager()
 
 @router.websocket("/terminal")
 async def websocket_endpoint(websocket: WebSocket,projectSelected:str):
-    await websocket.accept()
-    async with PTY(websocket,projectSelected) as pty:
-        await pty.run()
+    await manager.connect(websocket,projectSelected)
+    try:
+        pass
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
