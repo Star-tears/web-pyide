@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import CodeEditor from '@/components/element/pages/ide/editor/CodeEditor.vue';
+import CodeEditor from '@/components/VmIde/pages/ide/editor/CodeEditor.vue';
 
 interface Props {
   codeItem?: any;

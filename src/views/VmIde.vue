@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import TopMenu from '@/components/element/pages/ide/TopMenu.vue';
-import FooterStatusBar from '@/components/element/pages/ide/FooterStatusBar.vue';
-import MainFrame from '@/components/element/pages/ide/MainFrame.vue';
+import TopMenu from '@/components/VmIde/pages/ide/TopMenu.vue';
+import FooterStatusBar from '@/components/VmIde/pages/ide/FooterStatusBar.vue';
+import MainFrame from '@/components/VmIde/pages/ide/MainFrame.vue';
 import { storeToRefs } from 'pinia';
 // import { useWsStore } from '@/stores/websocket';
 import { onMounted } from 'vue';

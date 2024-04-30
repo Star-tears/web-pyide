@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import TerminalContainer from '@/components/element/pages/ide/edge-container/TerminalContainer.vue';
+import TerminalContainer from '@/components/VmIde/pages/ide/edge-container/TerminalContainer.vue';
 import { NButton, NIcon } from 'naive-ui';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';

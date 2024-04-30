@@ -25,10 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import ProjTree from '@/components/element/pages/ide/ProjTree.vue';
+import ProjTree from '@/components/VmIde/pages/ide/ProjTree.vue';
 import { NSplit } from 'naive-ui';
-import IdeEditor from '@/components/element/pages/ide/IdeEditor.vue';
-import CodeTabs from '@/components/element/pages/ide/CodeTabs.vue';
+import IdeEditor from '@/components/VmIde/pages/ide/IdeEditor.vue';
+import CodeTabs from '@/components/VmIde/pages/ide/CodeTabs.vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { IdeService } from '@/client';

@@ -29,7 +29,7 @@ import { DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdow
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { useDialog } from 'naive-ui';
-import ProjsDialog from '@/components/element/pages/ide/dialog/ProjsDialog.vue';
+import ProjsDialog from '@/components/VmIde/pages/ide/dialog/ProjsDialog.vue';
 const dialog = useDialog();
 
 const ideStore = useIdeStore();

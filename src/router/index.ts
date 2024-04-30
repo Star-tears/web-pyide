@@ -10,7 +10,7 @@ const router = createRouter({
     },
     {
       path: '/editor',
-      component: () => import('@/components/element/VmIde.vue'),
+      component: () => import('@/views/VmIde.vue'),
       meta: { title: 'Vm Web IDE' }
     }
   ]
