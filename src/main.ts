@@ -1,5 +1,8 @@
+import '@xterm/xterm/css/xterm.css';
 import '@icon-park/vue-next/styles/index.css';
 import './assets/main.css';
+
+import '@xterm/xterm/lib/xterm.js';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
