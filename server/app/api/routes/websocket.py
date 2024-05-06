@@ -1,8 +1,5 @@
 import os
 from fastapi import APIRouter,WebSocket, WebSocketDisconnect
-import pty
-
-from app.utils.pty import PTY
 
 router = APIRouter()
 
@@ -13,8 +10,18 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket,projectSelected:str):
         await websocket.accept()
         self.active_connections.append(websocket)
-        async with PTY(websocket,projectSelected) as pty:
-            await pty.run()
+        import platform
+
+        if platform.system() == 'Windows':
+            # 在 Windows 上执行的代码
+            from app.utils.winpty import WINPTY
+            async with WINPTY(websocket,projectSelected) as pty:
+                await pty.run()
+        else:
+            # 在 Linux 上执行的代码
+            from app.utils.pty import PTY
+            async with PTY(websocket,projectSelected) as pty:
+                await pty.run()
 
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)

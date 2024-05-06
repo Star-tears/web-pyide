@@ -11,7 +11,9 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "generate-client": "openapi-ts --input http://localhost:8000/api/v1/openapi.json --output ./src/client --client axios"
+    "generate-client": "openapi-ts --input http://localhost:21006/api/v1/openapi.json --output ./src/client --client axios",
+    "run-dev-api-server":"cd server && poetry run python app/main.py",
+    "install-all":"yarn install && cd server && poetry install"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.2",

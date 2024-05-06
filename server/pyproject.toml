@@ -7,6 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pyinstaller = { version = "^6.6.0", python = ">=3.8,<3.13" }
 fastapi = "^0.110.2"
 uvicorn = "^0.29.0"
 pydantic = "^2.7.1"
@@ -14,6 +15,7 @@ pydantic-settings = "^2.2.1"
 jedi = "^0.19.1"
 websockets = "^12.0"
 jinja2 = "^3.1.4"
+pywinpty = "^2.0.13"
 
 
 [build-system]
