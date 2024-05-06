@@ -37,7 +37,7 @@ onMounted(() => {
   const fitAddon = new FitAddon();
   term.loadAddon(fitAddon);
   const socket = new WebSocket(
-    'ws://localhost:8000/api/v1/ws/terminal' +
+    'ws://localhost:21006/api/v1/ws/terminal' +
       '?projectSelected=' +
       ideInfo.value.currProj.config.name
   );
