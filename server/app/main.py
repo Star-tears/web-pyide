@@ -12,7 +12,11 @@ import uvicorn
 from app.api.main import api_router
 from app.core.config import settings
 from fastapi.staticfiles import StaticFiles
-
+import mimetypes
+mimetypes.init()
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/css', '.css')
+mimetypes.add_type('image/svg+xml', '.svg')
 def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
 
@@ -23,7 +27,8 @@ app = FastAPI(
 )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
-app.mount("/assets", StaticFiles(directory= os.path.join(os.path.dirname(__file__),'..','..','dist', 'assets')), name="assets")
+app.mount("/assets", StaticFiles(directory= os.path.join(os.path.dirname(__file__),'..','..','dist','assets')), name="static")
+# app.mount("/", StaticFiles(directory= os.path.join(os.path.dirname(__file__),'..','..','dist'),html=True), name="home")
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__),'..','..','dist'))
 
 @app.get("/", response_class=HTMLResponse,tags=["index"])
