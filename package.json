@@ -14,7 +14,7 @@
     "generate-client": "openapi-ts --input http://localhost:21006/api/v1/openapi.json --output ./src/client --client axios",
     "run-dev-api-server":"cd server && poetry run python app/main.py",
     "install-all":"yarn install && cd server && poetry install",
-    "build-all":"yarn build && cd server && poetry run pyinstaller app/main.py"
+    "build-all":"yarn build && cd server && poetry build"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.2",
