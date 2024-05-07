@@ -2,3 +2,5 @@ main.spec
 
 dist
 build
+
+.exe
