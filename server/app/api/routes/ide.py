@@ -5,6 +5,7 @@ import threading
 from typing import Any
 from distutils.version import StrictVersion
 
+from app.utils.taskmanager import PythonConsoleConnectionManager, SubProgramThread, TaskManager
 from fastapi import APIRouter
 import jedi
 from jedi import __version__ as jedi_version
@@ -13,7 +14,7 @@ from app.common.config import Config
 from app.models.response import ResponseBase
 from app.utils.resource import *
 from app.models.project_items import *
-from app.utils.helper import convert_path
+from app.utils.helper import convert_path, gen_run_id
 
 jedi_is_gt_17 = StrictVersion(jedi_version) >= StrictVersion('0.17.0')
 
@@ -168,3 +169,24 @@ def get_python_pkg_installed_list():
     output = subprocess.run([Config.PYTHON, '-m', 'pip', 'list', '--format=json'], capture_output=True, text=True)
     packages_list = json.loads(output.stdout)
     return ResponseBase(code=0, data=packages_list)
+
+@router.post("/run_python_program", response_model=ResponseBase)
+def run_python_program(data:RunPythonItem):
+    prj_name = data.projectName
+    prj_path = os.path.join(Config.PROJECTS, 'ide', prj_name)
+    file_path = os.path.join(prj_path, convert_path(data.filePath))
+    if os.path.exists(file_path) and os.path.isfile(file_path) and file_path.endswith('.py'):
+        taskManager=TaskManager()
+        cmd = [Config.PYTHON, '-u', file_path]
+        task_id=gen_run_id(data.filePath)
+        taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
+        taskManager.start_subprogram(task_id)
+        return ResponseBase(code=0, data={"taskId":task_id})
+    return ResponseBase(code=-1, data={})
+
+@router.post("/stop_python_program", response_model=ResponseBase)
+def stop_python_program(data:StopPythonItem):
+    taskManager=TaskManager()
+    taskId = data.taskId
+    taskManager.stop_subprogram(taskId)
+    return ResponseBase(code=0, data={})

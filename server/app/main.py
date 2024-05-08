@@ -1,6 +1,9 @@
 import argparse
+import asyncio
 import os
 import sys
+
+from app.utils.taskmanager import PythonConsoleConnectionManager
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 
 from app.common.config import Config
@@ -22,25 +25,6 @@ mimetypes.add_type('image/svg+xml', '.svg')
 def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json",
-    generate_unique_id_function=custom_generate_unique_id,
-)
-
-app.include_router(api_router, prefix=settings.API_V1_STR)
-app.mount("/assets", StaticFiles(directory= os.path.join(Config.FRONTEND,'assets')), name="static")
-# app.mount("/", StaticFiles(directory= os.path.join(os.path.dirname(__file__),'..','..','dist'),html=True), name="home")
-templates = Jinja2Templates(directory=os.path.join(Config.FRONTEND))
-
-@app.get("/", response_class=HTMLResponse,tags=["index"])
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-@app.get("/editor", response_class=HTMLResponse,tags=["editor"])
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--address', type=str, default='0.0.0.0', help='server listen address')
@@ -51,6 +35,23 @@ def main():
     Config.FRONTEND=os.path.join(args.frontendpath)
     Config.WEBIDESERVER=os.path.join(args.webserverpath)
     Config.PROJECTS=os.path.join(Config.WEBIDESERVER,'projects')
+    app = FastAPI(
+    title=settings.PROJECT_NAME,
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    generate_unique_id_function=custom_generate_unique_id,
+    )
+    app.include_router(api_router, prefix=settings.API_V1_STR)
+    app.mount("/assets", StaticFiles(directory= os.path.join(Config.FRONTEND,'assets')), name="static")
+    # app.mount("/", StaticFiles(directory= os.path.join(os.path.dirname(__file__),'..','..','dist'),html=True), name="home")
+    templates = Jinja2Templates(directory=os.path.join(Config.FRONTEND))
+
+    @app.get("/", response_class=HTMLResponse,tags=["index"])
+    async def home(request: Request):
+        return templates.TemplateResponse("index.html", {"request": request})
+
+    @app.get("/editor", response_class=HTMLResponse,tags=["editor"])
+    async def home(request: Request):
+        return templates.TemplateResponse("index.html", {"request": request})
     uvicorn.run(app, host=args.address, port=21006,reload=False)
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev-server":"cd server && poetry run python app/main.py -- --frontend \"..\\dist\" --webserverpath \"..\\.webide-server\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -12,7 +13,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "generate-client": "openapi-ts --input http://localhost:21006/api/v1/openapi.json --output ./src/client --client axios",
-    "run-dev-api-server":"cd server && poetry run python app/main.py",
     "install-all":"yarn install && cd server && poetry install",
     "build-all":"yarn build && cd server && poetry build"
   },

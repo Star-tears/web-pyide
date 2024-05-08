@@ -44,3 +44,10 @@ class SaveProjItem(BaseModel):
     expendKeys: list
     openList: list
     selectFilePath: str | None
+
+class RunPythonItem(BaseModel):
+    projectName: str
+    filePath: str
+
+class StopPythonItem(BaseModel):
+    taskId: str
