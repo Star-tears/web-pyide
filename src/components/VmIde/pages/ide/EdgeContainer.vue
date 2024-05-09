@@ -2,7 +2,8 @@
   <div class="relative size-full">
     <NButton size="small" class="absolute z-50 right-2 top-2 px-2" :render-icon="renderMinIcon"
       @click="onMinBtnClick" />
-    <TerminalContainer :class="{ hidden: ideInfo.edgeContainerValue !== 'console' }" />
+    <PyConsoleContainer :class="{ hidden: ideInfo.edgeContainerValue !== 'py-console' }" />
+    <TerminalContainer :class="{ hidden: ideInfo.edgeContainerValue !== 'terminal' }" />
     <MonitorContainer v-if="ideInfo.edgeContainerValue === 'monitor'" />
     <PkgManagerContainer v-if="ideInfo.edgeContainerValue === 'pkg-manager'" />
   </div>
@@ -14,6 +15,7 @@ import { NButton, NIcon } from 'naive-ui';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { RemoveOutline } from '@vicons/ionicons5';
+import PyConsoleContainer from './edge-container/PyConsoleContainer.vue';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);

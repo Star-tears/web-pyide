@@ -1,31 +1,17 @@
 <template>
   <div ref="terminalContainer" class="size-full flex flex-col">
     <div class="ml-2 h-7 mr-12 overflow-hidden">
-      <n-tabs
-        v-model:value="activeConsoleName"
-        type="card"
-        closable
-        @close="handleClose"
-        addable
-        class="mr-8"
+      <n-tabs v-model:value="activeConsoleName" type="card" closable @close="handleClose" addable class="mr-8"
         :tab-style="{
           padding: '0 0 0 0.375rem',
           height: '1.75rem',
           minWidth: '60px',
           maxWidth: '100px'
-        }"
-        :add-tab-style="{
+        }" :add-tab-style="{
           padding: '0 0.375rem 0 0.375rem',
           height: '1.75rem'
-        }"
-        :on-add="onAdd"
-      >
-        <n-tab-pane
-          v-for="panel in panelsRef"
-          :key="panel"
-          :tab="getTabContent(panel.toString())"
-          :name="panel"
-        >
+        }" :on-add="onAdd">
+        <n-tab-pane v-for="panel in panelsRef" :key="panel" :tab="getTabContent(panel.toString())" :name="panel">
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -52,12 +38,9 @@
         </NScrollbar>
       </div>
       <div class="h-full flex-1 w-0">
-        <ConsoleItem
-          v-for="name in panelsRef"
-          :key="name"
-          :console-item-index="name"
-          :class="{ hidden: activeConsoleName !== name }"
-        ></ConsoleItem>
+        <TerminalItem v-for="name in panelsRef" :key="name" :console-item-index="name"
+          :class="{ hidden: activeConsoleName !== name }">
+        </TerminalItem>
       </div>
     </div>
   </div>
@@ -66,7 +49,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue/dist/iconify.js';
 import { NIcon, NScrollbar } from 'naive-ui';
-import ConsoleItem from './terminal/ConsoleItem.vue';
+import TerminalItem from './terminal/TerminalItem.vue';
 
 const terminalContainer = ref(null);
 const activeConsoleName = ref(null);
@@ -100,6 +83,7 @@ const onAdd = () => {
 .xterm .xterm-viewport {
   overflow-y: auto;
 }
+
 .xterm-viewport::-webkit-scrollbar {
   background-color: #2f2f2f;
   width: 10px;
@@ -108,6 +92,7 @@ const onAdd = () => {
 .xterm-viewport::-webkit-scrollbar-thumb {
   background: #545a5e;
 }
+
 .xterm-viewport::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   background: #2f2f2f;

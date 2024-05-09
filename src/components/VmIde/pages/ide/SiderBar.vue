@@ -3,13 +3,11 @@
     <div class="flex flex-col items-center justify-between h-full">
       <div></div>
       <div class="mb-6 flex flex-col justify-center">
-        <ToggleGroup
-          v-model="edgeWinValue"
-          type="single"
-          orientation="vertical"
-          class="flex-col gap-4"
-        >
-          <ToggleGroupItem value="console" class="px-1" :style="getActiveStyle('console')">
+        <ToggleGroup v-model="edgeWinValue" type="single" orientation="vertical" class="flex-col gap-4">
+          <ToggleGroupItem value="py-console" class="px-1" :style="getActiveStyle('py-console')">
+            <Icon icon="mdi:language-python" class="size-7" />
+          </ToggleGroupItem>
+          <ToggleGroupItem value="terminal" class="px-1" :style="getActiveStyle('terminal')">
             <Icon icon="material-symbols-light:terminal-rounded" class="size-7" />
           </ToggleGroupItem>
           <ToggleGroupItem value="monitor" class="px-1" :style="getActiveStyle('monitor')">

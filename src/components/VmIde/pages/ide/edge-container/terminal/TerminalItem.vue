@@ -1,5 +1,5 @@
 <template>
-  <div ref="consoleContainer" class="size-full">
+  <div ref="terminalItemContainer" class="size-full">
     <div :id="'xterm-' + props.consoleItemIndex" class="xterm size-full"></div>
   </div>
 </template>
@@ -23,8 +23,8 @@ const props = defineProps<Props>();
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 
-const consoleContainer = ref(null);
-const { width, height } = useElementSize(consoleContainer);
+const terminalItemContainer = ref(null);
+const { width, height } = useElementSize(terminalItemContainer);
 
 onMounted(() => {
   const term = new Terminal({
