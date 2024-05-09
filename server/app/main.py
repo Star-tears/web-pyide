@@ -28,11 +28,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--address', type=str, default='0.0.0.0', help='server listen address')
     parser.add_argument('--port', type=int, default=21006, help='server listen port')
-    parser.add_argument('--webserverpath', type=str, default='.webide-server', help='webserver path')
-    parser.add_argument('--frontendpath', type=str, default='dist', help='frontend path')
+    parser.add_argument('--webserver-path', type=str, default='.webide-server', help='webserver path')
+    parser.add_argument('--frontend-path', type=str, default='dist', help='frontend path')
     args = parser.parse_args()
-    Config.FRONTEND=os.path.join(args.frontendpath)
-    Config.WEBIDESERVER=os.path.join(args.webserverpath)
+    Config.FRONTEND=os.path.join(args.frontend_path)
+    Config.WEBIDESERVER=os.path.join(args.webserver_path)
     Config.PROJECTS=os.path.join(Config.WEBIDESERVER,'projects')
     app = FastAPI(
     title=settings.PROJECT_NAME,
