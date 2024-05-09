@@ -3,7 +3,6 @@ import asyncio
 import os
 import sys
 
-from app.utils.taskmanager import PythonConsoleConnectionManager
 sys.path.append(os.path.join(os.path.dirname(__file__),'..'))
 
 from app.common.config import Config
