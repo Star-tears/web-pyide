@@ -52,7 +52,6 @@ class PythonConsoleConnectionManager:
         self.active_connections: list[WebSocket] = []
         self.active_connections_dict:Dict[str, list[WebSocket]]={}
         self.queue = asyncio.Queue()
-        
 
     async def connect(self, websocket: WebSocket,taskId:str):
         await websocket.accept()

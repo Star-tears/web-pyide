@@ -13,9 +13,10 @@ class ConnectionManager:
 
         if platform.system() == 'Windows':
             # 在 Windows 上执行的代码
-            from app.utils.winpty import WINPTY
-            async with WINPTY(websocket,projectSelected) as pty:
-                await pty.run()
+            # from app.utils.winpty import WINPTY
+            # async with WINPTY(websocket,projectSelected) as pty:
+            #     await pty.run()
+            pass
         else:
             # 在 Linux 上执行的代码
             from app.utils.pty import PTY

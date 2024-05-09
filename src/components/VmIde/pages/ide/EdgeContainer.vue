@@ -1,12 +1,8 @@
 <template>
   <div class="relative size-full">
-    <NButton
-      size="small"
-      class="absolute z-50 right-2 top-2 px-2"
-      :render-icon="renderMinIcon"
-      @click="onMinBtnClick"
-    />
-    <TerminalContainer v-if="ideInfo.edgeContainerValue === 'console'" />
+    <NButton size="small" class="absolute z-50 right-2 top-2 px-2" :render-icon="renderMinIcon"
+      @click="onMinBtnClick" />
+    <TerminalContainer :class="{ hidden: ideInfo.edgeContainerValue !== 'console' }" />
     <MonitorContainer v-if="ideInfo.edgeContainerValue === 'monitor'" />
     <PkgManagerContainer v-if="ideInfo.edgeContainerValue === 'pkg-manager'" />
   </div>
