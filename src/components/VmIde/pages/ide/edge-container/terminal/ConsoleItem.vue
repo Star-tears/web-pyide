@@ -36,11 +36,18 @@ onMounted(() => {
   });
   const fitAddon = new FitAddon();
   term.loadAddon(fitAddon);
-  const socket = new WebSocket(
-    'ws://localhost:21006/api/v1/ws/terminal' +
-      '?projectSelected=' +
-      ideInfo.value.currProj.config.name
-  );
+  const loc = window.location;
+  let new_uri;
+  if (loc.protocol === "https:") {
+    new_uri = "wss:";
+  } else {
+    new_uri = "ws:";
+  }
+  new_uri += "//" + loc.host + '/api/v1 / ws / terminal' +
+    '?projectSelected=' +
+    ideInfo.value.currProj.config.name;
+  console.log(new_uri);
+  const socket = new WebSocket(new_uri);
 
   const attachAddon = new AttachAddon(socket);
   term.loadAddon(attachAddon);
