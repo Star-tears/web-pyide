@@ -30,33 +30,32 @@
 - Python: 3.10
 - FastAPI
 
-### 前端
-
 ```bash
-yarn install
-
-# 开发运行(默认端口是8080)
-yarn dev
-
-# 打包编译(默认打包的路径在dist目录，后端程序已经配置从该目录加载资源)
-yarn build
+pip install poetry
 ```
 
-### 后端
+### 安装依赖
 
 ```bash
-# 假定已经安装好Python环境（建议使用虚拟Python环境并激活）
+yarn install-all
+```
 
-# 进入后端目录
-cd server
+### 运行
 
-# 安装依赖
-poetry install
+> 开发环境
 
-# 运行（运行端口为8000）
-python app/main.py
+```bash
+yarn build
 
-# http://localhost:8000/docs 可查看API文档
+yarn dev-server
+
+yarn dev
+```
+
+### 打包
+
+```bash
+yarn build-all
 ```
 
 ## 重构进度
@@ -71,7 +70,7 @@ python app/main.py
 - [x] 代码编辑器写入文件
 - [x] 文件树图标、tab栏图标
 - [x] 在终端运行代码(命令行式)
-- [ ] 一键运行
+- [x] 一键运行
 - [ ] 多程序运行监控管理
 - [ ] 文件、文件夹创建删除重命名等操作
 
@@ -79,4 +78,5 @@ python app/main.py
 
 - [x] 构建FastAPI总体框架
 - [x] 迁移部分接口
-- [ ] 重构终端websocket连接
+- [x] 重构终端websocket连接
+- [x] 任务管理相关api
