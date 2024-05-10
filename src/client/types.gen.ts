@@ -26,6 +26,11 @@ export type HTTPValidationError = {
     detail?: Array<ValidationError>;
 };
 
+export type PipCommandItem = {
+    command: string;
+    options: Array<(string)>;
+};
+
 export type ProjItem = {
     projectName: string;
 };
@@ -406,6 +411,24 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 200: ResponseBase;
+            };
+        };
+    };
+    '/api/v1/ide/run_pip_command': {
+        get: {
+            req: {
+                requestBody: PipCommandItem;
+                self: unknown;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
             };
         };
     };

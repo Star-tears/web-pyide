@@ -86,6 +86,25 @@ export const $HTTPValidationError = {
     title: 'HTTPValidationError'
 } as const;
 
+export const $PipCommandItem = {
+    properties: {
+        command: {
+            type: 'string',
+            title: 'Command'
+        },
+        options: {
+            items: {
+                type: 'string'
+            },
+            type: 'array',
+            title: 'Options'
+        }
+    },
+    type: 'object',
+    required: ['command', 'options'],
+    title: 'PipCommandItem'
+} as const;
+
 export const $ProjItem = {
     properties: {
         projectName: {

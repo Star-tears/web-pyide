@@ -216,3 +216,42 @@ def get_task_info_list():
     taskManager=TaskManager()
     get_task_info_list=taskManager.get_task_info_list()
     return ResponseBase(code=0, data=get_task_info_list)
+
+@router.get("/run_pip_command", response_model=ResponseBase)
+def run_pip_command(self, data:PipCommandItem):
+    command = data.get('command')
+    if not isinstance(command, str) or not command:
+        return ResponseBase(code=-1, data={'stdout': 'pip command: {} error'.format(command)})
+    else:
+        options = data.get('options', [])
+        if not command.startswith('pip'):
+            List = command.split(' ')
+            if len(List) == 1:
+                cmd = [Config.PYTHON, '-u', '-m', 'pip', List[0], ' '.join(options)]
+            elif len(List) > 1:
+                cmd = [Config.PYTHON, '-u', '-m', 'pip', List[0]]
+                for op in List[1:]:
+                    cmd.append(op)
+                if List[1] == 'uninstall' and '-y' not in cmd:
+                    cmd.append('-y')
+                # cmd = [Config.PYTHON, '-u', '-m', 'pip', List[0], '{} {}'.format(' '.join(List[1:]), ' '.join(options))]
+            else:
+                return ResponseBase(code=-1, data={'stdout': 'cmd error'})
+        else:
+            List = command.split(' ')
+            if len(List) == 2:
+                cmd = [Config.PYTHON, '-u', '-m', List[0], List[1], ' '.join(options)]
+            elif len(List) > 2:
+                cmd = [Config.PYTHON, '-u', '-m', List[0], List[1]]
+                for op in List[2:]:
+                    cmd.append(op)
+                if List[1] == 'uninstall' and '-y' not in cmd:
+                    cmd.append('-y')
+                # cmd = [Config.PYTHON, '-u', '-m', List[0], List[1], '{} {}'.format(' '.join(List[2:]), ' '.join(options))]
+            else:
+                return ResponseBase(code=-1, data={'stdout': 'cmd error'})
+        taskManager=TaskManager()
+        task_id=gen_run_id("pip-cmd")
+        taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
+        taskManager.start_subprogram(task_id)
+        return ResponseBase(code=0, data={'stdout': 'success'})

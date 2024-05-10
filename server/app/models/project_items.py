@@ -51,3 +51,7 @@ class RunPythonItem(BaseModel):
 
 class PyTaskIdItem(BaseModel):
     taskId: str
+
+class PipCommandItem(BaseModel):
+    command: str
+    options: list[str]

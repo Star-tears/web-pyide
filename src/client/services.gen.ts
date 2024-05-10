@@ -377,6 +377,29 @@ export class IdeService {
         });
     }
     
+    /**
+     * Run Pip Command
+     * @param data The data for the request.
+     * @param data.self
+     * @param data.requestBody
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideRunPipCommand(data: $OpenApiTs['/api/v1/ide/run_pip_command']['get']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/run_pip_command']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ide/run_pip_command',
+            query: {
+                self: data.self
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
 }
 
 export class IndexService {
