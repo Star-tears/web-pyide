@@ -28,26 +28,26 @@ export const useIdeStore = defineStore('ide', () => {
     taskIdList: []
   });
 
-  const killPyTask = () => {
+  const killPyTask = (taskId?: string) => {
     IdeService.ideKillPythonProgram({
       requestBody: {
-        taskId: ideInfo.value.activePyTaskIdValue
+        taskId: taskId ? taskId : ideInfo.value.activePyTaskIdValue
       }
     }).then((res) => {
       refreshTaskIdList();
     });
   };
-  const reloadPyTask = () => {
+  const reloadPyTask = (taskId?: string) => {
     IdeService.ideReloadPythonProgram({
       requestBody: {
-        taskId: ideInfo.value.activePyTaskIdValue
+        taskId: taskId ? taskId : ideInfo.value.activePyTaskIdValue
       }
     });
   };
-  const stopPyTask = () => {
+  const stopPyTask = (taskId?: string) => {
     IdeService.ideStopPythonProgram({
       requestBody: {
-        taskId: ideInfo.value.activePyTaskIdValue
+        taskId: taskId ? taskId : ideInfo.value.activePyTaskIdValue
       }
     });
   };

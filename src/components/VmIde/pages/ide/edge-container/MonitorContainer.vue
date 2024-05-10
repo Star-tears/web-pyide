@@ -6,12 +6,12 @@
           <template #header-extra>
             <NTag type="success" class="mr-4"> 3个 </NTag>
           </template>
-          <n-table striped>
+          <n-table striped :single-line="false">
             <thead>
               <tr>
                 <th>脚本id</th>
                 <th>运行状态</th>
-                <th>...</th>
+                <th>运行指令</th>
                 <th>控制</th>
               </tr>
             </thead>
@@ -20,12 +20,50 @@
                 <tr>
                   <td>{{ taskId }}</td>
                   <td>
-                    <NTag :bordered="false" :type="taskInfo.alive ? 'success' : 'error'" size="small">
+                    <NTag
+                      :bordered="false"
+                      :type="taskInfo.alive ? 'success' : 'error'"
+                      size="small"
+                    >
                       {{ taskInfo.alive ? '运行中' : '停止' }}
                     </NTag>
                   </td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger as-child>
+                          <Button variant="outline"> 查看脚本启动指令 </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{{ taskInfo.cmd }}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </td>
+                  <td>
+                    <div
+                      class="inline-flex border border-gray-200 rounded-full p-0.5 dark:border-neutral-700"
+                    >
+                      <button
+                        type="button"
+                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                      >
+                        <Icon icon="ion:reload-circle" width="24" height="24" color="#fff" />
+                      </button>
+                      <button
+                        type="button"
+                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                      >
+                        <Icon icon="material-symbols:stop" width="24" height="24" />
+                      </button>
+                      <button
+                        type="button"
+                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                      >
+                        <Icon icon="mdi:bin" width="24" height="24" />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               </template>
             </tbody>
@@ -37,8 +75,11 @@
 </template>
 
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { IdeService } from '@/client';
 import { NScrollbar } from 'naive-ui';
+import { Icon } from '@iconify/vue/dist/iconify.js';
 
 const taskInfoList = ref<any>({});
 onMounted(() => {
