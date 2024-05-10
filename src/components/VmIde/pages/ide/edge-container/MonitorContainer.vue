@@ -16,30 +16,18 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>/main.py</td>
-                <td>
-                  <NTag :bordered="false" type="success" size="small"> 运行中 </NTag>
-                </td>
-                <td>...</td>
-                <td>...</td>
-              </tr>
-              <tr>
-                <td>/utils/main.py</td>
-                <td>
-                  <NTag :bordered="false" type="error" size="small"> 停止 </NTag>
-                </td>
-                <td>...</td>
-                <td>...</td>
-              </tr>
-              <tr>
-                <td>test.py</td>
-                <td>
-                  <NTag :bordered="false" type="info" size="small"> 运行结束 </NTag>
-                </td>
-                <td>...</td>
-                <td>...</td>
-              </tr>
+              <template v-for="(taskInfo, taskId) in taskInfoList" :key="taskId">
+                <tr>
+                  <td>{{ taskId }}</td>
+                  <td>
+                    <NTag :bordered="false" :type="taskInfo.alive ? 'success' : 'error'" size="small">
+                      {{ taskInfo.alive ? '运行中' : '停止' }}
+                    </NTag>
+                  </td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+              </template>
             </tbody>
           </n-table>
         </n-card>
@@ -52,11 +40,10 @@
 import { IdeService } from '@/client';
 import { NScrollbar } from 'naive-ui';
 
-const taskInfoList = ref({});
+const taskInfoList = ref<any>({});
 onMounted(() => {
   IdeService.ideGetTaskInfoList().then((res) => {
     taskInfoList.value = res.data;
-    console.log(taskInfoList.value);
   });
 });
 </script>
