@@ -32,19 +32,21 @@
                     :tab-style="{
                         padding: '0 0 0 0.375rem',
                         height: '1.75rem',
-                        minWidth: '60px',
-                        maxWidth: '100px'
+                        minWidth: '60px'
                     }" :add-tab-style="{
                         padding: '0 0.375rem 0 0.375rem',
                         height: '1.75rem'
                     }" :on-add="onAdd">
-                    <n-tab-pane v-for="panel in panelsRef" :key="panel" :tab="getTabContent(panel.toString())"
+                    <n-tab-pane v-for="panel in ideInfo.taskIdList" :key="panel" :tab="getTabContent(panel.toString())"
                         :name="panel">
                     </n-tab-pane>
                 </n-tabs>
             </div>
             <div class="flex-1 h-0 flex flex-row">
                 <div class="h-full w-full">
+                    <PyConsoleItem v-for="name in ideInfo.taskIdList" :key="name" :task-id="name"
+                        :class="{ hidden: activeConsoleName !== name }">
+                    </PyConsoleItem>
                 </div>
             </div>
 
@@ -57,34 +59,34 @@ import { useIdeStore } from '@/stores/ide';
 import { Icon } from '@iconify/vue/dist/iconify.js';
 import { NIcon, NScrollbar } from 'naive-ui';
 import { storeToRefs } from 'pinia';
+import PyConsoleItem from './py-console/PyConsoleItem.vue';
 
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const pyConsoleContainer = ref(null);
-const activeConsoleName = ref(null);
-const panelsRef = ref([]);
+const activeConsoleName = ref('');
 const indexCount = ref(0);
 function handleClose(name: number) {
-    const { value: panels } = panelsRef;
-    const index = panels.findIndex((v) => name === v);
-    panels.splice(index, 1);
-    if (activeConsoleName.value === name) {
-        activeConsoleName.value = panels[index];
-    }
+    // const { value: panels } = panelsRef;
+    // const index = panels.findIndex((v) => name === v);
+    // panels.splice(index, 1);
+    // if (activeConsoleName.value === name) {
+    //     activeConsoleName.value = panels[index];
+    // }
 }
 
 const getTabContent = (key: string) => {
-    return h('div', { class: 'flex flex-row h-full items-center gap-2' }, [
+    return h('div', { class: 'flex flex-row h-full items-center gap-2 w-full' }, [
         h(Icon, { icon: 'ph:terminal-window', width: '20px', height: '20px' }),
         h('div', null, key)
     ]);
 };
 
 const onAdd = () => {
-    panelsRef.value.push(indexCount.value);
-    activeConsoleName.value = indexCount.value;
-    indexCount.value++;
+    // panelsRef.value.push(indexCount.value);
+    // activeConsoleName.value = indexCount.value;
+    // indexCount.value++;
 };
 const refreshTaskIdList = () => {
     ideStore.refreshTaskIdList();

@@ -136,8 +136,8 @@ class SubProgramThread(threading.Thread):
     def response_to_client(self, stdout):
         if stdout:
             try:
-                print('[Program {} stdout: {}]'.format(self.id,stdout))
-                asyncio.run(pythonConsoleConnectionManager.put_message(self.id,stdout))
+                # print('[Program {} stdout: {}]'.format(self.id,stdout))
+                asyncio.run(pythonConsoleConnectionManager.put_message(self.id,stdout+'\r\n'))
             except Exception as e:
                 print('[Program {} is exception], {}'.format(self.id, e))
     def run_program(self):

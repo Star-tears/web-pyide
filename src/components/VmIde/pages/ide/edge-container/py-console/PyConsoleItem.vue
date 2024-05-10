@@ -1,6 +1,6 @@
 <template>
     <div ref="pyConsoleItemContainer" class="size-full">
-        <div :id="getId" class="xterm size-full"></div>
+        <div :id="'xterm-py-console-' + props.taskId" class="xterm size-full"></div>
     </div>
 </template>
 
@@ -26,10 +26,6 @@ const { ideInfo } = storeToRefs(ideStore);
 const pyConsoleItemContainer = ref(null);
 const { width, height } = useElementSize(pyConsoleItemContainer);
 
-const getId = () => {
-    return 'xterm-py-console-' + props.taskId;
-};
-
 onMounted(() => {
     const term = new Terminal({
         theme: Atom,
@@ -47,13 +43,17 @@ onMounted(() => {
     } else {
         new_uri = "ws:";
     }
-    new_uri += "//" + loc.host + '/api/v1/ws/pythonConsole' + '?taskId=' + props.taskId;
-    console.log(new_uri);
+    if (import.meta.env.DEV) {
+        const server_host = import.meta.env.VITE_SERVER_HOST;
+        new_uri += "//" + server_host + '/api/v1/ws/pythonConsole' + '?taskId=' + props.taskId;
+    } else {
+        new_uri += "//" + loc.host + '/api/v1/ws/pythonConsole' + '?taskId=' + props.taskId;
+    }
     const socket = new WebSocket(new_uri);
 
     const attachAddon = new AttachAddon(socket);
     term.loadAddon(attachAddon);
-    term.open(document.getElementById(getId()));
+    term.open(document.getElementById('xterm-py-console-' + props.taskId));
     onUnmounted(() => {
         socket.close();
     });
