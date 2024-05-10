@@ -1,11 +1,14 @@
 <template>
-  <div class="h-8 border-b border-slate-600 flex items-center pl-4">
+  <div class="h-8 border-b border-slate-600 flex items-center px-4 flex-row justify-between">
     <FileSettingItem />
+    <div>
+      <RunPyBtn />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
+import RunPyBtn from './topmenu-items/RunPyBtn.vue';
 </script>
 
 <style scoped></style>

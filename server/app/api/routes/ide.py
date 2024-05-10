@@ -184,11 +184,25 @@ def run_python_program(data:RunPythonItem):
         return ResponseBase(code=0, data={"taskId":task_id})
     return ResponseBase(code=-1, data={})
 
+@router.post("/kill_python_program", response_model=ResponseBase)
+def kill_python_program(data:PyTaskIdItem):
+    taskManager=TaskManager()
+    taskId = data.taskId
+    taskManager.kill_subprogram(taskId)
+    return ResponseBase(code=0, data={})
+
 @router.post("/stop_python_program", response_model=ResponseBase)
-def stop_python_program(data:StopPythonItem):
+def stop_python_program(data:PyTaskIdItem):
     taskManager=TaskManager()
     taskId = data.taskId
     taskManager.stop_subprogram(taskId)
+    return ResponseBase(code=0, data={})
+
+@router.post("/reload_python_program", response_model=ResponseBase)
+def reload_python_program(data:PyTaskIdItem):
+    taskManager=TaskManager()
+    taskId = data.taskId
+    taskManager.reload_subprogram(taskId)
     return ResponseBase(code=0, data={})
 
 @router.get("/get_task_id_list", response_model=ResponseBase)

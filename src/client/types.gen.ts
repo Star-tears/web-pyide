@@ -35,6 +35,10 @@ export type ProjReNameItem = {
     newName: string;
 };
 
+export type PyTaskIdItem = {
+    taskId: string;
+};
+
 export type ReNameItem = {
     projectName: string;
     oldPath: string;
@@ -58,10 +62,6 @@ export type SaveProjItem = {
     expendKeys: Array<unknown>;
     openList: Array<unknown>;
     selectFilePath: string | null;
-};
-
-export type StopPythonItem = {
-    taskId: string;
 };
 
 export type ValidationError = {
@@ -338,10 +338,44 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/v1/ide/kill_python_program': {
+        post: {
+            req: {
+                requestBody: PyTaskIdItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
     '/api/v1/ide/stop_python_program': {
         post: {
             req: {
-                requestBody: StopPythonItem;
+                requestBody: PyTaskIdItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/reload_python_program': {
+        post: {
+            req: {
+                requestBody: PyTaskIdItem;
             };
             res: {
                 /**

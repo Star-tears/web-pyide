@@ -24,11 +24,29 @@ export const useIdeStore = defineStore('ide', () => {
     projList: [],
     pythonPkgInstalledList: [],
     edgeContainerValue: null,
+    activePyTaskIdValue:'',
     taskIdList: []
   });
+
+  const runPyTask = () => {
+    if(ideInfo.value.currProj.config.name&&ideInfo.value.currProj.pathSelected&&ideInfo.value.currProj.pathSelected.endsWith(".py"))
+    IdeService.ideRunPythonProgram({
+      requestBody: {
+        projectName: ideInfo.value.currProj.config.name,
+        filePath: ideInfo.value.currProj.pathSelected
+      }
+    }).then((res:any)=>{
+      refreshTaskIdList();
+      ideInfo.value.edgeContainerValue='py-console';
+      ideInfo.value.activePyTaskIdValue=res.data["taskId"];
+    });
+  };
   const refreshTaskIdList = () => {
     IdeService.ideGetTaskIdList().then((res) => {
       ideInfo.value.taskIdList = res.data;
+      if(!ideInfo.value.taskIdList.includes(ideInfo.value.activePyTaskIdValue)&&ideInfo.value.taskIdList.length>0){
+        ideInfo.value.activePyTaskIdValue=ideInfo.value.taskIdList[0];
+      }
     });
   };
   const setCurrentKey = (key: string) => {
@@ -426,6 +444,7 @@ export const useIdeStore = defineStore('ide', () => {
     setCodeItemContent,
     setPythonPkgInstalledList,
     ide_save_project,
-    refreshTaskIdList
+    refreshTaskIdList,
+    runPyTask
   };
 });

@@ -49,5 +49,5 @@ class RunPythonItem(BaseModel):
     projectName: str
     filePath: str
 
-class StopPythonItem(BaseModel):
+class PyTaskIdItem(BaseModel):
     taskId: str

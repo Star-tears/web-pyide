@@ -114,6 +114,18 @@ export const $ProjReNameItem = {
     title: 'ProjReNameItem'
 } as const;
 
+export const $PyTaskIdItem = {
+    properties: {
+        taskId: {
+            type: 'string',
+            title: 'Taskid'
+        }
+    },
+    type: 'object',
+    required: ['taskId'],
+    title: 'PyTaskIdItem'
+} as const;
+
 export const $ReNameItem = {
     properties: {
         projectName: {
@@ -220,18 +232,6 @@ export const $SaveProjItem = {
     type: 'object',
     required: ['projectName', 'expendKeys', 'openList', 'selectFilePath'],
     title: 'SaveProjItem'
-} as const;
-
-export const $StopPythonItem = {
-    properties: {
-        taskId: {
-            type: 'string',
-            title: 'Taskid'
-        }
-    },
-    type: 'object',
-    required: ['taskId'],
-    title: 'StopPythonItem'
 } as const;
 
 export const $ValidationError = {

@@ -80,7 +80,7 @@ class TaskManager(object):
     def get_task_id_list(self):
         return list(self.task_dict.keys())
     def set_subprogram(self, program_id, sub_t):
-        self.stop_subprogram(program_id)
+        self.kill_subprogram(program_id)
         self.task_dict[program_id] = sub_t
     
     def remove_subprogram(self, program_id):
@@ -106,15 +106,40 @@ class TaskManager(object):
                     pass
         elif program_id in self.task_dict:
             try:
+                t = self.task_dict.get(program_id)
+                t.stop()
+                t.join()
+            except:
+                pass
+
+    def kill_subprogram(self,program_id):
+        if program_id is None:
+            for _, t in self.task_dict.items():
+                t.stop()
+            for _, t in self.task_dict.items():
+                try:
+                    pythonConsoleConnectionManager.remove_taskId(program_id)
+                    t.join()
+                except:
+                    pass
+        elif program_id in self.task_dict:
+            try:
                 t = self.task_dict.pop(program_id)
                 t.stop()
                 pythonConsoleConnectionManager.remove_taskId(program_id)
                 t.join()
             except:
                 pass
-
-
-
+    def reload_subprogram(self,program_id):
+        if program_id in self.task_dict:
+            try:
+                t = self.task_dict.get(program_id)
+                cmd=t.cmd
+                taskId=program_id
+                self.set_subprogram(program_id,SubProgramThread(cmd,taskId))
+                self.start_subprogram(program_id)
+            except:
+                pass
 class SubProgramThread(threading.Thread):
     def __init__(self, cmd, id):
         super(SubProgramThread, self).__init__()

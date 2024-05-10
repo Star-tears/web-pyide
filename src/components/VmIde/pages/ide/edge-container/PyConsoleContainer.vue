@@ -65,7 +65,11 @@ import PyConsoleItem from './py-console/PyConsoleItem.vue';
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const pyConsoleContainer = ref(null);
-const activeConsoleName = ref('');
+const activeConsoleName = computed({
+    get: () => ideInfo.value.activePyTaskIdValue,
+    set: (value: string) => (ideInfo.value.activePyTaskIdValue = value)
+});
+
 const indexCount = ref(0);
 function handleClose(name: number) {
     // const { value: panels } = panelsRef;
