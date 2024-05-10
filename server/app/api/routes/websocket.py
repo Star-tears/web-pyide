@@ -51,6 +51,6 @@ async def python_console_endpoint(websocket: WebSocket,taskId:str):
     await pythonConsoleConnectionManager.connect(websocket,taskId)
     try:
         while True:
-            await pythonConsoleConnectionManager.send_message()
+            await pythonConsoleConnectionManager.send_message(taskId)
     except WebSocketDisconnect:
         pythonConsoleConnectionManager.disconnect(websocket,taskId)
