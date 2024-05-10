@@ -277,4 +277,84 @@ export class IdeService {
         });
     }
     
+    /**
+     * Run Python Program
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideRunPythonProgram(data: $OpenApiTs['/api/v1/ide/run_python_program']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/run_python_program']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/run_python_program',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Stop Python Program
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideStopPythonProgram(data: $OpenApiTs['/api/v1/ide/stop_python_program']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/stop_python_program']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/stop_python_program',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Get Task Id List
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideGetTaskIdList(): CancelablePromise<$OpenApiTs['/api/v1/ide/get_task_id_list']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ide/get_task_id_list'
+        });
+    }
+    
+}
+
+export class IndexService {
+    /**
+     * Home
+     * @returns string Successful Response
+     * @throws ApiError
+     */
+    public static indexHome(): CancelablePromise<$OpenApiTs['/']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/'
+        });
+    }
+    
+}
+
+export class EditorService {
+    /**
+     * Home
+     * @returns string Successful Response
+     * @throws ApiError
+     */
+    public static editorHome(): CancelablePromise<$OpenApiTs['/editor']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/editor'
+        });
+    }
+    
 }

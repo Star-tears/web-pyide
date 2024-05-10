@@ -13,7 +13,7 @@ class PythonConsoleConnectionManager:
         self.active_connections: list[WebSocket] = []
         self.active_connections_dict:Dict[str, list[WebSocket]]={}
         self.queue_dict: Dict[str,asyncio.Queue]={}
-        self.queue_limit=1000
+        self.single_queue_limit=200
 
     async def connect(self, websocket: WebSocket,taskId:str):
         await websocket.accept()
@@ -24,7 +24,7 @@ class PythonConsoleConnectionManager:
         message_queue=self.queue_dict.setdefault(taskId,asyncio.Queue())
         await message_queue.put(message)
         current_size=message_queue.qsize()
-        if current_size>self.queue_limit:
+        if current_size>self.single_queue_limit:
             _ = await message_queue.get()
             message_queue.task_done()
         
@@ -75,36 +75,38 @@ pythonConsoleConnectionManager = PythonConsoleConnectionManager()
 @singleton
 class TaskManager(object):
     def __init__(self, *args, **kwargs) -> None:
-        self.subprograms = {}
-
+        self.task_dict = {}
+    
+    def get_task_id_list(self):
+        return list(self.task_dict.keys())
     def set_subprogram(self, program_id, sub_t):
         self.stop_subprogram(program_id)
-        self.subprograms[program_id] = sub_t
+        self.task_dict[program_id] = sub_t
     
     def remove_subprogram(self, program_id):
         if program_id is None:
             self.stop_subprogram()
-            self.subprograms.clear()
-        elif program_id in self.subprograms:
+            self.task_dict.clear()
+        elif program_id in self.task_dict:
             self.stop_subprogram(program_id)
-            self.subprograms.pop(program_id, None)
+            self.task_dict.pop(program_id, None)
     
     def start_subprogram(self, program_id):
-        if program_id in self.subprograms:
-            self.subprograms[program_id].start()
+        if program_id in self.task_dict:
+            self.task_dict[program_id].start()
     
     def stop_subprogram(self, program_id):
         if program_id is None:
-            for _, t in self.subprograms.items():
+            for _, t in self.task_dict.items():
                 t.stop()
-            for _, t in self.subprograms.items():
+            for _, t in self.task_dict.items():
                 try:
                     t.join()
                 except:
                     pass
-        elif program_id in self.subprograms:
+        elif program_id in self.task_dict:
             try:
-                t = self.subprograms.pop(program_id)
+                t = self.task_dict.pop(program_id)
                 t.stop()
                 pythonConsoleConnectionManager.remove_taskId(program_id)
                 t.join()

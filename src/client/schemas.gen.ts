@@ -173,6 +173,22 @@ export const $ResponseBase = {
     title: 'ResponseBase'
 } as const;
 
+export const $RunPythonItem = {
+    properties: {
+        projectName: {
+            type: 'string',
+            title: 'Projectname'
+        },
+        filePath: {
+            type: 'string',
+            title: 'Filepath'
+        }
+    },
+    type: 'object',
+    required: ['projectName', 'filePath'],
+    title: 'RunPythonItem'
+} as const;
+
 export const $SaveProjItem = {
     properties: {
         projectName: {
@@ -204,6 +220,18 @@ export const $SaveProjItem = {
     type: 'object',
     required: ['projectName', 'expendKeys', 'openList', 'selectFilePath'],
     title: 'SaveProjItem'
+} as const;
+
+export const $StopPythonItem = {
+    properties: {
+        taskId: {
+            type: 'string',
+            title: 'Taskid'
+        }
+    },
+    type: 'object',
+    required: ['taskId'],
+    title: 'StopPythonItem'
 } as const;
 
 export const $ValidationError = {

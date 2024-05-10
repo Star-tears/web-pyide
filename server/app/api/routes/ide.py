@@ -190,3 +190,9 @@ def stop_python_program(data:StopPythonItem):
     taskId = data.taskId
     taskManager.stop_subprogram(taskId)
     return ResponseBase(code=0, data={})
+
+@router.get("/get_task_id_list", response_model=ResponseBase)
+def get_task_id_list():
+    taskManager=TaskManager()
+    task_id_list=taskManager.get_task_id_list()
+    return ResponseBase(code=0, data=task_id_list)

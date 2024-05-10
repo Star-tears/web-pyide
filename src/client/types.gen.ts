@@ -48,11 +48,20 @@ export type ResponseBase = {
     data: unknown;
 };
 
+export type RunPythonItem = {
+    projectName: string;
+    filePath: string;
+};
+
 export type SaveProjItem = {
     projectName: string;
     expendKeys: Array<unknown>;
     openList: Array<unknown>;
     selectFilePath: string | null;
+};
+
+export type StopPythonItem = {
+    taskId: string;
 };
 
 export type ValidationError = {
@@ -309,6 +318,70 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 200: ResponseBase;
+            };
+        };
+    };
+    '/api/v1/ide/run_python_program': {
+        post: {
+            req: {
+                requestBody: RunPythonItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/stop_python_program': {
+        post: {
+            req: {
+                requestBody: StopPythonItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/get_task_id_list': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+            };
+        };
+    };
+    '/': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: string;
+            };
+        };
+    };
+    '/editor': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: string;
             };
         };
     };
