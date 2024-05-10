@@ -23,9 +23,14 @@ export const useIdeStore = defineStore('ide', () => {
     nodeSelected: null,
     projList: [],
     pythonPkgInstalledList: [],
-    edgeContainerValue: null
+    edgeContainerValue: null,
+    taskIdList: []
   });
-
+  const refreshTaskIdList = () => {
+    IdeService.ideGetTaskIdList().then((res) => {
+      ideInfo.value.taskIdList = res.data;
+    });
+  };
   const setCurrentKey = (key: string) => {
     ideInfo.value.selectKeys = [key];
     ideInfo.value.nodeSelected = getCurrentNode();
@@ -420,6 +425,7 @@ export const useIdeStore = defineStore('ide', () => {
     setCodeItems,
     setCodeItemContent,
     setPythonPkgInstalledList,
-    ide_save_project
+    ide_save_project,
+    refreshTaskIdList
   };
 });

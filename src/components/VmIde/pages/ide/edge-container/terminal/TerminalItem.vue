@@ -43,7 +43,7 @@ onMounted(() => {
   } else {
     new_uri = "ws:";
   }
-  new_uri += "//" + loc.host + '/api/v1 / ws / terminal' +
+  new_uri += "//" + loc.host + '/api/v1/ws/terminal' +
     '?projectSelected=' +
     ideInfo.value.currProj.config.name;
   console.log(new_uri);

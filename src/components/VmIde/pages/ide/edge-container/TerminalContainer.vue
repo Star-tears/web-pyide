@@ -79,22 +79,3 @@ const onAdd = () => {
 </script>
 
 <style scoped></style>
-<style>
-.xterm .xterm-viewport {
-  overflow-y: auto;
-}
-
-.xterm-viewport::-webkit-scrollbar {
-  background-color: #2f2f2f;
-  width: 10px;
-}
-
-.xterm-viewport::-webkit-scrollbar-thumb {
-  background: #545a5e;
-}
-
-.xterm-viewport::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  background: #2f2f2f;
-}
-</style>
