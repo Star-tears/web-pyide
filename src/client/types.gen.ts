@@ -399,6 +399,16 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/v1/ide/get_task_info_list': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+            };
+        };
+    };
     '/': {
         get: {
             res: {

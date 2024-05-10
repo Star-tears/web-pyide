@@ -210,3 +210,9 @@ def get_task_id_list():
     taskManager=TaskManager()
     task_id_list=taskManager.get_task_id_list()
     return ResponseBase(code=0, data=task_id_list)
+
+@router.get("/get_task_info_list", response_model=ResponseBase)
+def get_task_info_list():
+    taskManager=TaskManager()
+    get_task_info_list=taskManager.get_task_info_list()
+    return ResponseBase(code=0, data=get_task_info_list)

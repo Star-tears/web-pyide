@@ -2,7 +2,7 @@ import asyncio
 import subprocess
 import threading
 import time
-from typing import Dict
+from typing import Any, Dict
 
 from app.utils.helper import singleton
 from fastapi import WebSocket
@@ -79,6 +79,15 @@ class TaskManager(object):
     
     def get_task_id_list(self):
         return list(self.task_dict.keys())
+    
+    def get_task_info_list(self):
+        task_info_list:Dict[str,Dict[str,Any]]={}
+        for task_id, sub_t in self.task_dict.items():
+            task_info_list[task_id] = {} 
+            task_info_list[task_id]["alive"]=sub_t.is_alive()
+            task_info_list[task_id]["cmd"]=sub_t.cmd
+        return task_info_list;
+
     def set_subprogram(self, program_id, sub_t):
         self.kill_subprogram(program_id)
         self.task_dict[program_id] = sub_t

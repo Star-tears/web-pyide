@@ -365,6 +365,18 @@ export class IdeService {
         });
     }
     
+    /**
+     * Get Task Info List
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideGetTaskInfoList(): CancelablePromise<$OpenApiTs['/api/v1/ide/get_task_info_list']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ide/get_task_info_list'
+        });
+    }
+    
 }
 
 export class IndexService {
