@@ -43,10 +43,16 @@ onMounted(() => {
   } else {
     new_uri = "ws:";
   }
-  new_uri += "//" + loc.host + '/api/v1/ws/terminal' +
-    '?projectSelected=' +
-    ideInfo.value.currProj.config.name;
-  console.log(new_uri);
+  if (import.meta.env.DEV) {
+    const server_host = import.meta.env.VITE_SERVER_HOST;
+    new_uri += "//" + server_host + '/api/v1/ws/terminal' +
+      '?projectSelected=' +
+      ideInfo.value.currProj.config.name;;
+  } else {
+    new_uri += "//" + loc.host + '/api/v1/ws/terminal' +
+      '?projectSelected=' +
+      ideInfo.value.currProj.config.name;
+  }
   const socket = new WebSocket(new_uri);
 
   const attachAddon = new AttachAddon(socket);

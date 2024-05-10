@@ -34,9 +34,9 @@
                         height: '1.75rem',
                         minWidth: '60px'
                     }" :add-tab-style="{
-                        padding: '0 0.375rem 0 0.375rem',
-                        height: '1.75rem'
-                    }" :on-add="onAdd">
+            padding: '0 0.375rem 0 0.375rem',
+            height: '1.75rem'
+        }" :on-add="onAdd">
                     <n-tab-pane v-for="panel in ideInfo.taskIdList" :key="panel" :tab="getTabContent(panel.toString())"
                         :name="panel">
                     </n-tab-pane>
@@ -66,6 +66,10 @@ const pyConsoleContainer = ref(null);
 const activeConsoleName = computed({
     get: () => ideInfo.value.activePyTaskIdValue,
     set: (value: string) => (ideInfo.value.activePyTaskIdValue = value)
+});
+
+onMounted(() => {
+    ideStore.refreshTaskIdList();
 });
 
 function handleClose(name: any) {
