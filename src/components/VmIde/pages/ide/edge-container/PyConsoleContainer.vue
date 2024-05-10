@@ -3,17 +3,17 @@
         <div class="w-6 border-r h-full border-t">
             <NScrollbar class="size-full">
                 <div class="w-full flex flex-col items-center justify-center mt-2 gap-1">
-                    <n-button quaternary size="tiny" class="px-1">
+                    <n-button quaternary size="tiny" class="px-1" @click="reloadPyTask">
                         <template #icon>
                             <Icon icon="codicon:debug-start" />
                         </template>
                     </n-button>
-                    <n-button quaternary size="tiny" class="px-1">
+                    <n-button quaternary size="tiny" class="px-1" @click="stopPyTask">
                         <template #icon>
                             <Icon icon="material-symbols:stop" />
                         </template>
                     </n-button>
-                    <n-button quaternary size="tiny" class="px-1">
+                    <n-button quaternary size="tiny" class="px-1" @click="killPyTask">
                         <template #icon>
                             <Icon icon="material-symbols:delete-outline" />
                         </template>
@@ -49,7 +49,6 @@
                     </PyConsoleItem>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -61,7 +60,6 @@ import { NIcon, NScrollbar } from 'naive-ui';
 import { storeToRefs } from 'pinia';
 import PyConsoleItem from './py-console/PyConsoleItem.vue';
 
-
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const pyConsoleContainer = ref(null);
@@ -70,14 +68,18 @@ const activeConsoleName = computed({
     set: (value: string) => (ideInfo.value.activePyTaskIdValue = value)
 });
 
-const indexCount = ref(0);
-function handleClose(name: number) {
-    // const { value: panels } = panelsRef;
-    // const index = panels.findIndex((v) => name === v);
-    // panels.splice(index, 1);
-    // if (activeConsoleName.value === name) {
-    //     activeConsoleName.value = panels[index];
-    // }
+function handleClose(name: any) {
+    const index = ideInfo.value.taskIdList.findIndex((v: any) => name === v);
+    ideInfo.value.taskIdList.splice(index, 1);
+    if (activeConsoleName.value === name) {
+        if (ideInfo.value.taskIdList.length > index)
+            activeConsoleName.value = ideInfo.value.taskIdList[index];
+        else if (ideInfo.value.taskIdList.length > 0) {
+            activeConsoleName.value = ideInfo.value.taskIdList[index - 1];
+        } else {
+            activeConsoleName.value = '';
+        }
+    }
 }
 
 const getTabContent = (key: string) => {
@@ -94,6 +96,16 @@ const onAdd = () => {
 };
 const refreshTaskIdList = () => {
     ideStore.refreshTaskIdList();
+};
+
+const reloadPyTask = () => {
+    ideStore.reloadPyTask();
+};
+const stopPyTask = () => {
+    ideStore.stopPyTask();
+};
+const killPyTask = () => {
+    ideStore.killPyTask();
 };
 </script>
 

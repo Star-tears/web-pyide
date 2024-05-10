@@ -8,7 +8,7 @@
             <Icon icon="mdi:language-python" class="size-7" />
           </ToggleGroupItem>
           <ToggleGroupItem value="terminal" class="px-1" :style="getActiveStyle('terminal')">
-            <Icon icon="material-symbols-light:terminal-rounded" class="size-7" />
+            <Icon icon="ph:terminal-fill" class="size-7" />
           </ToggleGroupItem>
           <ToggleGroupItem value="monitor" class="px-1" :style="getActiveStyle('monitor')">
             <Icon icon="material-symbols-light:stacks-rounded" class="size-7" />
