@@ -30,3 +30,6 @@ coverage
 __pycache__
 
 *.tsbuildinfo
+
+/.webide-server/projects/pkgs
+/.webide-server/projects/uploads
