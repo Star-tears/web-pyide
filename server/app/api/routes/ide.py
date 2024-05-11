@@ -2,7 +2,7 @@ import asyncio
 import os
 import subprocess
 import threading
-from typing import Any
+from typing import Any, List
 from distutils.version import StrictVersion
 
 from app.utils.taskmanager import (
@@ -301,6 +301,7 @@ def run_pip_command(data: PipCommandItem):
 @router.post("/upload-file")
 async def upload_file(file: UploadFile = File(...)):
     try:
+        # 需要使用filename替换file.filename，否则会500错误
         filename = file.filename
         # 指定保存文件的本地目录
         folder_path = os.path.join(Config.PROJECTS, "uploads")
@@ -327,3 +328,41 @@ async def upload_file(file: UploadFile = File(...)):
     finally:
         # 关闭文件，防止资源泄露
         await file.close()
+
+
+@router.post("/upload-multiple-files")
+async def upload_multiple_files(files: List[UploadFile] = File(...)):
+    try:
+
+        # 创建一个列表来保存所有上传文件的路径
+        paths = []
+        for file in files:
+            # 为每个文件创建唯一的保存路径（这里简化处理，实际情况可能需要更复杂的命名规则避免冲突）
+            filename = file.filename
+            # 指定保存文件的本地目录
+            folder_path = os.path.join(Config.PROJECTS, "uploads")
+            file_path = os.path.join(Config.PROJECTS, "uploads", filename)
+
+            # 检查文件夹是否存在
+            if not os.path.exists(folder_path):
+                # 如果文件夹不存在，创建文件夹
+                os.makedirs(folder_path)
+
+            # 保存文件到本地
+            with open(file_path, "wb") as buffer:
+                contents = await file.read()
+                buffer.write(contents)
+            paths.append(file_path)
+
+        return {
+            "message": f"{len(files)} files uploaded successfully.",
+            "file_paths": paths,
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+
+    finally:
+        # 确保所有文件都已关闭
+        for file in files:
+            await file.close()

@@ -396,6 +396,44 @@ export class IdeService {
         });
     }
     
+    /**
+     * Upload File
+     * @param data The data for the request.
+     * @param data.formData
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static ideUploadFile(data: $OpenApiTs['/api/v1/ide/upload-file']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/upload-file']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/upload-file',
+            formData: data.formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Upload Multiple Files
+     * @param data The data for the request.
+     * @param data.formData
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static ideUploadMultipleFiles(data: $OpenApiTs['/api/v1/ide/upload-multiple-files']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/upload-multiple-files']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/upload-multiple-files',
+            formData: data.formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
 }
 
 export class IndexService {
