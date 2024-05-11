@@ -298,6 +298,20 @@ def run_pip_command(data: PipCommandItem):
         return ResponseBase(code=0, data={"stdout": "success"})
 
 
+@router.post("/install_py_pkg_by_local_file", response_model=ResponseBase)
+def install_py_pkg_by_local_file(data: PkgList):
+    file_list = data.pkgList
+    folder_path = os.path.join(Config.PROJECTS, "uploads")
+    for index, file_name in enumerate(file_list):
+        file_list[index] = os.path.join(folder_path, file_name)
+    cmd = [Config.PYTHON, "-u", "-m", "pip", "install"] + file_list
+    taskManager = TaskManager()
+    task_id = gen_run_id("pip-cmd")
+    taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
+    taskManager.start_subprogram(task_id)
+    return ResponseBase(code=0, data={"stdout": "success"})
+
+
 @router.post("/upload-file")
 async def upload_file(file: UploadFile = File(...)):
     try:

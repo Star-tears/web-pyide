@@ -397,6 +397,25 @@ export class IdeService {
     }
     
     /**
+     * Install Py Pkg By Local File
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideInstallPyPkgByLocalFile(data: $OpenApiTs['/api/v1/ide/install_py_pkg_by_local_file']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/install_py_pkg_by_local_file']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/install_py_pkg_by_local_file',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
      * Upload File
      * @param data The data for the request.
      * @param data.formData

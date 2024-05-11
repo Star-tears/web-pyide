@@ -39,6 +39,10 @@ export type PipCommandItem = {
     options?: Array<(string)> | null;
 };
 
+export type PkgList = {
+    pkgList: Array<(string)>;
+};
+
 export type ProjItem = {
     projectName: string;
 };
@@ -426,6 +430,23 @@ export type $OpenApiTs = {
         post: {
             req: {
                 requestBody: PipCommandItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/install_py_pkg_by_local_file': {
+        post: {
+            req: {
+                requestBody: PkgList;
             };
             res: {
                 /**

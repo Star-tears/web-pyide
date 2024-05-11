@@ -70,12 +70,14 @@
                     </NForm>
                   </NTabPane>
                   <NTabPane name="本地安装">
-                    <NButton class="w-full mb-2">上传并安装</NButton>
                     <NUpload
                       multiple
                       directory-dnd
+                      ref="uploadRef"
                       accept=".tar.gz,.tar.bz2,.egg,.zip,.whl"
-                      :max="5"
+                      action="/api/v1/ide/upload-file"
+                      :on-finish="onFileUploadFinish"
+                      :on-remove="onFileRemove"
                     >
                       <NUploadDragger>
                         <div style="margin-bottom: 12px">
@@ -87,10 +89,17 @@
                           点击或者拖动文件到该区域来准备上传
                         </n-text>
                         <n-p depth="3" style="margin: 8px 0 0 0">
-                          可上传一个python安装包安装, 支持.tar.gz, .tar.bz2, .egg, .zip, .whl包
+                          可上传多个python安装包安装, 支持.tar.gz, .tar.bz2, .egg, .zip, .whl包
                         </n-p>
                       </NUploadDragger>
                     </NUpload>
+                    <NButton
+                      class="w-full mb-2"
+                      @click="installPkgByLocalFiles"
+                      :loading="pipInstallLoading"
+                      :disabled="pkgSet.size === 0"
+                      >安装</NButton
+                    >
                   </NTabPane>
                 </NTabs>
               </NCard>
@@ -118,13 +127,15 @@ import {
   NInput,
   NButton,
   NUpload,
-  NUploadDragger
+  NUploadDragger,
+  type UploadFileInfo
 } from 'naive-ui';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { Separator } from '@/components/ui/separator';
 import { ArchiveOutline as ArchiveIcon } from '@vicons/ionicons5';
 import { IdeService } from '@/client';
+import type { SettledFileInfo } from 'naive-ui/es/upload/src/interface';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -132,7 +143,8 @@ const model = ref({
   inputValue: null
 });
 const pipInstallLoading = ref(false);
-
+const pkgSet = ref<Set<string>>(new Set<string>());
+const uploadRef = ref<any>(null);
 onMounted(() => {
   refreshPkgInstalledList();
   const intervalId = setInterval(() => {
@@ -153,10 +165,12 @@ const refreshPkgInstalledList = () => {
 const installPythonPackage = () => {
   pipInstallLoading.value = true;
   const cmd = 'pip install ' + model.value.inputValue;
-  console.log(cmd);
   IdeService.ideRunPipCommand({
     requestBody: { command: cmd, options: [] }
   }).then((res) => {
+    setTimeout(() => {
+      pipInstallLoading.value = false;
+    }, 2000);
     if (res.code == 0) {
       refreshPkgInstalledList();
       setTimeout(() => {
@@ -167,12 +181,38 @@ const installPythonPackage = () => {
     }
   });
 };
+
+const onFileUploadFinish = (options: { file: UploadFileInfo; event?: ProgressEvent }) => {
+  pkgSet.value.add(options.file.name);
+};
+
+const onFileRemove = (data: { file: SettledFileInfo; fileList: SettledFileInfo[] }) => {
+  pkgSet.value.delete(data.file.name);
+  return true;
+};
+
+const installPkgByLocalFiles = () => {
+  pipInstallLoading.value = true;
+  IdeService.ideInstallPyPkgByLocalFile({
+    requestBody: {
+      pkgList: [...pkgSet.value]
+    }
+  }).then((res) => {
+    setTimeout(() => {
+      pipInstallLoading.value = false;
+    }, 2000);
+    if (res.code == 0) {
+      refreshPkgInstalledList();
+      setTimeout(() => {
+        pipInstallLoading.value = false;
+        refreshPkgInstalledList();
+        ideStore.refreshTaskIdList();
+        pkgSet.value.clear();
+        uploadRef.value.clear();
+      }, 1000);
+    }
+  });
+};
 </script>
 
-<style scoped>
-.pkg-manager-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style scoped></style>

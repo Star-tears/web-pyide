@@ -141,6 +141,21 @@ export const $PipCommandItem = {
     title: 'PipCommandItem'
 } as const;
 
+export const $PkgList = {
+    properties: {
+        pkgList: {
+            items: {
+                type: 'string'
+            },
+            type: 'array',
+            title: 'Pkglist'
+        }
+    },
+    type: 'object',
+    required: ['pkgList'],
+    title: 'PkgList'
+} as const;
+
 export const $ProjItem = {
     properties: {
         projectName: {

@@ -67,3 +67,7 @@ class PyTaskIdItem(BaseModel):
 class PipCommandItem(BaseModel):
     command: str
     options: list[str] | None = None
+
+
+class PkgList(BaseModel):
+    pkgList: list[str]
