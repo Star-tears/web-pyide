@@ -10,7 +10,8 @@ from app.utils.taskmanager import (
     SubProgramThread,
     TaskManager,
 )
-from fastapi import APIRouter
+from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse
 import jedi
 from jedi import __version__ as jedi_version
 
@@ -295,3 +296,34 @@ def run_pip_command(data: PipCommandItem):
         taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
         taskManager.start_subprogram(task_id)
         return ResponseBase(code=0, data={"stdout": "success"})
+
+
+@router.post("/upload-file")
+async def upload_file(file: UploadFile = File(...)):
+    try:
+        filename = file.filename
+        # 指定保存文件的本地目录
+        folder_path = os.path.join(Config.PROJECTS, "uploads")
+        file_path = os.path.join(Config.PROJECTS, "uploads", filename)
+
+        # 检查文件夹是否存在
+        if not os.path.exists(folder_path):
+            # 如果文件夹不存在，创建文件夹
+            os.makedirs(folder_path)
+
+        # 保存文件到本地
+        with open(file_path, "wb") as buffer:
+            contents = await file.read()
+            buffer.write(contents)
+
+        return JSONResponse(
+            content={"message": "File uploaded successfully.", "file_path": file_path}
+        )
+
+    except Exception as e:
+        # 处理可能出现的异常，比如文件写入失败
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+    finally:
+        # 关闭文件，防止资源泄露
+        await file.close()
