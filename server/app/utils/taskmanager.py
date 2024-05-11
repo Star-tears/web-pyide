@@ -80,7 +80,7 @@ class TaskManager(object):
     def get_task_id_list(self):
         return list(self.task_dict.keys())
     
-    def get_task_info_list(self):
+    def get_task_info_dict(self):
         task_info_list:Dict[str,Dict[str,Any]]={}
         for task_id, sub_t in self.task_dict.items():
             task_info_list[task_id] = {} 

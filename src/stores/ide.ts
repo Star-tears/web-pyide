@@ -25,16 +25,29 @@ export const useIdeStore = defineStore('ide', () => {
     pythonPkgInstalledList: [],
     edgeContainerValue: null,
     activePyTaskIdValue: '',
-    taskIdList: []
+    taskIdList: [],
+    taskInfoDict: {}
   });
 
+  const toPyTaskView = (taskId: string) => {
+    ideInfo.value.edgeContainerValue = 'py-console';
+    ideInfo.value.activePyTaskIdValue = taskId;
+  };
+  const refreshTaskInfoDict = () => {
+    IdeService.ideGetTaskInfoDict().then((res) => {
+      ideInfo.value.taskInfoDict = res.data;
+    });
+  };
   const killPyTask = (taskId?: string) => {
     IdeService.ideKillPythonProgram({
       requestBody: {
         taskId: taskId ? taskId : ideInfo.value.activePyTaskIdValue
       }
     }).then((res) => {
-      refreshTaskIdList();
+      if (res.code == 0) {
+        refreshTaskIdList();
+        refreshTaskInfoDict();
+      }
     });
   };
   const reloadPyTask = (taskId?: string) => {
@@ -42,12 +55,20 @@ export const useIdeStore = defineStore('ide', () => {
       requestBody: {
         taskId: taskId ? taskId : ideInfo.value.activePyTaskIdValue
       }
+    }).then((res) => {
+      if (res.code == 0) {
+        refreshTaskInfoDict();
+      }
     });
   };
   const stopPyTask = (taskId?: string) => {
     IdeService.ideStopPythonProgram({
       requestBody: {
         taskId: taskId ? taskId : ideInfo.value.activePyTaskIdValue
+      }
+    }).then((res) => {
+      if (res.code == 0) {
+        refreshTaskInfoDict();
       }
     });
   };
@@ -63,9 +84,11 @@ export const useIdeStore = defineStore('ide', () => {
           filePath: ideInfo.value.currProj.pathSelected
         }
       }).then((res: any) => {
-        refreshTaskIdList();
-        ideInfo.value.edgeContainerValue = 'py-console';
-        ideInfo.value.activePyTaskIdValue = res.data['taskId'];
+        if (res.code == 0) {
+          refreshTaskIdList();
+          toPyTaskView(res.data['taskId']);
+          refreshTaskInfoDict();
+        }
       });
     }
   };
@@ -479,6 +502,8 @@ export const useIdeStore = defineStore('ide', () => {
     runPyTask,
     stopPyTask,
     reloadPyTask,
-    killPyTask
+    killPyTask,
+    refreshTaskInfoDict,
+    toPyTaskView
   };
 });

@@ -366,14 +366,14 @@ export class IdeService {
     }
     
     /**
-     * Get Task Info List
+     * Get Task Info Dict
      * @returns ResponseBase Successful Response
      * @throws ApiError
      */
-    public static ideGetTaskInfoList(): CancelablePromise<$OpenApiTs['/api/v1/ide/get_task_info_list']['get']['res'][200]> {
+    public static ideGetTaskInfoDict(): CancelablePromise<$OpenApiTs['/api/v1/ide/get_task_info_dict']['get']['res'][200]> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ide/get_task_info_list'
+            url: '/api/v1/ide/get_task_info_dict'
         });
     }
     
