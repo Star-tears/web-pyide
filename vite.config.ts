@@ -36,7 +36,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  base:'/',
+  base: './',
   server: {
     proxy: {
       '^/api': {

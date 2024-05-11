@@ -28,7 +28,7 @@ export type HTTPValidationError = {
 
 export type PipCommandItem = {
     command: string;
-    options: Array<(string)>;
+    options?: Array<(string)> | null;
 };
 
 export type ProjItem = {
@@ -415,10 +415,9 @@ export type $OpenApiTs = {
         };
     };
     '/api/v1/ide/run_pip_command': {
-        get: {
+        post: {
             req: {
                 requestBody: PipCommandItem;
-                self: unknown;
             };
             res: {
                 /**

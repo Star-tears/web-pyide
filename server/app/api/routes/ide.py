@@ -255,7 +255,7 @@ def get_task_info_list():
     return ResponseBase(code=0, data=get_task_info_list)
 
 
-@router.get("/run_pip_command", response_model=ResponseBase)
+@router.post("/run_pip_command", response_model=ResponseBase)
 def run_pip_command(data: PipCommandItem):
     command = data.command
     if not isinstance(command, str) or not command:

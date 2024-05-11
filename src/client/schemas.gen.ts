@@ -93,15 +93,22 @@ export const $PipCommandItem = {
             title: 'Command'
         },
         options: {
-            items: {
-                type: 'string'
-            },
-            type: 'array',
+            anyOf: [
+                {
+                    items: {
+                        type: 'string'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ],
             title: 'Options'
         }
     },
     type: 'object',
-    required: ['command', 'options'],
+    required: ['command'],
     title: 'PipCommandItem'
 } as const;
 

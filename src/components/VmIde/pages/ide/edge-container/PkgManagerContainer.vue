@@ -151,19 +151,28 @@ const refreshPkgInstalledList = () => {
   });
 };
 const installPythonPackage = () => {
-  // pipInstallLoading.value = true;
-  // ideStore.install_python_package({
-  //   pkgListStr: model.value.inputValue,
-  //   callback: {
-  //     callback: () => {
-  //       setTimeout(() => {
-  //         pipInstallLoading.value = false;
-  //         refreshPkgInstalledList();
-  //       }, 1000);
-  //     }
-  //   }
-  // });
+  pipInstallLoading.value = true;
+  const cmd = 'pip install ' + model.value.inputValue;
+  console.log(cmd);
+  IdeService.ideRunPipCommand({
+    requestBody: { command: cmd, options: [] }
+  }).then((res) => {
+    if (res.code == 0) {
+      refreshPkgInstalledList();
+      setTimeout(() => {
+        pipInstallLoading.value = false;
+        refreshPkgInstalledList();
+        ideStore.refreshTaskIdList();
+      }, 1000);
+    }
+  });
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.pkg-manager-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>

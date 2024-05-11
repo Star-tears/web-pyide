@@ -4,7 +4,7 @@
       <div class="m-2">
         <n-card title="脚本管理区">
           <template #header-extra>
-            <NTag type="success" class="mr-4"> 3个 </NTag>
+            <NTag type="success" class="mr-4"> {{ taskCount }}个 </NTag>
           </template>
           <n-table striped :single-line="false">
             <thead>
@@ -82,9 +82,11 @@ import { NScrollbar } from 'naive-ui';
 import { Icon } from '@iconify/vue/dist/iconify.js';
 
 const taskInfoList = ref<any>({});
+const taskCount = ref(0);
 onMounted(() => {
   IdeService.ideGetTaskInfoList().then((res) => {
     taskInfoList.value = res.data;
+    taskCount.value = Object.keys(taskInfoList.value).length;
   });
 });
 </script>
