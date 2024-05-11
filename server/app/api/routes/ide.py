@@ -257,13 +257,13 @@ def get_task_info_list():
 
 @router.get("/run_pip_command", response_model=ResponseBase)
 def run_pip_command(data: PipCommandItem):
-    command = data.get("command")
+    command = data.command
     if not isinstance(command, str) or not command:
         return ResponseBase(
             code=-1, data={"stdout": "pip command: {} error".format(command)}
         )
     else:
-        options = data.get("options", [])
+        options = data.options if data.options is not None else []
         if not command.startswith("pip"):
             List = command.split(" ")
             if len(List) == 1:
