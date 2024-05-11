@@ -8,10 +8,15 @@ import autoprefixer from 'autoprefixer';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
+import legacy from '@vitejs/plugin-legacy';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    legacy({
+      // targets: ['Chrome 102'],
+      modernPolyfills: true
+    }),
     vue(),
     VueDevTools(),
     AutoImport({
