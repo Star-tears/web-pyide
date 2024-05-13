@@ -9,6 +9,7 @@
       :render-prefix="renderPrefix"
       :selected-keys="selectKeys"
       :on-update:selected-keys="updateSelectKeys"
+      :render-label="renderLabel"
     />
   </NScrollbar>
 </template>
@@ -23,6 +24,7 @@ import { storeToRefs } from 'pinia';
 import { getFileIcon, getFolderIcon } from '@/utils';
 import type { Key } from 'naive-ui/es/tree/src/interface';
 import { IdeService } from '@/client';
+import LabelItem from '@/components/VmIde/components/LabelItem.vue';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -66,6 +68,28 @@ const renderPrefix = ({
     default: () => h(FileTrayFullOutline)
   });
 };
+
+const renderLabel = (info: { option: TreeOption; checked: boolean; selected: boolean }) => {
+  return h(
+    LabelItem,
+    {
+      label: info.option.label,
+      'onNew-name': (newName) => {
+        ideStore.setNodeSelected(info.option);
+        if (info.option.type === 'dir' && info.option.path === '/') {
+          renameProject(newName, info.option.label);
+        } else if (info.option.type === 'dir') {
+          renameFolder(newName, info.option.path as string, ideStore.getCurrentProj());
+        } else if (info.option.type === 'file') {
+          renameFile(newName, info.option.path as string, ideStore.getCurrentProj());
+        }
+        // console.log(ideInfo.value);
+      }
+    },
+    null
+  );
+};
+
 onMounted(() => {
   setTimeout(() => {
     ideStore.setCurrentKey('/');
@@ -82,6 +106,48 @@ onMounted(() => {
     }, 200);
   }, 300);
 });
+
+const renameProject = (newName: string, oldName: string) => {
+  IdeService.ideIdeRenameProject({
+    requestBody: {
+      oldName: oldName,
+      newName: newName
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleRename(newName);
+      ideStore.ide_save_project();
+    }
+  });
+};
+const renameFile = (newName: string, oldPath: string, projectName: string) => {
+  IdeService.ideIdeRenameFile({
+    requestBody: {
+      newName: newName,
+      projectName: projectName,
+      oldPath: oldPath
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleRename(newName);
+      ideStore.ide_save_project();
+    }
+  });
+};
+const renameFolder = (newName: string, oldPath: string, projectName: string) => {
+  IdeService.ideIdeRenameFolder({
+    requestBody: {
+      newName: newName,
+      projectName: projectName,
+      oldPath: oldPath
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleRename(newName);
+      ideStore.ide_save_project();
+    }
+  });
+};
 </script>
 
 <style scoped></style>

@@ -29,6 +29,9 @@ export const useIdeStore = defineStore('ide', () => {
     taskInfoDict: {}
   });
 
+  const getCurrentProj = () => {
+    return ideInfo.value.currProj.data.label;
+  };
   const toPyTaskView = (taskId: string) => {
     ideInfo.value.edgeContainerValue = 'py-console';
     ideInfo.value.activePyTaskIdValue = taskId;
@@ -270,6 +273,7 @@ export const useIdeStore = defineStore('ide', () => {
       const renameNodeData = (nodeData: any, parentPath: string) => {
         nodeData.path = path.join(parentPath, nodeData.name);
         nodeData.key = nodeData.path;
+        nodeData.uuid = nodeData.path;
         if (nodeData.type === 'dir' && nodeData.children) {
           for (let i = 0; i < nodeData.children.length; i++) {
             renameNodeData(nodeData.children[i], nodeData.path);
@@ -411,6 +415,7 @@ export const useIdeStore = defineStore('ide', () => {
   };
   const setNodeSelected = (selected: any) => {
     ideInfo.value.nodeSelected = selected;
+    // console.log(ideInfo.value);
   };
   const setPathSelected = (selected: any) => {
     ideInfo.value.currProj.pathSelected = selected;
@@ -504,6 +509,8 @@ export const useIdeStore = defineStore('ide', () => {
     reloadPyTask,
     killPyTask,
     refreshTaskInfoDict,
-    toPyTaskView
+    toPyTaskView,
+    handleRename,
+    getCurrentProj
   };
 });

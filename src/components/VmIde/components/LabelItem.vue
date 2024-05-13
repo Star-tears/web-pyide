@@ -30,7 +30,19 @@ import {
 } from '@/components/ui/context-menu';
 import { vOnClickOutside } from '@vueuse/components';
 
-const fileName = ref('file name');
+interface Props {
+  label?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  label: 'file name'
+});
+
+const emit = defineEmits<{
+  (e: 'new-name', newName: string): void;
+}>();
+
+const fileName = ref(props.label);
 const isRenameState = ref(false);
 const newFileName = ref('');
 
@@ -53,8 +65,10 @@ const handleEnterKey = () => {
   if (newFileName.value !== '') {
     fileName.value = newFileName.value;
     handleRenameState(false);
+    emit('new-name', newFileName.value);
   }
 };
+
 watch(newFileName, () => {
   if (newFileName.value === '') inputValidationStatus.value = 'error';
   else inputValidationStatus.value = undefined;
