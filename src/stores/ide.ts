@@ -110,6 +110,22 @@ export const useIdeStore = defineStore('ide', () => {
     ideInfo.value.selectKeys = [key];
     ideInfo.value.nodeSelected = getCurrentNode();
   };
+  const getParentNode = (path: string) => {
+    let data = ideInfo.value.currProj.data;
+    let alive = true;
+    while (alive) {
+      alive = false;
+      for (let i = 0; i < data.children.length; i++) {
+        if (data.children[i].path === path) {
+          return data;
+        } else if (path.indexOf(data.children[i].path) === 0) {
+          data = data.children[i];
+          alive = true;
+          break;
+        }
+      }
+    }
+  };
   const getCurrentNode = () => {
     if (!(ideInfo.value.selectKeys || ideInfo.value.selectKeys.length > 0)) return null;
     return findNodeByKey(ideInfo.value.currProj.data, ideInfo.value.selectKeys[0]);
@@ -158,6 +174,12 @@ export const useIdeStore = defineStore('ide', () => {
         break;
       }
     }
+    if (ideInfo.value.currProj.config.name === projectName) {
+      ideInfo.value.codeItems = [];
+      ideInfo.value.currProj.data = {};
+      ideInfo.value.currProj.expandedKeys = [];
+      ideInfo.value.currProj.pathSelected = '';
+    }
   };
   const handleDelFolder = ({ parentData, folderPath }: { parentData: any; folderPath: string }) => {
     for (let i = 0; i < parentData.children.length; i++) {
@@ -172,7 +194,7 @@ export const useIdeStore = defineStore('ide', () => {
         codeItems.push(ideInfo.value.codeItems[i]);
       }
     }
-    ideInfo.value.codeItems = codeItems;
+    ideInfo.value.codeItems.value = codeItems;
     if (ideInfo.value.currProj.pathSelected.indexOf(folderPath) === 0) {
       ideInfo.value.currProj.pathSelected = codeItems.length > 0 ? codeItems[0].path : '';
     }
@@ -182,7 +204,7 @@ export const useIdeStore = defineStore('ide', () => {
         expandedKeys.push(ideInfo.value.currProj.expandedKeys[i]);
       }
     }
-    ideInfo.value.currProj.expandedKeys = expandedKeys;
+    ideInfo.value.currProj.expandedKeys.value = expandedKeys;
   };
   const handleGetFile = ({
     filePath,
@@ -244,6 +266,7 @@ export const useIdeStore = defineStore('ide', () => {
       key: path,
       path: path,
       type: type,
+      uuid: path,
       children: []
     });
     ideInfo.value.currProj.expandedKeys.push(ideInfo.value.nodeSelected.path);
@@ -511,6 +534,10 @@ export const useIdeStore = defineStore('ide', () => {
     refreshTaskInfoDict,
     toPyTaskView,
     handleRename,
-    getCurrentProj
+    getCurrentProj,
+    handleDelFile,
+    handleDelFolder,
+    handleDelProject,
+    getParentNode
   };
 });

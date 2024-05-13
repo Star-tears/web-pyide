@@ -1,6 +1,6 @@
 <template>
   <div class="size-full">
-    <CodeEditor :codeItem="$props.codeItem" :codeItemIndex="$props.codeItemIndex"></CodeEditor>/>
+    <CodeEditor :codeItem="props.codeItem" :codeItemIndex="props.codeItemIndex"></CodeEditor>/>
   </div>
 </template>
 

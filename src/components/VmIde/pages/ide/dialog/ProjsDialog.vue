@@ -1,7 +1,11 @@
 <template>
   <div>
     <n-card hoverable title="项目列表">
-      <template #header-extra> <NTag type="success" size="small">3个</NTag> </template>
+      <template #header-extra>
+        <NTag type="success" size="small"
+          >{{ ideInfo.projList ? ideInfo.projList.length : 0 }}个</NTag
+        >
+      </template>
       <n-table striped>
         <thead>
           <tr>
@@ -78,6 +82,14 @@ const getFile = (path: string, save: boolean) => {
     }
   });
 };
+
+onMounted(() => {
+  IdeService.ideIdeListProjects().then((res) => {
+    if (res.code == 0) {
+      ideStore.handleProjects(res.data);
+    }
+  });
+});
 </script>
 
 <style scoped></style>

@@ -16,6 +16,9 @@
       <ContextMenuTrigger @dblclick="startRename">{{ fileName }}</ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem @click="startRename">重命名</ContextMenuItem>
+        <ContextMenuItem v-if="isDir" @click="createfile">新建文件</ContextMenuItem>
+        <ContextMenuItem v-if="isDir" @click="createFolder">新建文件夹</ContextMenuItem>
+        <ContextMenuItem @click="deleteFile">删除</ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   </div>
@@ -32,14 +35,19 @@ import { vOnClickOutside } from '@vueuse/components';
 
 interface Props {
   label?: string;
+  isDir?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'file name'
+  label: 'file name',
+  isDir: false
 });
 
 const emit = defineEmits<{
   (e: 'new-name', newName: string): void;
+  (e: 'create-file'): void;
+  (e: 'create-folder'): void;
+  (e: 'delete-file'): void;
 }>();
 
 const fileName = ref(props.label);
@@ -73,6 +81,17 @@ watch(newFileName, () => {
   if (newFileName.value === '') inputValidationStatus.value = 'error';
   else inputValidationStatus.value = undefined;
 });
+
+const createfile = () => {
+  emit('create-file');
+};
+const createFolder = () => {
+  emit('create-folder');
+};
+
+const deleteFile = () => {
+  emit('delete-file');
+};
 </script>
 
 <style scoped></style>

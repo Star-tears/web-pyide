@@ -84,6 +84,25 @@ const renderLabel = (info: { option: TreeOption; checked: boolean; selected: boo
           renameFile(newName, info.option.path as string, ideStore.getCurrentProj());
         }
         // console.log(ideInfo.value);
+      },
+      isDir: info.option.type === 'dir',
+      'onCreate-file': () => {
+        ideStore.setNodeSelected(info.option);
+        // todo
+      },
+      'onCreate-folder': () => {
+        ideStore.setNodeSelected(info.option);
+        // todo
+      },
+      'onDelete-file': () => {
+        ideStore.setNodeSelected(info.option);
+        if (info.option.type === 'dir' && info.option.path === '/') {
+          deleteProject(ideStore.getCurrentProj());
+        } else if (info.option.type === 'dir') {
+          deleteFolder(info.option.path as string, ideStore.getCurrentProj());
+        } else if (info.option.type === 'file') {
+          deleteFile(info.option.path as string, ideStore.getCurrentProj());
+        }
       }
     },
     null
@@ -145,6 +164,44 @@ const renameFolder = (newName: string, oldPath: string, projectName: string) => 
     if (res.code == 0) {
       ideStore.handleRename(newName);
       ideStore.ide_save_project();
+    }
+  });
+};
+const deleteProject = (projectName: string) => {
+  IdeService.ideIdeDeleteProject({
+    requestBody: {
+      projectName: projectName
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleDelProject(projectName);
+    }
+  });
+};
+const deleteFile = (filePath: string, projectName: string) => {
+  IdeService.ideIdeDeleteFile({
+    requestBody: {
+      projectName: projectName,
+      filePath: filePath
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleDelFile({ parentData: ideStore.getParentNode(filePath), filePath: filePath });
+    }
+  });
+};
+const deleteFolder = (folderPath: string, projectName: string) => {
+  IdeService.ideIdeDeleteFolder({
+    requestBody: {
+      projectName: projectName,
+      folderPath: folderPath
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleDelFolder({
+        parentData: ideStore.getParentNode(folderPath),
+        folderPath: folderPath
+      });
     }
   });
 };
