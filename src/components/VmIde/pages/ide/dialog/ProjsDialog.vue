@@ -2,9 +2,9 @@
   <div>
     <n-card hoverable title="项目列表">
       <template #header-extra>
-        <NTag type="success" size="small"
-          >{{ ideInfo.projList ? ideInfo.projList.length : 0 }}个</NTag
-        >
+        <NTag type="success" size="small">
+          {{ ideInfo.projList ? ideInfo.projList.length : 0 }}个
+        </NTag>
       </template>
       <n-table striped>
         <thead>

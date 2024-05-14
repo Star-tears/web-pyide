@@ -260,16 +260,27 @@ export const useIdeStore = defineStore('ide', () => {
   };
   const addChildrenNode = ({ name, path, type }: { name: string; path: string; type: string }) => {
     if (!ideInfo.value.nodeSelected || ideInfo.value.nodeSelected.type !== 'dir') return;
-    ideInfo.value.nodeSelected.children.push({
-      name: name,
-      label: name,
-      key: path,
-      path: path,
-      type: type,
-      uuid: path,
-      children: []
-    });
-    ideInfo.value.currProj.expandedKeys.push(ideInfo.value.nodeSelected.path);
+    if (type === 'dir') {
+      ideInfo.value.nodeSelected.children.push({
+        name: name,
+        label: name,
+        key: path,
+        path: path,
+        type: type,
+        uuid: path,
+        children: []
+      });
+    } else {
+      ideInfo.value.nodeSelected.children.push({
+        name: name,
+        label: name,
+        key: path,
+        path: path,
+        type: type,
+        uuid: path
+      });
+    }
+    // ideInfo.value.currProj.expandedKeys.push(ideInfo.value.nodeSelected.path);
     if (type == 'file') {
       ideInfo.value.currProj.pathSelected = path;
 
@@ -281,7 +292,7 @@ export const useIdeStore = defineStore('ide', () => {
       });
       ideInfo.value.codeSelected = ideInfo.value.codeItems[ideInfo.value.codeItems.length - 1];
     } else {
-      ideInfo.value.currProj.expandedKeys.push(path);
+      // ideInfo.value.currProj.expandedKeys.push(path);
     }
   };
   const handleRename = (name: string) => {
@@ -538,6 +549,7 @@ export const useIdeStore = defineStore('ide', () => {
     handleDelFile,
     handleDelFolder,
     handleDelProject,
-    getParentNode
+    getParentNode,
+    addChildrenNode
   };
 });

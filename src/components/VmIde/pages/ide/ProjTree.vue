@@ -25,13 +25,17 @@ import { getFileIcon, getFolderIcon } from '@/utils';
 import type { Key } from 'naive-ui/es/tree/src/interface';
 import { IdeService } from '@/client';
 import LabelItem from '@/components/VmIde/components/LabelItem.vue';
+import CreateDialog from './dialog/CreateDialog.vue';
+import path from 'path-browserify';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const tree_data = computed(() => ideInfo.value.currProj.data);
 // const expandKeys = ref<Key[]>(['文件夹']);
 const selectKeys = computed(() => ideInfo.value.selectKeys);
-
+const createNewFileName = ref('');
+const dialog = useDialog();
+const message = useMessage();
 const emit = defineEmits<{
   (e: 'get-item', path: string): void;
 }>();
@@ -88,11 +92,63 @@ const renderLabel = (info: { option: TreeOption; checked: boolean; selected: boo
       isDir: info.option.type === 'dir',
       'onCreate-file': () => {
         ideStore.setNodeSelected(info.option);
-        // todo
+        createNewFileName.value = '';
+        const d = dialog.success({
+          title: '新建文件',
+          content: () =>
+            h(CreateDialog, {
+              parentPath: info.option.path as string,
+              placeholder: '输入文件名',
+              newFileNameValue: createNewFileName.value,
+              'onUpdate:newFileNameValue': (v) => (createNewFileName.value = v)
+            }),
+          positiveText: '确认创建',
+          onPositiveClick: () => {
+            d.loading = true;
+            return new Promise((resolve) => {
+              if (createNewFileName.value === '') {
+                message.error('文件名不能为空');
+                setTimeout(resolve, 10);
+              } else {
+                createFile(
+                  createNewFileName.value,
+                  info.option.path as string,
+                  ideStore.getCurrentProj()
+                ).then(resolve);
+              }
+            });
+          }
+        });
       },
       'onCreate-folder': () => {
         ideStore.setNodeSelected(info.option);
-        // todo
+        createNewFileName.value = '';
+        const d = dialog.success({
+          title: '新建文件夹',
+          content: () =>
+            h(CreateDialog, {
+              parentPath: info.option.path as string,
+              placeholder: '输入文件夹名',
+              newFileNameValue: createNewFileName.value,
+              'onUpdate:newFileNameValue': (v) => (createNewFileName.value = v)
+            }),
+          positiveText: '确认创建',
+          onPositiveClick: () => {
+            d.loading = true;
+            return new Promise((resolve) => {
+              if (createNewFileName.value === '') {
+                message.error('文件夹名不能为空');
+                setTimeout(resolve, 10);
+              } else {
+                createFolder(
+                  createNewFileName.value,
+                  info.option.path as string,
+                  ideStore.getCurrentProj()
+                ).then(resolve);
+              }
+            });
+          }
+        });
       },
       'onDelete-file': () => {
         ideStore.setNodeSelected(info.option);
@@ -202,6 +258,46 @@ const deleteFolder = (folderPath: string, projectName: string) => {
         parentData: ideStore.getParentNode(folderPath),
         folderPath: folderPath
       });
+    }
+  });
+};
+
+const createFile = (fileName: string, parentPath: string, projectName: string) => {
+  return IdeService.ideIdeCreateFile({
+    requestBody: {
+      projectName: projectName,
+      parentPath: parentPath,
+      fileName: fileName
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      const newPath = path.join(parentPath, fileName);
+      ideStore.addChildrenNode({
+        name: fileName,
+        path: newPath,
+        type: 'file'
+      });
+      ideStore.ide_save_project();
+    }
+  });
+};
+
+const createFolder = (folderName: string, parentPath: string, projectName: string) => {
+  return IdeService.ideIdeCreateFolder({
+    requestBody: {
+      projectName: projectName,
+      parentPath: parentPath,
+      folderName: folderName
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      const newPath = path.join(parentPath, folderName);
+      ideStore.addChildrenNode({
+        name: folderName,
+        path: newPath,
+        type: 'dir'
+      });
+      ideStore.ide_save_project();
     }
   });
 };
