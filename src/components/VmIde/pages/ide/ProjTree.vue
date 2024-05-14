@@ -5,7 +5,7 @@
       block-line
       expand-on-click
       v-model:expanded-keys="expendKeys"
-      :data="[tree_data]"
+      :data="tree_data"
       :render-prefix="renderPrefix"
       :selected-keys="selectKeys"
       :on-update:selected-keys="updateSelectKeys"
@@ -30,7 +30,9 @@ import path from 'path-browserify';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
-const tree_data = computed(() => ideInfo.value.currProj.data);
+const tree_data = computed(() => {
+  return [ideInfo.value.currProj.data];
+});
 // const expandKeys = ref<Key[]>(['文件夹']);
 const selectKeys = computed(() => ideInfo.value.selectKeys);
 const createNewFileName = ref('');

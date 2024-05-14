@@ -49,6 +49,7 @@ const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 
 const selectProj = (projName: string) => {
+  console.log(projName);
   getProject(projName);
   ideStore.setCodeItems([]);
 };
@@ -62,6 +63,8 @@ const getProject = (name?: any) => {
       for (var i = 0; i < ideInfo.value.currProj.config.openList.length; i++) {
         getFile(ideInfo.value.currProj.config.openList[i], false);
       }
+
+      console.log(ideInfo.value);
     }
   });
 };
