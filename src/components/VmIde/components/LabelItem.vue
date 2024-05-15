@@ -18,6 +18,7 @@
         <ContextMenuItem @click="startRename">重命名</ContextMenuItem>
         <ContextMenuItem v-if="isDir" @click="createfile">新建文件</ContextMenuItem>
         <ContextMenuItem v-if="isDir" @click="createFolder">新建文件夹</ContextMenuItem>
+        <ContextMenuItem v-if="isDir" @click="uploadFile">上传文件</ContextMenuItem>
         <ContextMenuItem @click="deleteFile">删除</ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
@@ -48,6 +49,7 @@ const emit = defineEmits<{
   (e: 'create-file'): void;
   (e: 'create-folder'): void;
   (e: 'delete-file'): void;
+  (e: 'upload-file'): void;
 }>();
 
 const fileName = ref(props.label);
@@ -91,6 +93,10 @@ const createFolder = () => {
 
 const deleteFile = () => {
   emit('delete-file');
+};
+
+const uploadFile = () => {
+  emit('upload-file');
 };
 </script>
 

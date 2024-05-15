@@ -380,3 +380,32 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
         # 确保所有文件都已关闭
         for file in files:
             await file.close()
+
+
+@router.post("/upload-file-for-proj")
+async def upload_file_for_proj(file: UploadFile, projName: str, dirPath: str):
+    try:
+        # 为每个文件创建唯一的保存路径（这里简化处理，实际情况可能需要更复杂的命名规则避免冲突）
+        filename = file.filename
+        file_path = os.path.join(
+            Config.PROJECTS, "ide", projName, dirPath[1:], filename
+        )
+        in_proj_path = os.path.join(dirPath, filename)
+        print(file_path)
+        # 保存文件到本地
+        with open(file_path, "wb") as buffer:
+            contents = await file.read()
+            buffer.write(contents)
+        # paths.append(file_path)
+
+        return {
+            "message": f"File uploaded successfully.",
+            "file_paths": in_proj_path,
+        }
+
+    except Exception as e:
+        return {"error": str(e)}
+
+    finally:
+        # 确保所有文件都已关闭
+        await file.close()
