@@ -28,6 +28,7 @@ import { IdeService } from '@/client';
 import LabelItem from '@/components/VmIde/components/LabelItem.vue';
 import CreateDialog from './dialog/CreateDialog.vue';
 import path from 'path-browserify';
+import UploadFileForProjDialog from './dialog/UploadFileForProjDialog.vue';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
@@ -37,6 +38,7 @@ const tree_data = computed(() => {
 // const expandKeys = ref<Key[]>(['文件夹']);
 const selectKeys = computed(() => ideInfo.value.selectKeys);
 const createNewFileName = ref('');
+const uploadFileForProjDialogRef = ref<InstanceType<typeof UploadFileForProjDialog>>(null);
 const dialog = useDialog();
 const message = useMessage();
 const emit = defineEmits<{
@@ -163,6 +165,25 @@ const renderLabel = (info: { option: TreeOption; checked: boolean; selected: boo
         } else if (info.option.type === 'file') {
           deleteFile(info.option.path as string, ideStore.getCurrentProj());
         }
+      },
+      'onUpload-file': () => {
+        ideStore.setNodeSelected(info.option);
+        const d = dialog.success({
+          title: '上传文件',
+          content: () =>
+            h(UploadFileForProjDialog, {
+              parentPath: info.option.path as string,
+              projName: ideStore.getCurrentProj(),
+              ref: uploadFileForProjDialogRef
+            }),
+          positiveText: '确认上传',
+          onPositiveClick: () => {
+            d.loading = true;
+            return new Promise((resolve) => {
+              uploadFileForProjDialogRef.value.startUpload().then(resolve);
+            });
+          }
+        });
       }
     },
     null

@@ -84,6 +84,7 @@ declare module 'vue' {
     TooltipTrigger: typeof import('./src/components/ui/tooltip/TooltipTrigger.vue')['default']
     TopMenu: typeof import('./src/components/VmIde/pages/ide/TopMenu.vue')['default']
     TopMenuItemBase: typeof import('./src/components/VmIde/pages/ide/topmenu-items/TopMenuItemBase.vue')['default']
+    UploadFileForProjDialog: typeof import('./src/components/VmIde/pages/ide/dialog/UploadFileForProjDialog.vue')['default']
     VscodeIconsFileTypePython: typeof import('./src/components/icons/VscodeIconsFileTypePython.vue')['default']
     WebIdeProviders: typeof import('./src/components/providers/WebIdeProviders.vue')['default']
   }

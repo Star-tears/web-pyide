@@ -391,7 +391,7 @@ async def upload_file_for_proj(file: UploadFile, projName: str, dirPath: str):
             Config.PROJECTS, "ide", projName, dirPath[1:], filename
         )
         in_proj_path = os.path.join(dirPath, filename)
-        print(file_path)
+
         # 保存文件到本地
         with open(file_path, "wb") as buffer:
             contents = await file.read()
