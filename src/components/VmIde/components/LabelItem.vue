@@ -13,7 +13,9 @@
     />
 
     <ContextMenu v-else>
-      <ContextMenuTrigger @dblclick="startRename">{{ fileName }}</ContextMenuTrigger>
+      <ContextMenuTrigger @dblclick="startRename"
+        ><div class="min-w-40">{{ fileName }}</div></ContextMenuTrigger
+      >
       <ContextMenuContent>
         <ContextMenuItem @click="startRename">重命名</ContextMenuItem>
         <ContextMenuItem v-if="isDir" @click="createfile">新建文件</ContextMenuItem>
