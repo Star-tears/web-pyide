@@ -13,6 +13,19 @@ export const $Body_ide_upload_file = {
     title: 'Body_ide-upload_file'
 } as const;
 
+export const $Body_ide_upload_file_for_proj = {
+    properties: {
+        file: {
+            type: 'string',
+            format: 'binary',
+            title: 'File'
+        }
+    },
+    type: 'object',
+    required: ['file'],
+    title: 'Body_ide-upload_file_for_proj'
+} as const;
+
 export const $Body_ide_upload_multiple_files = {
     properties: {
         files: {

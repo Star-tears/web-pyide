@@ -4,6 +4,10 @@ export type Body_ide_upload_file = {
     file: (Blob | File);
 };
 
+export type Body_ide_upload_file_for_proj = {
+    file: (Blob | File);
+};
+
 export type Body_ide_upload_multiple_files = {
     files: Array<((Blob | File))>;
 };
@@ -481,6 +485,25 @@ export type $OpenApiTs = {
         post: {
             req: {
                 formData: Body_ide_upload_multiple_files;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: unknown;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/upload-file-for-proj': {
+        post: {
+            req: {
+                dirPath: string;
+                formData: Body_ide_upload_file_for_proj;
+                projName: string;
             };
             res: {
                 /**

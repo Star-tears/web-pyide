@@ -453,6 +453,31 @@ export class IdeService {
         });
     }
     
+    /**
+     * Upload File For Proj
+     * @param data The data for the request.
+     * @param data.projName
+     * @param data.dirPath
+     * @param data.formData
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static ideUploadFileForProj(data: $OpenApiTs['/api/v1/ide/upload-file-for-proj']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/upload-file-for-proj']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/upload-file-for-proj',
+            query: {
+                projName: data.projName,
+                dirPath: data.dirPath
+            },
+            formData: data.formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
 }
 
 export class IndexService {

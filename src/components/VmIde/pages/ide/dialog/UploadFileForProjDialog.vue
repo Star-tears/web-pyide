@@ -67,7 +67,7 @@ const onUpdateFileList = (fileList: UploadFileInfo[]) => {
   fileCount.value = fileList.length;
 };
 const waitUpload = async () => {
-  if (fileCount.value == uploadCount.value) {
+  if (fileCount.value <= uploadCount.value) {
     return;
   }
 
