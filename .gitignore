@@ -33,3 +33,4 @@ __pycache__
 
 /.webide-server/projects/pkgs
 /.webide-server/projects/uploads
+/.webide-server/projects/ide/**/.config

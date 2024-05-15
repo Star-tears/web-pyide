@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --force",
+    "dev": "vite",
     "dev-server": "cd server && poetry run python app/main.py -- --frontend-path \"../dist\" --webserver-path \"../.webide-server\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
