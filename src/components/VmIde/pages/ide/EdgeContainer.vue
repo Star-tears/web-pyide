@@ -1,7 +1,11 @@
 <template>
   <div class="relative size-full">
-    <NButton size="small" class="absolute z-50 right-2 top-2 px-2" :render-icon="renderMinIcon"
-      @click="onMinBtnClick" />
+    <NButton
+      size="small"
+      class="absolute z-50 right-2 top-2 px-2"
+      :render-icon="renderMinIcon"
+      @click="onMinBtnClick"
+    />
     <PyConsoleContainer :class="{ hidden: ideInfo.edgeContainerValue !== 'py-console' }" />
     <TerminalContainer :class="{ hidden: ideInfo.edgeContainerValue !== 'terminal' }" />
     <MonitorContainer v-if="ideInfo.edgeContainerValue === 'monitor'" />

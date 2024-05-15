@@ -1,56 +1,73 @@
 <template>
-    <div ref="pyConsoleContainer" class="size-full flex flex-row">
-        <div class="w-6 border-r h-full border-t">
-            <NScrollbar class="size-full">
-                <div class="w-full flex flex-col items-center justify-center mt-2 gap-1">
-                    <n-button quaternary size="tiny" class="px-1" @click="reloadPyTask">
-                        <template #icon>
-                            <Icon icon="codicon:debug-start" />
-                        </template>
-                    </n-button>
-                    <n-button quaternary size="tiny" class="px-1" @click="stopPyTask">
-                        <template #icon>
-                            <Icon icon="material-symbols:stop" />
-                        </template>
-                    </n-button>
-                    <n-button quaternary size="tiny" class="px-1" @click="killPyTask">
-                        <template #icon>
-                            <Icon icon="material-symbols:delete-outline" />
-                        </template>
-                    </n-button>
-                    <n-button quaternary size="tiny" class="px-1" @click="refreshTaskIdList">
-                        <template #icon>
-                            <Icon icon="material-symbols:refresh" />
-                        </template>
-                    </n-button>
-                </div>
-            </NScrollbar>
+  <div ref="pyConsoleContainer" class="size-full flex flex-row">
+    <div class="w-6 border-r h-full border-t">
+      <NScrollbar class="size-full">
+        <div class="w-full flex flex-col items-center justify-center mt-2 gap-1">
+          <n-button quaternary size="tiny" class="px-1" @click="reloadPyTask">
+            <template #icon>
+              <Icon icon="codicon:debug-start" />
+            </template>
+          </n-button>
+          <n-button quaternary size="tiny" class="px-1" @click="stopPyTask">
+            <template #icon>
+              <Icon icon="material-symbols:stop" />
+            </template>
+          </n-button>
+          <n-button quaternary size="tiny" class="px-1" @click="killPyTask">
+            <template #icon>
+              <Icon icon="material-symbols:delete-outline" />
+            </template>
+          </n-button>
+          <n-button quaternary size="tiny" class="px-1" @click="refreshTaskIdList">
+            <template #icon>
+              <Icon icon="material-symbols:refresh" />
+            </template>
+          </n-button>
         </div>
-        <div class="flex-1 w-0 flex flex-col">
-            <div class="h-7 mr-12 overflow-hidden">
-                <n-tabs v-model:value="activeConsoleName" type="card" closable @close="handleClose" addable class="mr-8"
-                    :tab-style="{
-                        padding: '0 0 0 0.375rem',
-                        height: '1.75rem',
-                        minWidth: '60px'
-                    }" :add-tab-style="{
+      </NScrollbar>
+    </div>
+    <div class="flex-1 w-0 flex flex-col">
+      <div class="h-7 mr-12 overflow-hidden">
+        <n-tabs
+          v-model:value="activeConsoleName"
+          type="card"
+          closable
+          @close="handleClose"
+          addable
+          class="mr-8"
+          :tab-style="{
+            padding: '0 0 0 0.375rem',
+            height: '1.75rem',
+            minWidth: '60px'
+          }"
+          :add-tab-style="{
             padding: '0 0.375rem 0 0.375rem',
             height: '1.75rem'
-        }" :on-add="onAdd">
-                    <n-tab-pane v-for="panel in ideInfo.taskIdList" :key="panel" :tab="getTabContent(panel.toString())"
-                        :name="panel">
-                    </n-tab-pane>
-                </n-tabs>
-            </div>
-            <div class="flex-1 h-0 flex flex-row">
-                <div class="h-full w-full">
-                    <PyConsoleItem v-for="name in ideInfo.taskIdList" :key="name" :task-id="name"
-                        :class="{ hidden: activeConsoleName !== name }">
-                    </PyConsoleItem>
-                </div>
-            </div>
+          }"
+          :on-add="onAdd"
+        >
+          <n-tab-pane
+            v-for="panel in ideInfo.taskIdList"
+            :key="panel"
+            :tab="getTabContent(panel.toString())"
+            :name="panel"
+          >
+          </n-tab-pane>
+        </n-tabs>
+      </div>
+      <div class="flex-1 h-0 flex flex-row">
+        <div class="h-full w-full">
+          <PyConsoleItem
+            v-for="name in ideInfo.taskIdList"
+            :key="name"
+            :task-id="name"
+            :class="{ hidden: activeConsoleName !== name }"
+          >
+          </PyConsoleItem>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -64,52 +81,52 @@ const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const pyConsoleContainer = ref(null);
 const activeConsoleName = computed({
-    get: () => ideInfo.value.activePyTaskIdValue,
-    set: (value: string) => (ideInfo.value.activePyTaskIdValue = value)
+  get: () => ideInfo.value.activePyTaskIdValue,
+  set: (value: string) => (ideInfo.value.activePyTaskIdValue = value)
 });
 
 onMounted(() => {
-    ideStore.refreshTaskIdList();
+  ideStore.refreshTaskIdList();
 });
 
 function handleClose(name: any) {
-    const index = ideInfo.value.taskIdList.findIndex((v: any) => name === v);
-    ideInfo.value.taskIdList.splice(index, 1);
-    if (activeConsoleName.value === name) {
-        if (ideInfo.value.taskIdList.length > index)
-            activeConsoleName.value = ideInfo.value.taskIdList[index];
-        else if (ideInfo.value.taskIdList.length > 0) {
-            activeConsoleName.value = ideInfo.value.taskIdList[index - 1];
-        } else {
-            activeConsoleName.value = '';
-        }
+  const index = ideInfo.value.taskIdList.findIndex((v: any) => name === v);
+  ideInfo.value.taskIdList.splice(index, 1);
+  if (activeConsoleName.value === name) {
+    if (ideInfo.value.taskIdList.length > index)
+      activeConsoleName.value = ideInfo.value.taskIdList[index];
+    else if (ideInfo.value.taskIdList.length > 0) {
+      activeConsoleName.value = ideInfo.value.taskIdList[index - 1];
+    } else {
+      activeConsoleName.value = '';
     }
+  }
 }
 
 const getTabContent = (key: string) => {
-    return h('div', { class: 'flex flex-row h-full items-center gap-2 w-full' }, [
-        h(Icon, { icon: 'ph:terminal-window', width: '20px', height: '20px' }),
-        h('div', null, key)
-    ]);
+  return h('div', { class: 'flex flex-row h-full items-center gap-2 w-full' }, [
+    h(Icon, { icon: 'ph:terminal-window', width: '20px', height: '20px' }),
+    h('div', null, key)
+  ]);
 };
 
 const onAdd = () => {
-    // panelsRef.value.push(indexCount.value);
-    // activeConsoleName.value = indexCount.value;
-    // indexCount.value++;
+  // panelsRef.value.push(indexCount.value);
+  // activeConsoleName.value = indexCount.value;
+  // indexCount.value++;
 };
 const refreshTaskIdList = () => {
-    ideStore.refreshTaskIdList();
+  ideStore.refreshTaskIdList();
 };
 
 const reloadPyTask = () => {
-    ideStore.reloadPyTask();
+  ideStore.reloadPyTask();
 };
 const stopPyTask = () => {
-    ideStore.stopPyTask();
+  ideStore.stopPyTask();
 };
 const killPyTask = () => {
-    ideStore.killPyTask();
+  ideStore.killPyTask();
 };
 </script>
 

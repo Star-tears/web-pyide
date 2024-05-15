@@ -20,7 +20,6 @@
 import { NCard, NTag } from 'naive-ui';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
-import { IdeService } from '@/client';
 
 interface Props {
   parentPath: string;
