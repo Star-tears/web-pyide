@@ -4,11 +4,12 @@
       show-line
       block-line
       expand-on-click
-      v-model:expanded-keys="expendKeys"
+      :expanded-keys="expendKeys"
       :data="tree_data"
       :render-prefix="renderPrefix"
       :selected-keys="selectKeys"
       :on-update:selected-keys="updateSelectKeys"
+      :on-update-expanded-keys="updateExpandedKeys"
       :render-label="renderLabel"
     />
   </NScrollbar>
@@ -42,14 +43,15 @@ const emit = defineEmits<{
   (e: 'get-item', path: string): void;
 }>();
 
-const expendKeys = computed({
-  get: () => ideInfo.value.currProj.expandedKeys,
-  set: (value: Key[]) => {
-    ideInfo.value.currProj.expandedKeys = value;
-    ideStore.ide_save_project();
-  }
-});
-
+const expendKeys = computed(() => ideInfo.value.currProj.expandedKeys);
+const updateExpandedKeys = (
+  keys: Array<string | number>,
+  option: Array<TreeOption | null>,
+  meta: { node: TreeOption | null; action: 'expand' | 'collapse' | 'filter' }
+) => {
+  ideInfo.value.currProj.expandedKeys = keys;
+  ideStore.ide_save_project();
+};
 const updateSelectKeys = (
   keys: Array<string | number>,
   option: Array<TreeOption | null>,
@@ -79,7 +81,7 @@ const renderLabel = (info: { option: TreeOption; checked: boolean; selected: boo
   return h(
     LabelItem,
     {
-      label: info.option.label,
+      label: info.option.name as string,
       'onNew-name': (newName) => {
         ideStore.setNodeSelected(info.option);
         if (info.option.type === 'dir' && info.option.path === '/') {

@@ -27,7 +27,9 @@
                 </NTag>
               </td>
               <td>
-                <div v-if="ideInfo.currProj.data.name !== data.name" class="select-none">打开</div>
+                <div v-if="ideInfo.currProj.config.name !== data.name" class="select-none">
+                  打开
+                </div>
                 <check-one v-else theme="filled" size="24" fill="#7ed321" />
               </td>
             </tr>
@@ -49,7 +51,9 @@ const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 
 const selectProj = (projName: string) => {
-  console.log(projName);
+  // 解锁对树展开的控制，防止目录切换错误
+  ideInfo.value.currProj.expandedKeys = [];
+  ideInfo.value.selectKeys = [];
   getProject(projName);
   ideStore.setCodeItems([]);
 };
@@ -63,8 +67,6 @@ const getProject = (name?: any) => {
       for (var i = 0; i < ideInfo.value.currProj.config.openList.length; i++) {
         getFile(ideInfo.value.currProj.config.openList[i], false);
       }
-
-      console.log(ideInfo.value);
     }
   });
 };
