@@ -35,9 +35,9 @@ def main():
     Config.WEBIDESERVER=os.path.join(args.webserver_path)
     Config.PROJECTS=os.path.join(Config.WEBIDESERVER,'projects')
     app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json",
-    generate_unique_id_function=custom_generate_unique_id,
+        title=settings.PROJECT_NAME,
+        openapi_url=f"{settings.API_V1_STR}/openapi.json",
+        generate_unique_id_function=custom_generate_unique_id,
     )
     app.include_router(api_router, prefix=settings.API_V1_STR)
     app.mount("/assets", StaticFiles(directory= os.path.join(Config.FRONTEND,'assets')), name="static")
