@@ -56,9 +56,6 @@ const currProj = computed(() => {
 });
 
 const selectProj = (projName: string) => {
-  // 解锁对树展开的控制，防止目录切换错误
-  ideInfo.value.currProj.expandedKeys = [];
-  ideInfo.value.selectKeys = [];
   getProject(projName);
   ideStore.setCodeItems([]);
 };

@@ -11,6 +11,7 @@
       :on-update:selected-keys="updateSelectKeys"
       :on-update-expanded-keys="updateExpandedKeys"
       :render-label="renderLabel"
+      :key="currProj"
     />
   </NScrollbar>
 </template>
@@ -23,7 +24,6 @@ import { FileTrayFullOutline } from '@vicons/ionicons5';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { getFileIcon, getFolderIcon } from '@/utils';
-import type { Key } from 'naive-ui/es/tree/src/interface';
 import { IdeService } from '@/client';
 import LabelItem from '@/components/VmIde/components/LabelItem.vue';
 import CreateDialog from './dialog/CreateDialog.vue';
@@ -35,7 +35,12 @@ const { ideInfo } = storeToRefs(ideStore);
 const tree_data = computed(() => {
   return [ideInfo.value.currProj.data];
 });
-// const expandKeys = ref<Key[]>(['文件夹']);
+
+// 绑定key为currProj，当前项目变化时，重新渲染文件树组件，防止数据绑定导致的未实时变化问题
+const currProj = computed(() => {
+  return ideStore.getCurrentProj();
+});
+
 const selectKeys = computed(() => ideInfo.value.selectKeys);
 const createNewFileName = ref('');
 const uploadFileForProjDialogRef = ref<InstanceType<typeof UploadFileForProjDialog>>(null);
@@ -83,7 +88,7 @@ const renderLabel = (info: { option: TreeOption; checked: boolean; selected: boo
   return h(
     LabelItem,
     {
-      label: info.option.name as string,
+      label: info.option.label,
       'onNew-name': (newName) => {
         ideStore.setNodeSelected(info.option);
         if (info.option.type === 'dir' && info.option.path === '/') {
