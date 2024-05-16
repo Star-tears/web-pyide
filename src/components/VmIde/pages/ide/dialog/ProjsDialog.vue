@@ -27,10 +27,10 @@
                 </NTag>
               </td>
               <td>
-                <div v-if="ideInfo.currProj.config.name !== data.name" class="select-none">
+                <Button v-if="currProj !== data.name" variant="link" @click="selectProj(data.name)">
                   打开
-                </div>
-                <check-one v-else theme="filled" size="24" fill="#7ed321" />
+                </Button>
+                <check-one v-else theme="filled" size="24" fill="#7ed321" class="ml-4" />
               </td>
             </tr>
           </template>
@@ -41,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
 import { NCard, NTag } from 'naive-ui';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
@@ -49,6 +50,10 @@ import { IdeService } from '@/client';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
+
+const currProj = computed(() => {
+  return ideStore.getCurrentProj();
+});
 
 const selectProj = (projName: string) => {
   // 解锁对树展开的控制，防止目录切换错误
