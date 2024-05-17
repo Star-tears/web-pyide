@@ -2,7 +2,7 @@
   <div class="relative size-full">
     <NButton
       size="small"
-      class="absolute z-50 right-2 top-2 px-2"
+      class="absolute right-2 top-2 z-50 px-2"
       :render-icon="renderMinIcon"
       @click="onMinBtnClick"
     />

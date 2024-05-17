@@ -1,8 +1,8 @@
 <template>
-  <div ref="pyConsoleContainer" class="size-full flex flex-row">
-    <div class="w-6 border-r h-full border-t">
+  <div ref="pyConsoleContainer" class="flex size-full flex-row">
+    <div class="h-full w-6 border-r border-t">
       <NScrollbar class="size-full">
-        <div class="w-full flex flex-col items-center justify-center mt-7 gap-1">
+        <div class="mt-7 flex w-full flex-col items-center justify-center gap-1">
           <n-button quaternary size="tiny" class="px-1" @click="reloadPyTask">
             <template #icon>
               <Icon icon="material-symbols:refresh" />
@@ -21,8 +21,8 @@
         </div>
       </NScrollbar>
     </div>
-    <div class="flex-1 w-0 flex flex-col">
-      <div class="h-7 mr-12 overflow-hidden">
+    <div class="flex w-0 flex-1 flex-col">
+      <div class="mr-12 h-7 overflow-hidden">
         <n-tabs
           v-model:value="activeConsoleName"
           type="card"
@@ -57,8 +57,8 @@
           </template>
         </n-tabs>
       </div>
-      <div class="flex-1 h-0 flex flex-row">
-        <div class="h-full w-full">
+      <div class="flex h-0 flex-1 flex-row">
+        <div class="size-full">
           <PyConsoleItem
             v-for="name in ideInfo.taskIdList"
             :key="name"

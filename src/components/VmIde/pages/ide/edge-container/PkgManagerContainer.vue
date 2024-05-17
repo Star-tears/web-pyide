@@ -1,12 +1,12 @@
 <template>
-  <div class="size-full flex flex-col">
-    <div class="h-11 flex flex-row items-center">
-      <div class="font-semibold text-lg mb-2 ml-4">Python 包管理</div>
+  <div class="flex size-full flex-col">
+    <div class="flex h-11 flex-row items-center">
+      <div class="mb-2 ml-4 text-lg font-semibold">Python 包管理</div>
     </div>
     <Separator />
-    <div class="flex-grow h-0">
-      <div class="size-full flex flex-row">
-        <div class="min-w-80 w-4/12 h-full">
+    <div class="h-0 grow">
+      <div class="flex size-full flex-row">
+        <div class="h-full w-4/12 min-w-80">
           <NScrollbar>
             <div class="m-2">
               <NCard hoverable>
@@ -39,7 +39,7 @@
           </NScrollbar>
         </div>
         <Separator orientation="vertical" />
-        <div class="flex-grow w-0 h-full">
+        <div class="h-full w-0 grow">
           <NScrollbar>
             <div class="m-2">
               <NCard hoverable content-style="padding: 0;">
@@ -94,7 +94,7 @@
                       </NUploadDragger>
                     </NUpload>
                     <NButton
-                      class="w-full mb-2"
+                      class="mb-2 w-full"
                       @click="installPkgByLocalFiles"
                       :loading="pipInstallLoading"
                       :disabled="pkgSet.size === 0"

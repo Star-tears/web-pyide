@@ -17,7 +17,7 @@
         <tbody>
           <template v-for="data in ideInfo.projList" :key="data.name">
             <tr
-              class="hover:scale-105 transition-all duration-300 ease-in-out"
+              class="transition-all duration-300 ease-in-out hover:scale-105"
               @dblclick="selectProj(data.name)"
             >
               <td class="select-none">{{ data.name }}</td>

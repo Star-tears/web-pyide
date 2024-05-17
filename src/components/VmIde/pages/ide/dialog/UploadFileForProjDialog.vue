@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-col gap-2">
-      <div class="flex flex-row gap-1 items-center">
+      <div class="flex flex-row items-center gap-1">
         <div>父路径:</div>
         <n-tag type="info"> {{ props.parentPath }} </n-tag>
       </div>

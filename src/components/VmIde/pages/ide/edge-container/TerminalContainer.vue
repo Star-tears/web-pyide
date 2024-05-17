@@ -1,6 +1,6 @@
 <template>
-  <div ref="terminalContainer" class="size-full flex flex-col">
-    <div class="ml-2 h-7 mr-12 overflow-hidden">
+  <div ref="terminalContainer" class="flex size-full flex-col">
+    <div class="ml-2 mr-12 h-7 overflow-hidden">
       <n-tabs
         v-model:value="activeConsoleName"
         type="card"
@@ -29,8 +29,8 @@
         </n-tab-pane>
       </n-tabs>
     </div>
-    <div class="flex-1 h-0">
-      <div class="h-full w-full">
+    <div class="h-0 flex-1">
+      <div class="size-full">
         <TerminalItem
           v-for="name in panelsRef"
           :key="name"

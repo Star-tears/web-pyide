@@ -45,32 +45,32 @@
                   </td>
                   <td>
                     <div
-                      class="inline-flex border border-gray-200 rounded-full p-0.5 dark:border-neutral-700"
+                      class="inline-flex rounded-full border border-gray-200 p-0.5 dark:border-neutral-700"
                     >
                       <button
                         type="button"
-                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                        class="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
                         @click="toPyTaskView(taskId)"
                       >
                         <Icon icon="mdi:eye" width="24" height="24" />
                       </button>
                       <button
                         type="button"
-                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                        class="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
                         @click="reloadPyTask(taskId)"
                       >
                         <Icon icon="ion:reload-circle" width="24" height="24" />
                       </button>
                       <button
                         type="button"
-                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                        class="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
                         @click="stopPyTask(taskId)"
                       >
                         <Icon icon="material-symbols:stop" width="24" height="24" />
                       </button>
                       <button
                         type="button"
-                        class="inline-flex flex-shrink-0 justify-center items-center size-8 rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
+                        class="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-gray-500 hover:bg-blue-100 hover:text-blue-800 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-neutral-500 dark:hover:bg-blue-900 dark:hover:text-blue-200"
                         @click="killPyTask(taskId)"
                       >
                         <Icon icon="mdi:bin" width="24" height="24" />

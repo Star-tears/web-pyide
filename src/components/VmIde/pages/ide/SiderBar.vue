@@ -1,6 +1,6 @@
 <template>
   <div class="w-12 border-r border-slate-600">
-    <div class="flex flex-col items-center justify-between h-full">
+    <div class="flex h-full flex-col items-center justify-between">
       <div></div>
       <div class="mb-6 flex flex-col justify-center">
         <ToggleGroup

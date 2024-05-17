@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row">
-    <SiderBar class="w-12 h-full" />
-    <MainContent class="flex-1 w-0" />
+    <SiderBar class="h-full w-12" />
+    <MainContent class="w-0 flex-1" />
   </div>
 </template>
 
