@@ -295,7 +295,7 @@ def run_pip_command(data: PipCommandItem):
         task_id = gen_run_id("pip-cmd")
         taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
         taskManager.start_subprogram(task_id)
-        return ResponseBase(code=0, data={"stdout": "success"})
+        return ResponseBase(code=0, data={"stdout": "success","taskId":task_id})
 
 
 @router.post("/install_py_pkg_by_local_file", response_model=ResponseBase)
@@ -309,7 +309,7 @@ def install_py_pkg_by_local_file(data: PkgList):
     task_id = gen_run_id("pip-cmd")
     taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
     taskManager.start_subprogram(task_id)
-    return ResponseBase(code=0, data={"stdout": "success"})
+    return ResponseBase(code=0, data={"stdout": "success","taskId":task_id})
 
 
 @router.post("/upload-file")

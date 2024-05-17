@@ -178,6 +178,7 @@ const installPythonPackage = () => {
         refreshPkgInstalledList();
         ideStore.refreshTaskIdList();
       }, 1000);
+      ideStore.toPyTaskView((res.data as any).taskId);
     }
   });
 };
@@ -210,6 +211,7 @@ const installPkgByLocalFiles = () => {
         pkgSet.value.clear();
         uploadRef.value.clear();
       }, 1000);
+      ideStore.toPyTaskView((res.data as any).taskId);
     }
   });
 };

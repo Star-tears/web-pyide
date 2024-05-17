@@ -33,6 +33,9 @@ export const useIdeStore = defineStore('ide', () => {
     return ideInfo.value.currProj.data.label;
   };
   const toPyTaskView = (taskId: string) => {
+    if (!ideInfo.value.taskIdList.includes(taskId)) {
+      ideInfo.value.taskIdList.push(taskId);
+    }
     ideInfo.value.edgeContainerValue = 'py-console';
     ideInfo.value.activePyTaskIdValue = taskId;
   };

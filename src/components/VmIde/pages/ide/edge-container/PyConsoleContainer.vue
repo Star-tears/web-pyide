@@ -2,10 +2,10 @@
   <div ref="pyConsoleContainer" class="size-full flex flex-row">
     <div class="w-6 border-r h-full border-t">
       <NScrollbar class="size-full">
-        <div class="w-full flex flex-col items-center justify-center mt-2 gap-1">
+        <div class="w-full flex flex-col items-center justify-center mt-7 gap-1">
           <n-button quaternary size="tiny" class="px-1" @click="reloadPyTask">
             <template #icon>
-              <Icon icon="codicon:debug-start" />
+              <Icon icon="material-symbols:refresh" />
             </template>
           </n-button>
           <n-button quaternary size="tiny" class="px-1" @click="stopPyTask">
@@ -16,11 +16,6 @@
           <n-button quaternary size="tiny" class="px-1" @click="killPyTask">
             <template #icon>
               <Icon icon="material-symbols:delete-outline" />
-            </template>
-          </n-button>
-          <n-button quaternary size="tiny" class="px-1" @click="refreshTaskIdList">
-            <template #icon>
-              <Icon icon="material-symbols:refresh" />
             </template>
           </n-button>
         </div>
@@ -53,6 +48,13 @@
             :name="panel"
           >
           </n-tab-pane>
+          <template #prefix>
+            <n-button quaternary size="small" class="px-1" @click="refreshTaskIdList">
+              <template #icon>
+                <Icon icon="tabler:refresh" />
+              </template>
+            </n-button>
+          </template>
         </n-tabs>
       </div>
       <div class="flex-1 h-0 flex flex-row">
