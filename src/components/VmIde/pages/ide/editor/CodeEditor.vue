@@ -35,7 +35,9 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
+onMounted(() => {
+  if (!props.codeItem.path.startsWith('/')) readOnly.value = true;
+});
 // const code = ref(`print('Hello, world!')`);
 const extensions = [python(), oneDark];
 

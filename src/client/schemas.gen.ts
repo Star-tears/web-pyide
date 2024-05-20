@@ -284,6 +284,18 @@ export const $RunPythonItem = {
     title: 'RunPythonItem'
 } as const;
 
+export const $SDKFileItem = {
+    properties: {
+        filePath: {
+            type: 'string',
+            title: 'Filepath'
+        }
+    },
+    type: 'object',
+    required: ['filePath'],
+    title: 'SDKFileItem'
+} as const;
+
 export const $SaveProjItem = {
     properties: {
         projectName: {

@@ -30,6 +30,8 @@ class FileItem(BaseModel):
     projectName: str
     filePath: str
 
+class SDKFileItem(BaseModel):
+    filePath: str
 
 class ReNameItem(BaseModel):
     projectName: str

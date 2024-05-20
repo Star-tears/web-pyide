@@ -44,6 +44,8 @@ def ide_get_project(data: ProjItem):
 def get_sdk_project():
     prj_path = os.path.join(Config.SDK)
     code, project = get_readonly_project(prj_path,"sdk")
+    project["name"] += " ( " + str(Config.SDK) + " )"
+    project["label"] += " ( " + str(Config.SDK) + " )"
     return ResponseBase(code=code, data=project)
 
 @router.post("/ide_create_project", response_model=ResponseBase)
@@ -141,6 +143,12 @@ def ide_get_file(data: FileItem):
     code, file_data = get_project_file(prj_path, file_path)
     return ResponseBase(code=code, data=file_data)
 
+@router.post("/get_sdk_file", response_model=ResponseBase)
+def get_sdk_file(data: SDKFileItem):
+    prj_path = os.path.join(Config.SDK)
+    file_path = os.path.join(prj_path, convert_path(data.filePath))
+    code, file_data = get_project_file(prj_path, file_path)
+    return ResponseBase(code=code, data=file_data)
 
 @router.post("/ide_delete_file", response_model=ResponseBase)
 def ide_delete_file(data: FileItem):

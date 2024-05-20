@@ -78,6 +78,10 @@ export type RunPythonItem = {
     filePath: string;
 };
 
+export type SDKFileItem = {
+    filePath: string;
+};
+
 export type SaveProjItem = {
     projectName: string;
     expendKeys: Array<unknown>;
@@ -125,6 +129,16 @@ export type $OpenApiTs = {
                  * Validation Error
                  */
                 422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/get_sdk_project': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
             };
         };
     };
@@ -234,6 +248,23 @@ export type $OpenApiTs = {
         post: {
             req: {
                 requestBody: FileItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/get_sdk_file': {
+        post: {
+            req: {
+                requestBody: SDKFileItem;
             };
             res: {
                 /**

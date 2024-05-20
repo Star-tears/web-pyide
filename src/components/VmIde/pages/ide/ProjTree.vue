@@ -13,6 +13,14 @@
       :render-label="renderLabel"
       :key="currProj"
     />
+    <NTree
+      show-line
+      block-line
+      expand-on-click
+      :data="sdk_data"
+      :render-prefix="renderSdkPrefix"
+      :on-update:selected-keys="updateSdkSelectKeys"
+    />
   </NScrollbar>
 </template>
 
@@ -29,7 +37,7 @@ import LabelItem from '@/components/VmIde/components/LabelItem.vue';
 import CreateDialog from './dialog/CreateDialog.vue';
 import path from 'path-browserify';
 import UploadFileForProjDialog from './dialog/UploadFileForProjDialog.vue';
-
+import { Icon } from '@iconify/vue/dist/iconify.js';
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
 const tree_data = computed(() => {
@@ -40,6 +48,7 @@ const tree_data = computed(() => {
 const currProj = computed(() => {
   return ideStore.getCurrentProj();
 });
+const sdk_data = ref();
 
 const selectKeys = computed(() => ideInfo.value.selectKeys);
 const createNewFileName = ref('');
@@ -68,6 +77,33 @@ const updateSelectKeys = (
   if (option && option.length > 0 && option[0].type === 'file')
     emit('get-item', option[0].path as string);
 };
+const updateSdkSelectKeys = (
+  keys: Array<string | number>,
+  option: Array<TreeOption | null>,
+  meta: { node: TreeOption | null; action: 'select' | 'unselect' }
+) => {
+  ideStore.setCurrentKey(keys[0] as string);
+  const pathString = option[0].path as string;
+
+  // 找到第一个 '/' 的索引位置
+  const slashIndex: number = pathString.indexOf('/');
+
+  // 如果找到了 '/'，则从它之后的部分截取字符串；否则，直接返回原字符串
+  const resultString: string = slashIndex !== -1 ? pathString.substring(slashIndex) : pathString;
+  IdeService.ideGetSdkFile({
+    requestBody: {
+      filePath: resultString
+    }
+  }).then((res) => {
+    if (res.code == 0) {
+      ideStore.handleGetFile({
+        filePath: pathString,
+        data: res.data,
+        save: false
+      });
+    }
+  });
+};
 const renderPrefix = ({
   option,
   checked,
@@ -77,6 +113,24 @@ const renderPrefix = ({
   checked: boolean;
   selected: boolean;
 }) => {
+  if (option.type === 'file') return getFileIcon(option.label);
+  if (option.type === 'dir') return getFolderIcon(option.label);
+  return h(NIcon, null, {
+    default: () => h(FileTrayFullOutline)
+  });
+};
+
+const renderSdkPrefix = ({
+  option,
+  checked,
+  selected
+}: {
+  option: TreeOption;
+  checked: boolean;
+  selected: boolean;
+}) => {
+  if ((option.path as string).endsWith('/'))
+    return h(Icon, { icon: 'vscode-icons:folder-type-devcontainer', width: 20, height: 20 });
   if (option.type === 'file') return getFileIcon(option.label);
   if (option.type === 'dir') return getFolderIcon(option.label);
   return h(NIcon, null, {
@@ -209,6 +263,13 @@ onMounted(() => {
         }
       }
     }, 200);
+  }, 300);
+  setTimeout(() => {
+    IdeService.ideGetSdkProject().then((res) => {
+      if (res.code == 0) {
+        sdk_data.value = [res.data];
+      }
+    });
   }, 300);
 });
 
