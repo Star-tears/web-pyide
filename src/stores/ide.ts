@@ -110,6 +110,7 @@ export const useIdeStore = defineStore('ide', () => {
     });
   };
   const setCurrentKey = (key: string) => {
+    ideInfo.value.currProj.pathSelected = key;
     ideInfo.value.selectKeys = [key];
     ideInfo.value.nodeSelected = getCurrentNode();
   };
