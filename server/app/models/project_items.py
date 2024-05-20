@@ -61,6 +61,10 @@ class RunPythonItem(BaseModel):
     projectName: str
     filePath: str
 
+class DebugPythonItem(BaseModel):
+    projectName: str
+    filePath: str
+    options: list[str] | None = None
 
 class PyTaskIdItem(BaseModel):
     taskId: str

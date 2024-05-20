@@ -328,6 +328,25 @@ export class IdeService {
     }
     
     /**
+     * Debug Python Program
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static ideDebugPythonProgram(data: $OpenApiTs['/api/v1/ide/debug_python_program']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/debug_python_program']['post']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ide/debug_python_program',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
      * Kill Python Program
      * @param data The data for the request.
      * @param data.requestBody

@@ -230,6 +230,25 @@ def run_python_program(data: RunPythonItem):
         return ResponseBase(code=0, data={"taskId": task_id})
     return ResponseBase(code=-1, data={})
 
+@router.post("/debug_python_program", response_model=ResponseBase)
+def debug_python_program(data: DebugPythonItem):
+    prj_name = data.projectName
+    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    file_path = os.path.join(prj_path, convert_path(data.filePath))
+    if (
+        os.path.exists(file_path)
+        and os.path.isfile(file_path)
+        and file_path.endswith(".py")
+    ):
+        taskManager = TaskManager()
+        options = data.options if data.options is not None else []
+        cmd = [Config.PYTHON, "-u", file_path] + options
+        task_id = gen_run_id(data.filePath)
+        taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
+        taskManager.start_subprogram(task_id)
+        return ResponseBase(code=0, data={"taskId": task_id})
+    return ResponseBase(code=-1, data={})
+
 
 @router.post("/kill_python_program", response_model=ResponseBase)
 def kill_python_program(data: PyTaskIdItem):

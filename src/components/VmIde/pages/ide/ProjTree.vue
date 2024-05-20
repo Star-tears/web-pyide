@@ -83,7 +83,7 @@ const updateSdkSelectKeys = (
   meta: { node: TreeOption | null; action: 'select' | 'unselect' }
 ) => {
   ideStore.setCurrentKey(keys[0] as string);
-  const pathString = option[0].path as string;
+  const pathString = option[0].key as string;
 
   // 找到第一个 '/' 的索引位置
   const slashIndex: number = pathString.indexOf('/');

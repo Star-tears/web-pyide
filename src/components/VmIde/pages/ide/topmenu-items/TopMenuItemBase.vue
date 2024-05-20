@@ -3,7 +3,7 @@
     <DropdownMenuTrigger>
       <div
         class="rounded px-4 dark:hover:bg-white/20"
-        :class="{ 'bg-white': isActive }"
+        :class="{ 'bg-white/20': isActive }"
         @click="onItemClicked"
         v-on-click-outside="onClickOutside"
       >

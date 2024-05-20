@@ -24,6 +24,12 @@ export type CreateFolderItem = {
     folderName: string;
 };
 
+export type DebugPythonItem = {
+    projectName: string;
+    filePath: string;
+    options?: Array<(string)> | null;
+};
+
 export type DeleteFolderItem = {
     projectName: string;
     folderPath: string;
@@ -377,6 +383,23 @@ export type $OpenApiTs = {
         post: {
             req: {
                 requestBody: RunPythonItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/debug_python_program': {
+        post: {
+            req: {
+                requestBody: DebugPythonItem;
             };
             res: {
                 /**

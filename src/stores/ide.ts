@@ -29,6 +29,26 @@ export const useIdeStore = defineStore('ide', () => {
     taskInfoDict: {}
   });
 
+  const getFilePathList = (exclude: string[]) => {
+    const filePathList: any[] = [];
+    const dfs = (node: any): any => {
+      if (node.type === 'file') {
+        if (!exclude.includes(node.path)) filePathList.push({ label: node.path, value: node.path });
+        return;
+      }
+      if (node.children)
+        for (const child of node.children) {
+          const foundNode = dfs(child);
+          if (foundNode) {
+            return foundNode;
+          }
+        }
+      return;
+    };
+    dfs(ideInfo.value.currProj.data);
+    return filePathList;
+  };
+
   const getCurrentProj = () => {
     return ideInfo.value.currProj.data.label;
   };
@@ -554,6 +574,7 @@ export const useIdeStore = defineStore('ide', () => {
     handleDelFolder,
     handleDelProject,
     getParentNode,
-    addChildrenNode
+    addChildrenNode,
+    getFilePathList
   };
 });
