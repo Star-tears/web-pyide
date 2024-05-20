@@ -9,6 +9,7 @@
     :extensions="extensions"
     @ready="handleReady"
     @change="codeChanged"
+    :disabled="readOnly"
   />
 </template>
 
@@ -25,6 +26,8 @@ import { useDebounceFn } from '@vueuse/core';
 
 const ideStore = useIdeStore();
 const { ideInfo } = storeToRefs(ideStore);
+
+const readOnly = ref(false);
 
 interface Props {
   codeItem?: any;
