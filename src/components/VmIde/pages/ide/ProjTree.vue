@@ -83,26 +83,29 @@ const updateSdkSelectKeys = (
   meta: { node: TreeOption | null; action: 'select' | 'unselect' }
 ) => {
   ideStore.setCurrentKey(keys[0] as string);
-  const pathString = option[0].key as string;
 
-  // 找到第一个 '/' 的索引位置
-  const slashIndex: number = pathString.indexOf('/');
+  if (option && option.length > 0 && option[0].type === 'file') {
+    const pathString = option[0].key as string;
 
-  // 如果找到了 '/'，则从它之后的部分截取字符串；否则，直接返回原字符串
-  const resultString: string = slashIndex !== -1 ? pathString.substring(slashIndex) : pathString;
-  IdeService.ideGetSdkFile({
-    requestBody: {
-      filePath: resultString
-    }
-  }).then((res) => {
-    if (res.code == 0) {
-      ideStore.handleGetFile({
-        filePath: pathString,
-        data: res.data,
-        save: false
-      });
-    }
-  });
+    // 找到第一个 '/' 的索引位置
+    const slashIndex: number = pathString.indexOf('/');
+
+    // 如果找到了 '/'，则从它之后的部分截取字符串；否则，直接返回原字符串
+    const resultString: string = slashIndex !== -1 ? pathString.substring(slashIndex) : pathString;
+    IdeService.ideGetSdkFile({
+      requestBody: {
+        filePath: resultString
+      }
+    }).then((res) => {
+      if (res.code == 0) {
+        ideStore.handleGetFile({
+          filePath: pathString,
+          data: res.data,
+          save: false
+        });
+      }
+    });
+  }
 };
 const renderPrefix = ({
   option,

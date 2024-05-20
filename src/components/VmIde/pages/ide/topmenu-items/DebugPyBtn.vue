@@ -39,7 +39,14 @@ const debugPyTask = () => {
     onPositiveClick: () => {
       d.loading = true;
       return new Promise((resolve) => {
-        debugPyDialog.value.submitDebugTask().then(resolve);
+        debugPyDialog.value
+          .submitDebugTask()
+          .then((res) => {
+            if (res.code == 0) {
+              ideStore.toPyTaskView((res.data as any).taskId);
+            }
+          })
+          .then(resolve);
       });
     }
   });

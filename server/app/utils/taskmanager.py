@@ -200,7 +200,7 @@ class SubProgramThread(threading.Thread):
                 stdout = p.stdout.readline()
                 stdout = stdout.strip()
                 self.response_to_client(stdout)
-                time.sleep(0.01)
+                time.sleep(0.02)
             if not self.alive:
                 self.response_to_client("[program is terminate]")
                 p.kill()
@@ -211,13 +211,13 @@ class SubProgramThread(threading.Thread):
                 self.response_to_client(stdout)
             except:
                 pass
-            self.response_to_client(stdout)
+            # self.response_to_client(stdout)
             if p.returncode == 0:
-                print("Program {} success".format(self.id))
+                self.response_to_client("Program {} success".format(self.id))
                 p.kill()
                 return "ok"
             else:
-                print("Program {} failed".format(self.id))
+                self.response_to_client("Program {} failed".format(self.id))
                 p.kill()
                 return "failed"
         except Exception as e:
