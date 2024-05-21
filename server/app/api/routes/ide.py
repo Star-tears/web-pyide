@@ -1,5 +1,6 @@
 import asyncio
 import os
+from pathlib import Path
 import subprocess
 import threading
 from typing import Any, List
@@ -40,13 +41,15 @@ def ide_get_project(data: ProjItem):
     code, project = get_project(prj_path)
     return ResponseBase(code=code, data=project)
 
+
 @router.get("/get_sdk_project", response_model=ResponseBase)
 def get_sdk_project():
     prj_path = os.path.join(Config.SDK)
-    code, project = get_readonly_project(prj_path,"sdk")
+    code, project = get_readonly_project(prj_path, "sdk")
     project["name"] += " ( " + str(Config.SDK) + " )"
     project["label"] += " ( " + str(Config.SDK) + " )"
     return ResponseBase(code=code, data=project)
+
 
 @router.post("/ide_create_project", response_model=ResponseBase)
 async def ide_create_project(data: ProjItem):
@@ -143,12 +146,14 @@ def ide_get_file(data: FileItem):
     code, file_data = get_project_file(prj_path, file_path)
     return ResponseBase(code=code, data=file_data)
 
+
 @router.post("/get_sdk_file", response_model=ResponseBase)
 def get_sdk_file(data: SDKFileItem):
     prj_path = os.path.join(Config.SDK)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     code, file_data = get_project_file(prj_path, file_path)
     return ResponseBase(code=code, data=file_data)
+
 
 @router.post("/ide_delete_file", response_model=ResponseBase)
 def ide_delete_file(data: FileItem):
@@ -230,11 +235,33 @@ def run_python_program(data: RunPythonItem):
         return ResponseBase(code=0, data={"taskId": task_id})
     return ResponseBase(code=-1, data={})
 
+
 @router.post("/debug_python_program", response_model=ResponseBase)
 def debug_python_program(data: DebugPythonItem):
     prj_name = data.projectName
     prj_path = os.path.join(Config.IDE, prj_name)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
+    prj_abs_path = Path(os.path.join(Config.IDE, prj_name)).resolve()
+
+    def is_path_like(s: str) -> bool:
+        """
+        判断给定的字符串s是否看起来像一个文件或目录的路径。
+        这个检查不确认路径是否存在，只检查格式。
+        """
+        # 直接检查是否为绝对路径或相对路径（考虑以斜杠开始的情况）
+        if os.path.isabs(s) or (
+            s.startswith("/")
+            or s.startswith("\\")
+            or s.startswith("./")
+            or s.startswith("../")
+        ):
+            return True
+        # 其他检查逻辑保持不变，例如检查是否以字母数字或常见路径分隔符开始
+        elif s and (s[0].isalnum() or s[0] in [".", "/", "\\"]):
+            if "/" in s or "\\" in s:
+                return True
+        return False
+
     if (
         os.path.exists(file_path)
         and os.path.isfile(file_path)
@@ -242,6 +269,9 @@ def debug_python_program(data: DebugPythonItem):
     ):
         taskManager = TaskManager()
         options = data.options if data.options is not None else []
+        for i in range(len(options)):
+            if is_path_like(options[i]) == True:
+                options[i] = os.path.join(prj_abs_path, convert_path(options[i]))
         cmd = [Config.PYTHON, "-u", file_path] + options
         task_id = gen_run_id(data.filePath)
         taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
@@ -327,7 +357,7 @@ def run_pip_command(data: PipCommandItem):
         task_id = gen_run_id("pip-cmd")
         taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
         taskManager.start_subprogram(task_id)
-        return ResponseBase(code=0, data={"stdout": "success","taskId":task_id})
+        return ResponseBase(code=0, data={"stdout": "success", "taskId": task_id})
 
 
 @router.post("/install_py_pkg_by_local_file", response_model=ResponseBase)
@@ -341,7 +371,7 @@ def install_py_pkg_by_local_file(data: PkgList):
     task_id = gen_run_id("pip-cmd")
     taskManager.set_subprogram(task_id, SubProgramThread(cmd, task_id))
     taskManager.start_subprogram(task_id)
-    return ResponseBase(code=0, data={"stdout": "success","taskId":task_id})
+    return ResponseBase(code=0, data={"stdout": "success", "taskId": task_id})
 
 
 @router.post("/upload-file")
@@ -419,9 +449,7 @@ async def upload_file_for_proj(file: UploadFile, projName: str, dirPath: str):
     try:
         # 为每个文件创建唯一的保存路径（这里简化处理，实际情况可能需要更复杂的命名规则避免冲突）
         filename = file.filename
-        file_path = os.path.join(
-            Config.IDE, projName, dirPath[1:], filename
-        )
+        file_path = os.path.join(Config.IDE, projName, dirPath[1:], filename)
         in_proj_path = os.path.join(dirPath, filename)
 
         # 保存文件到本地
