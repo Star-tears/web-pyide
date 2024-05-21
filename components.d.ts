@@ -50,6 +50,7 @@ declare module 'vue' {
     LabelItem: typeof import('./src/components/VmIde/components/LabelItem.vue')['default']
     MainContent: typeof import('./src/components/VmIde/pages/ide/MainContent.vue')['default']
     MainFrame: typeof import('./src/components/VmIde/pages/ide/MainFrame.vue')['default']
+    MarkdownEditor: typeof import('./src/components/VmIde/pages/ide/editor/MarkdownEditor.vue')['default']
     MonitorContainer: typeof import('./src/components/VmIde/pages/ide/edge-container/MonitorContainer.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
