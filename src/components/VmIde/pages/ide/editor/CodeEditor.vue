@@ -1,8 +1,9 @@
 <template>
   <codemirror
     v-model="codeItemContent"
+    id="codemirror-editor"
     placeholder="Code goes here..."
-    style="height: 100%"
+    :style="{ height: '100%', fontSize: fontSize + 'px' }"
     :autofocus="true"
     :indent-with-tab="true"
     :tab-size="2"
@@ -35,9 +36,34 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+let fontSize = ref(16); // 初始字体大小
+
+const handleWheel = (event: WheelEvent) => {
+  if (event.ctrlKey || event.metaKey) {
+    event.preventDefault(); // 阻止默认的滚动行为
+    if (event.deltaY < 0) {
+      // 如果滚轮向上（放大字体）
+      fontSize.value += 2; // 增加字体大小，可根据需要调整增量
+    } else {
+      // 如果滚轮向下（缩小字体）
+      fontSize.value -= 2; // 减小字体大小，同样可调整
+    }
+    // 限制字体大小在一个合理的范围内，例如8至100
+    fontSize.value = Math.min(Math.max(fontSize.value, 8), 100);
+  }
+};
+
 onMounted(() => {
   if (!props.codeItem.path.startsWith('/')) readOnly.value = true;
+  document.addEventListener('wheel', handleWheel, { passive: false });
 });
+
+onUnmounted(() => {
+  document.removeEventListener('wheel', handleWheel);
+});
+// onMounted(() => {
+//   if (!props.codeItem.path.startsWith('/')) readOnly.value = true;
+// });
 // const code = ref(`print('Hello, world!')`);
 const extensions = [python(), oneDark];
 
