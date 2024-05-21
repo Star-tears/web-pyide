@@ -3498,7 +3498,7 @@ magic-string@^0.30.3, magic-string@^0.30.4, magic-string@^0.30.5, magic-string@^
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
-mavon-editor@3.0.1:
+mavon-editor@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/mavon-editor/-/mavon-editor-3.0.1.tgz#0c2660569ded5b29e59d0e429af61eb618783a90"
   integrity sha512-973cYCwv+AB+fcecsU6Ua6UXATxDMaY0Q7QzKQ/GmRW1sg+3DolZDnCGXth7XHDgrmqKTO57N42fVYujt0wfFw==
