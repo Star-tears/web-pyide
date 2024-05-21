@@ -50,7 +50,7 @@ class PTY:
         self.pty, tty = os.openpty()
         self.process = subprocess.Popen(
             "/bin/bash",
-            cwd= os.path.join(Config.PROJECTS,"ide",self.projectSelected),
+            cwd= os.path.join(Config.IDE,self.projectSelected),
             stdin=tty,
             stdout=tty,
             stderr=tty,

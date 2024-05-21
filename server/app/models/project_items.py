@@ -30,8 +30,10 @@ class FileItem(BaseModel):
     projectName: str
     filePath: str
 
+
 class SDKFileItem(BaseModel):
     filePath: str
+
 
 class ReNameItem(BaseModel):
     projectName: str
@@ -61,10 +63,12 @@ class RunPythonItem(BaseModel):
     projectName: str
     filePath: str
 
+
 class DebugPythonItem(BaseModel):
     projectName: str
     filePath: str
     options: list[str] | None = None
+
 
 class PyTaskIdItem(BaseModel):
     taskId: str
