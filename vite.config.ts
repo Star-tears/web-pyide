@@ -13,10 +13,10 @@ import legacy from '@vitejs/plugin-legacy';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    legacy({
-      // targets: ['Chrome 102'],
-      modernPolyfills: true
-    }),
+    // legacy({
+    //   targets: ['Chrome 102'],
+    //   modernPolyfills: true
+    // }),
     vue(),
     VueDevTools(),
     AutoImport({

@@ -26,6 +26,7 @@ import { ref } from 'vue';
 import { useIdeStore } from '@/stores/ide';
 import { storeToRefs } from 'pinia';
 import { getFileIcon } from '@/utils';
+import { Icon } from '@iconify/vue/dist/iconify.js';
 const emit = defineEmits<{
   (e: 'select-item', item: any): void;
   (e: 'close-item', item: any): void;
@@ -42,10 +43,22 @@ const dynamicStyles = ref({
 });
 
 const getTabContent = (key: string) => {
-  return h('div', { class: 'flex flex-row h-full items-center gap-2' }, [
-    getFileIcon(key),
-    h('div', null, key)
-  ]);
+  return h(
+    'div',
+    { class: 'flex flex-row h-full items-center gap-2' },
+    isReadOnly(key)
+      ? [
+          getFileIcon(key),
+          h(Icon, { icon: 'mdi:eye-lock' }),
+          h('div', null, key),
+          h('div', null, '[只读]')
+        ]
+      : [getFileIcon(key), h('div', null, key)]
+  );
+};
+
+const isReadOnly = (path: string) => {
+  return !path.startsWith('/');
 };
 
 const updateValue = (value: string) => {

@@ -47,6 +47,9 @@ def main():
     parser.add_argument(
         "--sdk-path", type=str, default=".webide-server/projects/sdk", help="sdk path"
     )
+    parser.add_argument(
+        "--python-path", type=str, default=Config.PYTHON, help="sdk path"
+    )
     args = parser.parse_args()
     Config.FRONTEND = os.path.join(args.frontend_path)
     Config.WEBIDESERVER = os.path.join(args.webserver_path)
@@ -55,6 +58,8 @@ def main():
     absolute_path = relative_path.resolve()
     Config.SDK = absolute_path
     Config.IDE = args.ide_path
+    if args.python_path != Config.PYTHON:
+        Config.PYTHON = args.python_path
     app = FastAPI(
         title=settings.PROJECT_NAME,
         openapi_url=f"{settings.API_V1_STR}/openapi.json",
