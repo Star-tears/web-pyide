@@ -28,7 +28,7 @@ router = APIRouter()
 
 @router.get("/ide_list_projects", response_model=ResponseBase)
 def ide_list_projects():
-    ide_path = os.path.join(Config.PROJECTS, "ide")
+    ide_path = os.path.join(Config.IDE)
     code, projects = list_projects(ide_path)
     return ResponseBase(code=code, data=projects)
 
@@ -36,7 +36,7 @@ def ide_list_projects():
 @router.post("/ide_get_project", response_model=ResponseBase)
 def ide_get_project(data: ProjItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     code, project = get_project(prj_path)
     return ResponseBase(code=code, data=project)
 
@@ -51,7 +51,7 @@ def get_sdk_project():
 @router.post("/ide_create_project", response_model=ResponseBase)
 async def ide_create_project(data: ProjItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     code, _ = create_project(
         prj_path,
         config_data={
@@ -69,7 +69,7 @@ async def ide_create_project(data: ProjItem):
 @router.post("/ide_delete_project", response_model=ResponseBase)
 def ide_delete_project(data: ProjItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     code, _ = delete(prj_path)
     return ResponseBase(code=code, data=_)
 
@@ -77,9 +77,9 @@ def ide_delete_project(data: ProjItem):
 @router.post("/ide_rename_project", response_model=ResponseBase)
 def ide_rename_project(data: ProjReNameItem):
     old_name = data.oldName
-    old_path = os.path.join(Config.PROJECTS, "ide", old_name)
+    old_path = os.path.join(Config.IDE, old_name)
     new_name = data.newName
-    new_path = os.path.join(Config.PROJECTS, "ide", new_name)
+    new_path = os.path.join(Config.IDE, new_name)
     code, _ = rename(old_path, new_path)
     return ResponseBase(code=code, data=_)
 
@@ -87,7 +87,7 @@ def ide_rename_project(data: ProjReNameItem):
 @router.post("/ide_save_project", response_model=ResponseBase)
 def ide_save_project(data: SaveProjItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     code, _ = save_project(prj_path, data)
     return ResponseBase(code=code, data=_)
 
@@ -95,7 +95,7 @@ def ide_save_project(data: SaveProjItem):
 @router.post("/ide_create_file", response_model=ResponseBase)
 def ide_create_file(data: CreateFileItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     parent_path = convert_path(data.parentPath)
     file_name = data.fileName
     file_path = os.path.join(prj_path, parent_path, file_name)
@@ -106,7 +106,7 @@ def ide_create_file(data: CreateFileItem):
 @router.post("/ide_write_file", response_model=ResponseBase)
 def ide_write_file(data: WriteFileItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     file_data = data.fileData
     code, _ = write_project_file(prj_path, file_path, file_data)
@@ -138,7 +138,7 @@ def ide_write_file(data: WriteFileItem):
 @router.post("/ide_get_file", response_model=ResponseBase)
 def ide_get_file(data: FileItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     code, file_data = get_project_file(prj_path, file_path)
     return ResponseBase(code=code, data=file_data)
@@ -153,7 +153,7 @@ def get_sdk_file(data: SDKFileItem):
 @router.post("/ide_delete_file", response_model=ResponseBase)
 def ide_delete_file(data: FileItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     code, _ = delete_project_file(prj_path, file_path)
     return ResponseBase(code=code, data=_)
@@ -162,7 +162,7 @@ def ide_delete_file(data: FileItem):
 @router.post("/ide_rename_file", response_model=ResponseBase)
 def ide_rename_file(data: ReNameItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     old_path = os.path.join(prj_path, convert_path(data.oldPath))
     new_name = data.newName
     new_path = os.path.join(os.path.dirname(old_path), new_name)
@@ -173,7 +173,7 @@ def ide_rename_file(data: ReNameItem):
 @router.post("/ide_create_folder", response_model=ResponseBase)
 def ide_create_folder(data: CreateFolderItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     parent_path = convert_path(data.parentPath)
     folder_name = data.folderName
     folder_path = os.path.join(prj_path, parent_path, folder_name)
@@ -184,7 +184,7 @@ def ide_create_folder(data: CreateFolderItem):
 @router.post("/ide_delete_folder", response_model=ResponseBase)
 async def ide_delete_folder(data: DeleteFolderItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     folder_path = os.path.join(prj_path, convert_path(data.folderPath))
     code, _ = delete_project_file(prj_path, folder_path)
     return ResponseBase(code=code, data=_)
@@ -193,7 +193,7 @@ async def ide_delete_folder(data: DeleteFolderItem):
 @router.post("/ide_rename_folder", response_model=ResponseBase)
 def ide_rename_folder(data: ReNameItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     old_path = os.path.join(prj_path, convert_path(data.oldPath))
     new_name = data.newName
     new_path = os.path.join(os.path.dirname(old_path), new_name)
@@ -215,7 +215,7 @@ def get_python_pkg_installed_list():
 @router.post("/run_python_program", response_model=ResponseBase)
 def run_python_program(data: RunPythonItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     if (
         os.path.exists(file_path)
@@ -233,7 +233,7 @@ def run_python_program(data: RunPythonItem):
 @router.post("/debug_python_program", response_model=ResponseBase)
 def debug_python_program(data: DebugPythonItem):
     prj_name = data.projectName
-    prj_path = os.path.join(Config.PROJECTS, "ide", prj_name)
+    prj_path = os.path.join(Config.IDE, prj_name)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     if (
         os.path.exists(file_path)
@@ -420,7 +420,7 @@ async def upload_file_for_proj(file: UploadFile, projName: str, dirPath: str):
         # 为每个文件创建唯一的保存路径（这里简化处理，实际情况可能需要更复杂的命名规则避免冲突）
         filename = file.filename
         file_path = os.path.join(
-            Config.PROJECTS, "ide", projName, dirPath[1:], filename
+            Config.IDE, projName, dirPath[1:], filename
         )
         in_proj_path = os.path.join(dirPath, filename)
 

@@ -31,6 +31,7 @@ def main():
     parser.add_argument('--port', type=int, default=21006, help='server listen port')
     parser.add_argument('--webserver-path', type=str, default='.webide-server', help='webserver path')
     parser.add_argument('--frontend-path', type=str, default='dist', help='frontend path')
+    parser.add_argument('--ide-path', type=str, default='ide', help='ide path')
     parser.add_argument('--sdk-path', type=str, default='sdk', help='sdk path')
     args = parser.parse_args()
     Config.FRONTEND=os.path.join(args.frontend_path)
@@ -39,6 +40,7 @@ def main():
     relative_path = Path(args.sdk_path)
     absolute_path = relative_path.resolve()
     Config.SDK=absolute_path
+    Config.IDE=args.ide_path
     app = FastAPI(
         title=settings.PROJECT_NAME,
         openapi_url=f"{settings.API_V1_STR}/openapi.json",
