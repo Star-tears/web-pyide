@@ -23,10 +23,6 @@ const props = defineProps<Props>();
 const isMarkdown = computed(() => {
   return props.codeItem.path.endsWith('.md');
 });
-
-onMounted(() => {
-  console.log(props);
-});
 </script>
 
 <style scoped></style>

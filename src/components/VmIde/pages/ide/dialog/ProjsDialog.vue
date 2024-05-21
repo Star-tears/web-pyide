@@ -66,7 +66,7 @@ const getProject = (name?: any) => {
   }).then((res) => {
     if (res.code == 0) {
       ideStore.handleProject(res.data);
-      for (var i = 0; i < ideInfo.value.currProj.config.openList?.length ?? 0; i++) {
+      for (var i = 0; i < ideInfo.value.currProj.config.openList?.length; i++) {
         getFile(ideInfo.value.currProj.config.openList[i], false);
       }
     }
