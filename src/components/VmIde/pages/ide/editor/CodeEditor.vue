@@ -132,30 +132,37 @@ const codeChanged = (value: any) => {
 
 const ideIdeWriteFile_debouncedFn = useDebounceFn(
   (value: any) => {
-    const state = view.value.state;
-    const ranges = state.selection.ranges;
-    const cursor = ranges[0].anchor;
-    const [lineNum, colNum] = calculateLineNumberAndColumnIndex(cursor);
+    // const state = view.value.state;
+    // const ranges = state.selection.ranges;
+    // const cursor = ranges[0].anchor;
+    // const [lineNum, colNum] = calculateLineNumberAndColumnIndex(cursor);
+    // IdeService.ideIdeWriteFile({
+    //   requestBody: {
+    //     projectName: ideInfo.value.currProj.data.name,
+    //     filePath: props.codeItem.path,
+    //     fileData: value,
+    //     complete: isPython(),
+    //     line: lineNum,
+    //     column: colNum
+    //   }
+    // }).then((res) => {
+    //   if (isPython) {
+    //     const completeDatas: any = res.data;
+    //     if (!res.data || completeDatas.length == 0) return;
+    //     let completions = [].concat(completeDatas);
+    //     const labeledObjects: { label: string }[] = completions.map((item) => ({ label: item }));
+    //     completeOptions.value = labeledObjects;
+    //   }
+    // });
     IdeService.ideIdeWriteFile({
       requestBody: {
         projectName: ideInfo.value.currProj.data.name,
         filePath: props.codeItem.path,
-        fileData: value,
-        complete: isPython(),
-        line: lineNum,
-        column: colNum
-      }
-    }).then((res) => {
-      if (isPython) {
-        const completeDatas: any = res.data;
-        if (!res.data || completeDatas.length == 0) return;
-        let completions = [].concat(completeDatas);
-        const labeledObjects: { label: string }[] = completions.map((item) => ({ label: item }));
-        completeOptions.value = labeledObjects;
+        fileData: value
       }
     });
   },
-  100,
+  1000,
   { maxWait: 5000 }
 );
 </script>

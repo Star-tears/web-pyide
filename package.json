@@ -14,7 +14,8 @@
     "format": "prettier --write src/",
     "generate-client": "openapi-ts --input http://localhost:21006/api/v1/openapi.json --output ./src/client --client axios",
     "install-all": "yarn install && cd server && poetry install",
-    "build-all": "yarn build && cd server &&  python -m nuitka --lto=no --onefile --standalone --output-dir=./build --output-filename=pyide app/main.py",
+    "build-server": "cd server && python -m nuitka --lto=no --standalone --onefile --output-dir=./build --output-filename=pyide app/main.py",
+    "build-all": "yarn build && yarn build-server",
     "build-all-to-module": "yarn build && cd server && poetry build",
     "preview-after-build": "cp -r dist ./server/build && cp -r .webide-server ./server/build && cd ./server/build && ./pyide --python-path python3"
   },

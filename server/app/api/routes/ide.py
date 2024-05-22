@@ -45,7 +45,7 @@ def ide_get_project(data: ProjItem):
 @router.get("/get_sdk_project", response_model=ResponseBase)
 def get_sdk_project():
     prj_path = os.path.join(Config.SDK)
-    code, project = get_readonly_project(prj_path, "sdk")
+    code, project = get_readonly_project(prj_path, str(os.path.basename(prj_path)))
     project["name"] += " ( " + str(Config.SDK) + " )"
     project["label"] += " ( " + str(Config.SDK) + " )"
     return ResponseBase(code=code, data=project)
