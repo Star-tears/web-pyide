@@ -19,6 +19,7 @@
     "preview-after-build": "cp -r dist ./server/build && cp -r .webide-server ./server/build && cd ./server/build && ./pyide --python-path python3"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.16.0",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-python": "^6.1.5",
     "@codemirror/theme-one-dark": "^6.1.2",

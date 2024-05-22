@@ -122,7 +122,7 @@ def ide_write_file(data: WriteFileItem):
             script = jedi.api.Script(
                 code=file_data,
                 path=file_path,
-                project=jedi.api.Project(file_path, added_sys_path=[]),
+                project=jedi.api.Project(file_path, added_sys_path=[prj_path]),
             )
             for completion in script.complete(line=line, column=column):
                 completions.add(completion.name)
