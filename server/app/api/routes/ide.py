@@ -45,7 +45,7 @@ def ide_get_project(data: ProjItem):
 @router.get("/get_sdk_project", response_model=ResponseBase)
 def get_sdk_project():
     prj_path = os.path.join(Config.SDK)
-    code, project = get_readonly_project(prj_path, "sdk")
+    code, project = get_readonly_project(prj_path, str(os.path.basename(prj_path)))
     project["name"] += " ( " + str(Config.SDK) + " )"
     project["label"] += " ( " + str(Config.SDK) + " )"
     return ResponseBase(code=code, data=project)
@@ -122,7 +122,7 @@ def ide_write_file(data: WriteFileItem):
             script = jedi.api.Script(
                 code=file_data,
                 path=file_path,
-                project=jedi.api.Project(file_path, added_sys_path=[]),
+                project=jedi.api.Project(file_path, added_sys_path=[prj_path]),
             )
             for completion in script.complete(line=line, column=column):
                 completions.add(completion.name)
