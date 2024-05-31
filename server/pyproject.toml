@@ -21,6 +21,7 @@ pywinpty = { version = "^2.0.13", platform = "win32"}
 python-multipart = "^0.0.9"
 parso = "^0.8.4"
 
+python-dotenv = "^1.0.1"
 [tool.poetry.group.dev.dependencies]
 nuitka = "^2.2.2"
 
