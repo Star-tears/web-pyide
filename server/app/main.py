@@ -33,8 +33,6 @@ Config.IDE = os.getenv("PYIDE_IDE_PATH", ".webide-server/projects/ide")
 Config.SDK = os.getenv("PYIDE_SDK_PATH", ".webide-server/projects/sdk")
 Config.PYTHON = os.getenv("PYIDE_PYTHON_PATH", "python3")
 
-print(Config.WEBIDESERVER)
-
 
 def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
