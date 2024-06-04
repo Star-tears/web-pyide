@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 from app.common.config import Config
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, File, WebSocket
 from fastapi import FastAPI, Request
 from fastapi.routing import APIRoute
 from fastapi.responses import HTMLResponse
@@ -61,6 +61,15 @@ async def home(request: Request):
 @app.get("/editor", response_class=HTMLResponse, tags=["editor"])
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/favicon.ico", tags=["favicon"])
+async def favicon():
+    # 这里假设你有一个放在static目录下的favicon.ico文件
+    return File(
+        os.path.join(Config.FRONTEND, "favicon.ico"),
+        media_type="image/vnd.microsoft.icon",
+    )
 
 
 if __name__ == "__main__":
