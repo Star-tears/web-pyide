@@ -31,6 +31,10 @@ class FileItem(BaseModel):
     filePath: str
 
 
+class SDKFileItem(BaseModel):
+    filePath: str
+
+
 class ReNameItem(BaseModel):
     projectName: str
     oldPath: str
@@ -58,6 +62,12 @@ class SaveProjItem(BaseModel):
 class RunPythonItem(BaseModel):
     projectName: str
     filePath: str
+
+
+class DebugPythonItem(BaseModel):
+    projectName: str
+    filePath: str
+    options: list[str] | None = None
 
 
 class PyTaskIdItem(BaseModel):

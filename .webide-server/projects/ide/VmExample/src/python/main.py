@@ -25,4 +25,3 @@ if __name__ == '__main__':
         ret += b
         print('{} + {} = {}'.format(a, b, ret))
         time.sleep(1)
-

@@ -23,7 +23,7 @@
 
 ## 编译和运行
 
-### 环境
+### 开发环境
 
 - Node: 20.12.1
 - Yarn: 1.22.22
@@ -50,6 +50,18 @@ yarn build
 yarn dev-server
 
 yarn dev
+
+# 生产环境预览
+yarn build-all
+yarn preview-after-build
+```
+
+> 生产环境
+
+需配置相应参数，示例：
+
+```bash
+./pyide --frontend-path ./dist --webserver-path ./.webide-server --sdk-path ./.webide-server/projects/sdk --ide-path ./.webide-server/projects/ide --python-path python3
 ```
 
 ### 打包
@@ -75,6 +87,8 @@ yarn build-all
 - [x] 文件、文件夹创建删除重命名等操作
 - [x] 新建工作区
 - [x] 上传文件
+- [x] markdown编辑器
+- [x] 只读文件提示
 
 ### 后端
 
@@ -83,3 +97,5 @@ yarn build-all
 - [x] 重构终端websocket连接
 - [x] 任务管理相关api
 - [x] 脚本输出捕获
+- [x] debug程序接口
+- [x] 只读文件获取

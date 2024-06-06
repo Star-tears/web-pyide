@@ -82,6 +82,36 @@ export const $CreateFolderItem = {
     title: 'CreateFolderItem'
 } as const;
 
+export const $DebugPythonItem = {
+    properties: {
+        projectName: {
+            type: 'string',
+            title: 'Projectname'
+        },
+        filePath: {
+            type: 'string',
+            title: 'Filepath'
+        },
+        options: {
+            anyOf: [
+                {
+                    items: {
+                        type: 'string'
+                    },
+                    type: 'array'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Options'
+        }
+    },
+    type: 'object',
+    required: ['projectName', 'filePath'],
+    title: 'DebugPythonItem'
+} as const;
+
 export const $DeleteFolderItem = {
     properties: {
         projectName: {
@@ -282,6 +312,18 @@ export const $RunPythonItem = {
     type: 'object',
     required: ['projectName', 'filePath'],
     title: 'RunPythonItem'
+} as const;
+
+export const $SDKFileItem = {
+    properties: {
+        filePath: {
+            type: 'string',
+            title: 'Filepath'
+        }
+    },
+    type: 'object',
+    required: ['filePath'],
+    title: 'SDKFileItem'
 } as const;
 
 export const $SaveProjItem = {

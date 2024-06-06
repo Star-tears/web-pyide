@@ -24,6 +24,12 @@ export type CreateFolderItem = {
     folderName: string;
 };
 
+export type DebugPythonItem = {
+    projectName: string;
+    filePath: string;
+    options?: Array<(string)> | null;
+};
+
 export type DeleteFolderItem = {
     projectName: string;
     folderPath: string;
@@ -78,6 +84,10 @@ export type RunPythonItem = {
     filePath: string;
 };
 
+export type SDKFileItem = {
+    filePath: string;
+};
+
 export type SaveProjItem = {
     projectName: string;
     expendKeys: Array<unknown>;
@@ -125,6 +135,16 @@ export type $OpenApiTs = {
                  * Validation Error
                  */
                 422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/get_sdk_project': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
             };
         };
     };
@@ -247,6 +267,23 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/v1/ide/get_sdk_file': {
+        post: {
+            req: {
+                requestBody: SDKFileItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
     '/api/v1/ide/ide_delete_file': {
         post: {
             req: {
@@ -346,6 +383,23 @@ export type $OpenApiTs = {
         post: {
             req: {
                 requestBody: RunPythonItem;
+            };
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: ResponseBase;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
+            };
+        };
+    };
+    '/api/v1/ide/debug_python_program': {
+        post: {
+            req: {
+                requestBody: DebugPythonItem;
             };
             res: {
                 /**

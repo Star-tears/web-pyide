@@ -19,7 +19,8 @@ const { ideInfo } = storeToRefs(ideStore);
 
 const getIsPyFile = computed(() => {
   return ideInfo.value.currProj.pathSelected
-    ? ideInfo.value.currProj.pathSelected.endsWith('.py')
+    ? ideInfo.value.currProj.pathSelected.endsWith('.py') &&
+        ideInfo.value.currProj.pathSelected.startsWith('/')
     : false;
 });
 
