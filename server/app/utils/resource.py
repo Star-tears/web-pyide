@@ -115,13 +115,13 @@ def list_dir(path, result=None, prefix="", filter_config=True, list_type="simple
     if os.path.exists(path):
         if result is None:
             result = {
-                "uuid": prefix+"/",
-                "key": prefix+"/",
+                "uuid": prefix + "/",
+                "key": prefix + "/",
                 "name": os.path.basename(path),
                 "label": os.path.basename(path),
                 "type": "dir",
                 # 'path': path,
-                "path": prefix+"/",
+                "path": prefix + "/",
             }
         result["children"] = []
         for p in os.listdir(path):
@@ -276,12 +276,14 @@ def get_project(path):
     else:
         return PATH_IS_NOT_EXIST, None
 
-def get_readonly_project(path,prefix=""):
+
+def get_readonly_project(path, prefix=""):
     if os.path.exists(path):
-        project = list_dir(path,prefix=prefix, list_type="detail")
+        project = list_dir(path, prefix=prefix, list_type="detail")
         return 0, project
     else:
         return PATH_IS_NOT_EXIST, None
+
 
 def create_project(path, config_data=None):
     code, _ = create(path)

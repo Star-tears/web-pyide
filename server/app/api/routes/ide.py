@@ -20,6 +20,7 @@ from app.common.config import Config
 from app.models.response import ResponseBase
 from app.utils.resource import *
 from app.models.project_items import *
+import app.utils.resource as res_helper
 from app.utils.helper import convert_path, gen_run_id
 
 jedi_is_gt_17 = StrictVersion(jedi_version) >= StrictVersion("0.17.0")
@@ -42,12 +43,14 @@ def ide_get_project(data: ProjItem):
     return ResponseBase(code=code, data=project)
 
 
-@router.get("/get_sdk_project", response_model=ResponseBase)
-def get_sdk_project():
-    prj_path = os.path.join(Config.SDK)
-    code, project = get_readonly_project(prj_path, str(os.path.basename(prj_path)))
-    project["name"] += " ( " + str(Config.SDK) + " )"
-    project["label"] += " ( " + str(Config.SDK) + " )"
+@router.get("/get_readonly_project", response_model=ResponseBase)
+def get_readonly_project():
+    prj_path = os.path.join(Config.READONLY_PATH)
+    code, project = res_helper.get_readonly_project(
+        prj_path, str(os.path.basename(prj_path))
+    )
+    project["name"] += " ( " + str(Config.READONLY_PATH) + " )"
+    project["label"] += " ( " + str(Config.READONLY_PATH) + " )"
     return ResponseBase(code=code, data=project)
 
 
@@ -147,9 +150,9 @@ def ide_get_file(data: FileItem):
     return ResponseBase(code=code, data=file_data)
 
 
-@router.post("/get_sdk_file", response_model=ResponseBase)
-def get_sdk_file(data: SDKFileItem):
-    prj_path = os.path.join(Config.SDK)
+@router.post("/get_readonly_file", response_model=ResponseBase)
+def get_readonly_file(data: ReadonlyFileItem):
+    prj_path = os.path.join(Config.READONLY_PATH)
     file_path = os.path.join(prj_path, convert_path(data.filePath))
     code, file_data = get_project_file(prj_path, file_path)
     return ResponseBase(code=code, data=file_data)

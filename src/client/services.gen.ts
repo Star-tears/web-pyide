@@ -38,14 +38,14 @@ export class IdeService {
     }
     
     /**
-     * Get Sdk Project
+     * Get Readonly Project
      * @returns ResponseBase Successful Response
      * @throws ApiError
      */
-    public static ideGetSdkProject(): CancelablePromise<$OpenApiTs['/api/v1/ide/get_sdk_project']['get']['res'][200]> {
+    public static ideGetReadonlyProject(): CancelablePromise<$OpenApiTs['/api/v1/ide/get_readonly_project']['get']['res'][200]> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ide/get_sdk_project'
+            url: '/api/v1/ide/get_readonly_project'
         });
     }
     
@@ -183,16 +183,16 @@ export class IdeService {
     }
     
     /**
-     * Get Sdk File
+     * Get Readonly File
      * @param data The data for the request.
      * @param data.requestBody
      * @returns ResponseBase Successful Response
      * @throws ApiError
      */
-    public static ideGetSdkFile(data: $OpenApiTs['/api/v1/ide/get_sdk_file']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/get_sdk_file']['post']['res'][200]> {
+    public static ideGetReadonlyFile(data: $OpenApiTs['/api/v1/ide/get_readonly_file']['post']['req']): CancelablePromise<$OpenApiTs['/api/v1/ide/get_readonly_file']['post']['res'][200]> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v1/ide/get_sdk_file',
+            url: '/api/v1/ide/get_readonly_file',
             body: data.requestBody,
             mediaType: 'application/json',
             errors: {
@@ -555,6 +555,21 @@ export class EditorService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/editor'
+        });
+    }
+    
+}
+
+export class FaviconService {
+    /**
+     * Favicon
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static faviconFavicon(): CancelablePromise<$OpenApiTs['/favicon.ico']['get']['res'][200]> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/favicon.ico'
         });
     }
     

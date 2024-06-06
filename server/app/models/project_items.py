@@ -31,7 +31,7 @@ class FileItem(BaseModel):
     filePath: str
 
 
-class SDKFileItem(BaseModel):
+class ReadonlyFileItem(BaseModel):
     filePath: str
 
 
