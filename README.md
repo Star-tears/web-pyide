@@ -21,6 +21,27 @@
 - 引入图标vscode-icons
 - 更改编辑器主题
 
+## 技术栈
+
+### 前端
+
+- Vue3
+- Vite
+- Pinia
+- TypeScript
+- Naive-ui
+- shadcn-vue
+- axios
+- xtermjs
+- codemirror
+
+### 后端
+
+- Python3.10
+- FastAPI
+- uvicorn
+- websockets
+
 ## 编译和运行
 
 ### 开发环境
