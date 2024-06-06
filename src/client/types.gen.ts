@@ -72,6 +72,10 @@ export type ReNameItem = {
     newName: string;
 };
 
+export type ReadonlyFileItem = {
+    filePath: string;
+};
+
 export type ResponseBase = {
     type?: string | null;
     id?: number | null;
@@ -81,10 +85,6 @@ export type ResponseBase = {
 
 export type RunPythonItem = {
     projectName: string;
-    filePath: string;
-};
-
-export type SDKFileItem = {
     filePath: string;
 };
 
@@ -138,7 +138,7 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/v1/ide/get_sdk_project': {
+    '/api/v1/ide/get_readonly_project': {
         get: {
             res: {
                 /**
@@ -267,10 +267,10 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/v1/ide/get_sdk_file': {
+    '/api/v1/ide/get_readonly_file': {
         post: {
             req: {
-                requestBody: SDKFileItem;
+                requestBody: ReadonlyFileItem;
             };
             res: {
                 /**
@@ -588,6 +588,16 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 200: string;
+            };
+        };
+    };
+    '/favicon.ico': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                200: unknown;
             };
         };
     };

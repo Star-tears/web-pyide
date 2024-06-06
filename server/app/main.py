@@ -1,13 +1,11 @@
 import os
-from dotenv import load_dotenv
 
 from app.common.config import Config
-from fastapi import FastAPI, File, WebSocket
+from fastapi import FastAPI, File
 from fastapi import FastAPI, Request
 from fastapi.routing import APIRoute
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-import jinja2
 import uvicorn
 from app.api.main import api_router
 from app.core.config import settings
@@ -19,19 +17,9 @@ mimetypes.add_type("application/javascript", ".js")
 mimetypes.add_type("text/css", ".css")
 mimetypes.add_type("image/svg+xml", ".svg")
 
-# 加载.env文件，如果存在的话
-load_dotenv(".env", override=False)  # 设置override=False表示环境变量优先
-active_env = os.getenv("ACTIVE_ENV")
-load_dotenv(f".env.{active_env}", override=False)
 
 address = os.getenv("PYIDE_SERVER_ADDRESS", "0.0.0.0")
 port = int(os.getenv("PYIDE_SERVER_PORT", 21006))
-Config.WEBIDESERVER = os.getenv("PYIDE_WEBSERVER_PATH", ".webide-server")
-Config.FRONTEND = os.getenv("PYIDE_FRONTEND_PATH", "dist")
-Config.PROJECTS = os.path.join(Config.WEBIDESERVER, "projects")
-Config.IDE = os.getenv("PYIDE_IDE_PATH", ".webide-server/projects/ide")
-Config.SDK = os.getenv("PYIDE_SDK_PATH", ".webide-server/projects/sdk")
-Config.PYTHON = os.getenv("PYIDE_PYTHON_PATH", "python3")
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:

@@ -259,6 +259,18 @@ export const $ReNameItem = {
     title: 'ReNameItem'
 } as const;
 
+export const $ReadonlyFileItem = {
+    properties: {
+        filePath: {
+            type: 'string',
+            title: 'Filepath'
+        }
+    },
+    type: 'object',
+    required: ['filePath'],
+    title: 'ReadonlyFileItem'
+} as const;
+
 export const $ResponseBase = {
     properties: {
         type: {
@@ -312,18 +324,6 @@ export const $RunPythonItem = {
     type: 'object',
     required: ['projectName', 'filePath'],
     title: 'RunPythonItem'
-} as const;
-
-export const $SDKFileItem = {
-    properties: {
-        filePath: {
-            type: 'string',
-            title: 'Filepath'
-        }
-    },
-    type: 'object',
-    required: ['filePath'],
-    title: 'SDKFileItem'
 } as const;
 
 export const $SaveProjItem = {

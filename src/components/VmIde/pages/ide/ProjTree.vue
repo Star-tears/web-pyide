@@ -17,9 +17,9 @@
       show-line
       block-line
       expand-on-click
-      :data="sdk_data"
-      :render-prefix="renderSdkPrefix"
-      :on-update:selected-keys="updateSdkSelectKeys"
+      :data="readonly_data"
+      :render-prefix="renderReadonlyPrefix"
+      :on-update:selected-keys="updateReadonlySelectKeys"
     />
   </NScrollbar>
 </template>
@@ -48,7 +48,7 @@ const tree_data = computed(() => {
 const currProj = computed(() => {
   return ideStore.getCurrentProj();
 });
-const sdk_data = ref();
+const readonly_data = ref();
 
 const selectKeys = computed(() => ideInfo.value.selectKeys);
 const createNewFileName = ref('');
@@ -77,7 +77,7 @@ const updateSelectKeys = (
   if (option && option.length > 0 && option[0].type === 'file')
     emit('get-item', option[0].path as string);
 };
-const updateSdkSelectKeys = (
+const updateReadonlySelectKeys = (
   keys: Array<string | number>,
   option: Array<TreeOption | null>,
   meta: { node: TreeOption | null; action: 'select' | 'unselect' }
@@ -92,7 +92,7 @@ const updateSdkSelectKeys = (
 
     // 如果找到了 '/'，则从它之后的部分截取字符串；否则，直接返回原字符串
     const resultString: string = slashIndex !== -1 ? pathString.substring(slashIndex) : pathString;
-    IdeService.ideGetSdkFile({
+    IdeService.ideGetReadonlyFile({
       requestBody: {
         filePath: resultString
       }
@@ -123,7 +123,7 @@ const renderPrefix = ({
   });
 };
 
-const renderSdkPrefix = ({
+const renderReadonlyPrefix = ({
   option,
   checked,
   selected
@@ -268,9 +268,9 @@ onMounted(() => {
     }, 200);
   }, 300);
   setTimeout(() => {
-    IdeService.ideGetSdkProject().then((res) => {
+    IdeService.ideGetReadonlyProject().then((res) => {
       if (res.code == 0) {
-        sdk_data.value = [res.data];
+        readonly_data.value = [res.data];
       }
     });
   }, 300);

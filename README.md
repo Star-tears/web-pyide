@@ -2,17 +2,17 @@
 
 ---
 
-> 一个简易的在线Python的IDE  
-> 基于Vue3 + Python3.10 + Tornado6.1实现  
-> 前后端分离  
-> 重构方向Vite + Vue3 + Python3.10 + FastAPI
+> 一个简易的可运行Python程序的Web IDE  
+> 由项目[https://github.com/vimior/PythonWebIDE](https://github.com/vimior/PythonWebIDE)学习而来，Vue3 + Python3.10 + Tornado6.1实现  
+> 可前后端分离，重构方向Vite + Vue3 + Python3.10 + FastAPI
 
 ## 功能说明
 
 - 支持工程、文件、文件夹的增删查改
 - 支持Python代码基本补全
-- 支持Python代码(GUI不支持)运行管理和输出
+- 支持Python代码运行管理和输出
 - 支持Markdown文件的编辑和预览
+- 支持终端
 
 ## 更新说明
 
@@ -20,6 +20,27 @@
 - 引入markdown编辑器
 - 引入图标vscode-icons
 - 更改编辑器主题
+
+## 技术栈
+
+### 前端
+
+- Vue3
+- Vite
+- Pinia
+- TypeScript
+- Naive-ui
+- shadcn-vue
+- axios
+- xtermjs
+- codemirror
+
+### 后端
+
+- Python3.10
+- FastAPI
+- uvicorn
+- websockets
 
 ## 编译和运行
 
@@ -58,16 +79,19 @@ yarn preview-after-build
 
 > 生产环境
 
-需配置相应参数，示例：
-
-```bash
-./pyide --frontend-path ./dist --webserver-path ./.webide-server --sdk-path ./.webide-server/projects/sdk --ide-path ./.webide-server/projects/ide --python-path python3
-```
-
 ### 打包
 
 ```bash
 yarn build-all
+
+# 打成tar包
+yarn package-tar
+```
+
+命令行运行·，示例：
+
+```bash
+./pyide
 ```
 
 ## 重构进度
@@ -89,6 +113,7 @@ yarn build-all
 - [x] 上传文件
 - [x] markdown编辑器
 - [x] 只读文件提示
+- [x] 终端交互，仅支持后端部署在Linux
 
 ### 后端
 
@@ -99,3 +124,4 @@ yarn build-all
 - [x] 脚本输出捕获
 - [x] debug程序接口
 - [x] 只读文件获取
+- [x] 终端交互，仅支持后端部署在Linux

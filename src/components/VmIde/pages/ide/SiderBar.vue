@@ -12,9 +12,9 @@
           <ToggleGroupItem value="py-console" class="px-1" :style="getActiveStyle('py-console')">
             <Icon icon="mdi:language-python" class="size-7" />
           </ToggleGroupItem>
-          <!-- <ToggleGroupItem value="terminal" class="px-1" :style="getActiveStyle('terminal')">
+          <ToggleGroupItem value="terminal" class="px-1" :style="getActiveStyle('terminal')">
             <Icon icon="ph:terminal-fill" class="size-7" />
-          </ToggleGroupItem> -->
+          </ToggleGroupItem>
           <ToggleGroupItem value="monitor" class="px-1" :style="getActiveStyle('monitor')">
             <Icon icon="material-symbols-light:stacks-rounded" class="size-7" />
           </ToggleGroupItem>
