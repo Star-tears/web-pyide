@@ -17,8 +17,9 @@
     "build-server": "cd server && python -m nuitka --lto=no --standalone --onefile --output-dir=./build --output-filename=pyide app/main.py",
     "build-all": "yarn build && yarn build-server",
     "build-all-to-module": "yarn build && cd server && poetry build",
-    "preview-after-build": "cp -r dist ./server/build && cp -r .webide-server ./server/build && cp ./server/.env.prod ./server/build && cd ./server/build && ./pyide",
-    "package-tar": "mkdir -p ./server/build/web-pyide && cd ./server/build && cp pyide web-pyide && cp .env.prod web-pyide && cp -r .webide-server web-pyide && cp -r dist web-pyide && tar -czvf web-pyide.tar.gz web-pyide"
+    "mv-files-to-build": "cp -r dist ./server/build && cp -r .webide-server ./server/build && cp ./server/.env.prod ./server/build",
+    "preview-after-build": "yarn mv-files-to-build && cd ./server/build && ./pyide",
+    "package-tar": "yarn mv-files-to-build && mkdir -p ./server/build/web-pyide && cd ./server/build && cp pyide web-pyide && cp .env.prod web-pyide && cp -r .webide-server web-pyide && cp -r dist web-pyide && tar -czvf web-pyide.tar.gz web-pyide"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.16.0",
