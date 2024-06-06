@@ -92,6 +92,7 @@ yarn package-tar
 - [x] 上传文件
 - [x] markdown编辑器
 - [x] 只读文件提示
+- [x] 终端交互，仅支持后端部署在Linux
 
 ### 后端
 
@@ -102,3 +103,4 @@ yarn package-tar
 - [x] 脚本输出捕获
 - [x] debug程序接口
 - [x] 只读文件获取
+- [x] 终端交互，仅支持后端部署在Linux
