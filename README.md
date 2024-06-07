@@ -94,6 +94,32 @@ yarn package-tar
 ./pyide
 ```
 
+## 演示
+
+### 编辑及运行
+
+![ide编辑及运行](docs/20240607163249_rec_.gif)
+
+### 程序管理（暂停、重启）
+
+![ide程序管理（暂停、重启）](docs/20240607163548_rec_.gif)
+
+### 终端
+
+![ide terminal](docs/20240607164133_rec_.gif)
+
+### 布局调整
+
+![ide布局](docs/20240607164405_rec_.gif)
+
+### python包管理
+
+![ide python包管理](docs/20240607164527_rec_.gif)
+
+### 文件新建、重命名，切换工作区
+
+![alt text](docs/20240607165057_rec_.gif)
+
 ## 重构进度
 
 ### 前端

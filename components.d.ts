@@ -57,7 +57,6 @@ declare module 'vue' {
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NP: typeof import('naive-ui')['NP']
-    NSelect: typeof import('naive-ui')['NSelect']
     NTable: typeof import('naive-ui')['NTable']
     NTabPane: typeof import('naive-ui')['NTabPane']
     NTabs: typeof import('naive-ui')['NTabs']
